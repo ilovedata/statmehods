@@ -21,7 +21,7 @@ book:
 bibliography: references.bib
 
 format:
-  html:
+  bookup-html:
 #    lang: kr
     language: custom.yml
     code-fold: false
