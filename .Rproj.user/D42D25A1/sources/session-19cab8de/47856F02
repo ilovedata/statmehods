@@ -3,7 +3,7 @@
     "path": "~/Library/CloudStorage/Dropbox/project/teaching/stat_methods/textbook/_quarto.yml",
     "project_path": "_quarto.yml",
     "type": "yaml",
-    "hash": "1504721787",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1693897003104.0,
@@ -13,14 +13,14 @@
         "source_window_id": "",
         "Source": "Source",
         "cursorPosition": "28,26",
-        "scrollLine": "5"
+        "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1693943672,
+    "lastKnownWriteTime": 1693945340,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1693943672241,
+    "last_content_update": 1693945340,
     "read_only": false,
     "read_only_alternatives": []
 }
