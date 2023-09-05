@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 .quarto/
+.Rproj.user/
 build/
 develop-eggs/
 dist/

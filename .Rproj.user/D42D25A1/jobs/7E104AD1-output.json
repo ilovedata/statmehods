@@ -1,6 +1,0 @@
-[1,"Installing 'formatR' ...\n"]
-[2,"trying URL 'https://cran.rstudio.com/bin/macosx/big-sur-x86_64/contrib/4.3/formatR_1.14.tgz'\n"]
-[2,"Content type 'application/x-gzip' length 150366 bytes (146 KB)\n==================================================\ndownloaded 146 KB\n\n"]
-[1,"The downloaded binary packages are in\n"]
-[1,"\t/var/folders/3k/d8g2lfdn57b665jktbg_sglm0000gn/T//RtmppkANxm/downloaded_packages\n"]
-[2,"\n\n✔ Package 'formatR' successfully installed.\n"]

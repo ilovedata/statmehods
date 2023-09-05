@@ -1,0 +1,28 @@
+\babel@toc {nil}{}\relax 
+\contentsline {chapter}{Preface}{1}{chapter*.4}%
+\contentsline {chapter}{\numberline {1}서론}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}학습 내용}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}R 언어}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}참고도서}{1}{section.1.3}%
+\contentsline {part}{\numberline {I}분할표의 분석}{3}{part.1}%
+\contentsline {chapter}{\numberline {2}연관성의 측도}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}필요한 패키지}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}이항변수}{5}{section.2.2}%
+\contentsline {section}{\numberline {2.3}분할표와 연관성의 측도}{6}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}분할표}{6}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}상대위험}{7}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}기여위험과 백신효과}{8}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}오즈비}{9}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}신뢰구간}{10}{section.2.4}%
+\contentsline {section}{\numberline {2.5}예제: 아스피린 임상실험}{11}{section.2.5}%
+\contentsline {section}{\numberline {2.6}예제: 약물남용 사례-대조 연구}{12}{section.2.6}%
+\contentsline {chapter}{\numberline {3}연관성의 검정}{15}{chapter.3}%
+\contentsline {section}{\numberline {3.1}필요한 패키지}{15}{section.3.1}%
+\contentsline {section}{\numberline {3.2}카이제곱 검정}{16}{section.3.2}%
+\contentsline {section}{\numberline {3.3}코크란-맨텔-헨젤 검정}{19}{section.3.3}%
+\contentsline {section}{\numberline {3.4}맥나마 검정}{22}{section.3.4}%
+\contentsline {chapter}{\numberline {4}진단의 평가}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}민감도와 특이도}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}양성예측도와 음성예측도}{27}{section.4.2}%
+\contentsline {chapter}{References}{31}{chapter*.13}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
