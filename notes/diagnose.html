@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>데이터 분석 방법론 - 4&nbsp; &lt;84&gt;&lt;8b&gt;&lt;9d&gt;&lt;98&gt; &lt;8f&gt;&lt;89&gt;&lt;80&gt;</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../notes/association-test.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/diagnose.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">데이터 분석 방법론</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">분할표의 분석</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/diagnose.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#f849980-8a9d8f84" id="toc-f849980-8a9d8f84" class="nav-link active" data-scroll-target="#f849980-8a9d8f84"><span class="header-section-number">4.1</span> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;</eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></a></li>
+  <li><a href="#f849980-9d8c8498888f84" id="toc-f849980-9d8c8498888f84" class="nav-link" data-scroll-target="#f849980-9d8c8498888f84"><span class="header-section-number">4.2</span> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;</eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sensitivity" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title"><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;8f&gt;&lt;89&gt;<ea><b0>&lt;80&gt;</b0></ea></ed></ec></a8></eb></a7></ec></span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><ec>&lt;9d&gt;&lt;98&gt;<ed>&lt;95&gt;&lt;99&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;9d&gt;&lt;80&gt; <ed>&lt;99&gt;&lt;98&gt;<ec>&lt;9e&gt;&lt;90&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;83&gt;&lt;81&gt;<ed>&lt;83&gt;&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec><a7>&lt;95&gt;<ed>&lt;9b&gt;&lt;84&gt;<eb><a5><bc> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;9d&gt;<bc><ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;88&gt;&lt;98&gt;<ed>&lt;96&gt;&lt;89&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b8><b0> <ec>&lt;9c&gt;&lt;84&gt;<ed>&lt;95&gt;<b4><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;9d&gt;&lt;98&gt;<ec>&lt;82&gt;<ac><eb>&lt;8a&gt;&lt;94&gt; <ec><a0>&lt;84&gt;<ed>&lt;86&gt;<b5><ec><a0>&lt;81&gt;<ec>&lt;9d&gt;<b8> <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><eb><b2>&lt;95&gt;<eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt; <eb>&lt;8b&gt;<a4><ec>&lt;96&gt;&lt;91&gt;<ed>&lt;95&gt;&lt;9c&gt; <ea><b3>&lt;84&gt;<ec><b8><a1> <ea><b8><b0><ea><b3>&lt;84&gt;<eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>. <ec><b5>&lt;9c&gt;<ea><b7><bc><ec>&lt;97&gt;&lt;90&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><b2><a8><eb>&lt;8b&gt;<a8> <eb><b6>&lt;84&gt;<ec>&lt;84&gt;&lt;9d&gt; <ec>&lt;9e&gt;<a5><eb><b9>&lt;84&gt;<eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <eb>&lt;8b&gt;<a4><ec>&lt;96&gt;&lt;91&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;9d&gt;&lt;84&gt; <ec><a0>&lt;95&gt;<ed>&lt;99&gt;&lt;95&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b3><a0> <ec>&lt;89&gt;<bd><ea><b2>&lt;8c&gt; <ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>. <ed>&lt;8a&gt;<b9><ed>&lt;9e&gt;&lt;88&gt; <ec><b5>&lt;9c&gt;<ea><b7><bc> <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;8b&gt;&lt;9c&gt;<eb>&lt;8c&gt;&lt;80&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;93&gt;<a4><eb><a9><b4><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;9d&gt;<bc><eb><b0>&lt;98&gt;<ec>&lt;9d&gt;<b8><eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;97&gt;<ac><eb>&lt;9f&gt;<ac> <ea><b0>&lt;80&gt;<ec><a7>&lt;80&gt; <ec>&lt;9d&gt;<b4><ec>&lt;9c&gt;<a0><eb><a1>&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><a5><bc> <eb><b0>&lt;9b&gt;<eb>&lt;8a&gt;&lt;94&gt; <ea><b2><bd><ec>&lt;9a&gt;<b0><ea><b0>&lt;80&gt; <ec>&lt;9e&gt;&lt;90&gt;<ec><a3><bc> <ec>&lt;9d&gt;<bc><ec>&lt;96&gt;<b4><eb>&lt;82&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></eb></b4></ec></bc></ec></bc></a3></ec></ec></b0></ea></b0></ec></bd></b2></ea></eb></b0></eb></bc></a5></eb></ac></ec></b2></ea></a8></eb></a7></ec></a1></eb></a0></ec></b4></ec></a7></ec></b0></ea></ac></eb></ac></ec></eb></b8></ec></b0></eb></bc></ec></ec></b4></a9></eb></a4></eb></ec></eb></ec></eb></a1></eb></bd></ec></bc></b7></ea></b5></ec></ed></b9></ed></a4></eb></ec></ec></a0></ed></b2></ea></bd></ec></a0></b3></ea></ed></ed></a0></ec></ec></a8></eb></a7></ec></ed></eb></ec></b3></eb></a7></ec></ed></ec></a4></eb></ac></ec></ed></a9></ec></b4></ec></bc></a5></eb></b9></eb></a5></ec></ec></b6></eb></a8></eb></a8></b2></ec></eb></ec></bc></b7></ea></b5></ec></a4></eb></ed></a9></ec></ac></ec></eb></b2></eb></b0></b8></ea></a8></eb></a7></ec></eb></ed></a9></ec></b4></ec></bc></a5></eb></b3></ea></b0></b8></ea></a1></b8></ec></b3></ea></ed></ec></a4></eb></a7></eb></a7></ec></ed></a9></ec></ac></ec></eb></b2></eb></a8></eb></a7></ec></b8></ec></a0></ec></b5></ed></a0></ec></eb></ac></ec></ec></ec></b4></ed></ec></b0></b8></ea></ed></ed></ec></ec></a8></eb></a7></ec></a4></eb></b4></ec></bc></ec></eb></ed></a8></eb></ed></bc></a5></eb></ed></a7></ec></ec></b3></eb></a7></ec></eb></ed></ec></ec></ec></ed></ec></a8></eb></a7></ec></ec></ec></ed></ec></p>
+<p><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ea><b0>&lt;90&gt;<ec>&lt;97&gt;<bc> <ec>&lt;97&gt;<ac><eb><b6>&lt;80&gt; <eb>&lt;93&gt;<b1><ec>&lt;9d&gt;&lt;84&gt; <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ea><b2><bd><ec>&lt;9a&gt;<b0> <ec>&lt;96&gt;<b8><ec><a0>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ea><b0>&lt;80&gt; <eb><b0>&lt;9c&gt;<ec>&lt;83&gt;&lt;9d&gt;<ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>. <ec><b5>&lt;9c&gt;<ea><b7><bc><ec>&lt;97&gt;&lt;90&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><b2><a8><eb>&lt;8b&gt;<a8> <ea><b8><b0><ec>&lt;88&gt;<a0> <eb>&lt;8d&gt;&lt;95&gt;<eb><b6>&lt;84&gt;<ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec>&lt;9d&gt;<b4><eb>&lt;9f&gt;<ac><ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ec>&lt;9c&gt;<a8><ec>&lt;9d&gt;<b4> <eb><a7>&lt;8e&gt;<ec>&lt;9d&gt;<b4> <ec><a4>&lt;84&gt;<ec>&lt;96&gt;<b4> <eb>&lt;93&gt;<a4><ec>&lt;97&gt;&lt;88&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ea><b0>&lt;80&gt; <ec>&lt;97&gt;&lt;86&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;80&gt; <ea><b0>&lt;9c&gt;<eb><b0>&lt;9c&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b8><b0> <ed>&lt;9e&gt;&lt;98&gt;<eb>&lt;93&gt;<a4><eb>&lt;8b&gt;<a4>.</a4></eb></a4></eb></ed></b0></b8></ea></ed></b0></eb></b0></ea></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></eb></ec></b0></ea></a5></eb></a4></ec></a7></eb></a7></ec></ec></a4></eb></b4></ec></a4></ec></b4></ec></a7></eb></b4></ec></a8></ec></a5></eb></a4></ec></ed></ac></eb></b4></ec></a1></eb></bc></ec></b6></eb></eb></a0></ec></b0></b8></ea></a8></eb></a8></b2></ec></eb></ec></bc></b7></ea></b5></ec></a4></eb></ed></ec></b0></eb></b0></ea></a5></eb></a4></ec></eb></a0></ec></b8></ec></b0></ec></bd></b2></ea></eb></ed></a8></eb></ed></ec></b1></eb></b6></eb></ac></ec></bc></ec></b0></ea></ac></ec></ed></a9></ec></ac></ec></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></p>
+<p><ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><a5><bc> <eb><b0>&lt;9b&gt;<ea><b3><a0> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1> <ed>&lt;8c&gt;&lt;90&gt;<ec><a0>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb><b0>&lt;9b&gt;<ec>&lt;95&gt;&lt;84&gt;<eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ea><b2><bd><ec>&lt;9a&gt;<b0><ea><b0>&lt;80&gt; <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;&lt;98&gt;<eb><a9><b0>, <eb><b0>&lt;98&gt;<eb>&lt;8c&gt;&lt;80&gt;<eb><a1>&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1> <ed>&lt;8c&gt;&lt;90&gt;<ec><a0>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb><b0>&lt;9b&gt;<ec>&lt;95&gt;&lt;84&gt;<eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b4> <ea><b2><bd><ec>&lt;9a&gt;<b0><ea><b0>&lt;80&gt; <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>. <ec>&lt;9d&gt;<b4><eb><a0>&lt;87&gt;<ea><b2>&lt;8c&gt; <strong><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <eb><b0>&lt;9c&gt;<ec>&lt;83&gt;&lt;9d&gt;<ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;91&gt;&lt;90&gt; <ea><b0>&lt;80&gt;<ec><a7>&lt;80&gt; <ec><a2>&lt;85&gt;<eb><a5>&lt;98&gt;</a5></eb></a2></ec></a7></ec></b0></ea></eb></eb></a5></eb></a4></ec></eb></ed></ec></b0></eb></ec></ec></a8></eb></a7></ec></strong> <ea><b0>&lt;80&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></b0></ea></b2></ea></a0></eb></b4></ec></a4></eb></eb></ed></eb></b0></ea></b0></ec></bd></b2></ea></b4></ec></b1></ec></ec></eb></ec></b0></eb></ec></a0></ec></ed></b1></ec></ec></a1></eb></eb></b0></eb></b0></a9></eb></eb></ed></eb></b0></ea></b0></ec></bd></b2></ea></b8></ec></b1></ec></ec></a0></ec></a4></ec></eb></ec></b0></eb></ec></a0></ec></ed></b1></ec></ec></a0></b3></ea></b0></eb></bc></a5></eb></ac></ec></b2></ea></eb></a1></eb></bd></ec></p>
+<p><ec>&lt;97&gt;<b0><ea><b5><ac><ec>&lt;9e&gt;&lt;90&gt;<eb>&lt;93&gt;<a4><ec>&lt;9d&gt;<b4> <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <ea><b0>&lt;9c&gt;<eb><b0>&lt;9c&gt;<ed>&lt;95&gt;<a0> <eb>&lt;95&gt;&lt;8c&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ec>&lt;9d&gt;&lt;98&gt; <ea><b0>&lt;80&gt;<eb>&lt;8a&gt;<a5><ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b4> <ec>&lt;9e&gt;&lt;91&gt;<ec>&lt;95&gt;&lt;84&gt;<ec><a7>&lt;80&gt;<eb>&lt;8f&gt;&lt;84&gt;<eb><a1>&lt;9d&gt; <eb>&lt;85&gt;<b8><eb><a0><a5><ed>&lt;95&gt;&lt;98&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt;, <eb><b6>&lt;88&gt;<ed>&lt;96&gt;&lt;89&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b2>&lt;8c&gt;<eb>&lt;8f&gt;&lt;84&gt; <eb>&lt;91&gt;&lt;90&gt; <ea><b0>&lt;80&gt;<ec><a7>&lt;80&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <eb><aa><a8><eb>&lt;91&gt;&lt;90&gt; 0 <ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <eb><a7>&lt;8c&gt;<eb>&lt;93&gt;<a4> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;97&gt;&lt;86&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></a4></eb></a7></eb></a1></eb></bc></ec></eb></a8></aa></eb></ec></a0></a5></eb></ed></ec></a5></eb></a4></ec></a7></ec></b0></ea></eb></eb></b2></ea></ed></ed></b6></eb></a7></eb></a7></ec></ed></a5></a0></eb></b8></eb></a1></eb></eb></a7></ec></ec></ec></b4></ec></b1></ec></a5></eb></b0></ea></ec></a5></eb></a4></ec></eb></a0></ed></b0></eb></b0></ea></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></b4></ec></a4></eb></ec></ac></b5></ea></b0></ec></p>
+<p><ea><b7><b9><eb>&lt;8b&gt;<a8><ec><a0>&lt;81&gt;<ec>&lt;9d&gt;<b8> <ec>&lt;98&gt;&lt;88&gt;<eb><a5><bc> <eb>&lt;93&gt;<a4><ec>&lt;96&gt;<b4><eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;. <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <eb><b0>&lt;94&gt;<ec>&lt;9d&gt;<b4><eb>&lt;9f&gt;<ac><ec>&lt;8a&gt;<a4> <ea><b0>&lt;90&gt;<ec>&lt;97&gt;<bc><ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;9c&gt;<a0><eb><ac><b4><eb><a5><bc> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt; A<eb>&lt;8a&gt;&lt;94&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><a5><bc> <eb><b0>&lt;9b&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb><aa><a8><eb>&lt;91&gt;&lt;90&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b4><eb>&lt;9d&gt;<bc><ea><b3><a0> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4><ea><b3><a0> <ed>&lt;95&gt;&lt;98&gt;<ec>&lt;9e&gt;&lt;90&gt;. <ec>&lt;9d&gt;<b4> <ea><b2><bd><ec>&lt;9a&gt;<b0> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec>&lt;9e&gt;&lt;98&gt;<eb><aa><bb> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><eb>&lt;90&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; 0<ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <eb><b0>&lt;98&gt;<eb>&lt;8c&gt;&lt;80&gt;<eb><a1>&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt; B<eb>&lt;8a&gt;&lt;94&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><a5><bc> <eb><b0>&lt;9b&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb><aa><a8><eb>&lt;91&gt;&lt;90&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b4><eb>&lt;9d&gt;<bc><ea><b3><a0> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4><eb><a9><b4> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec>&lt;9e&gt;&lt;98&gt;<eb><aa><bb> <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><eb>&lt;90&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;98&gt;<a4><eb><a5>&lt;98&gt;<ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; 0<ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <ec>&lt;97&gt;<ac><ea><b8><b0><ec>&lt;84&gt;&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt; A <ec>&lt;99&gt;&lt;80&gt; B <eb>&lt;8a&gt;&lt;94&gt; <eb><aa><a8><eb>&lt;91&gt;&lt;90&gt; <ec>&lt;93&gt;<b8><eb><aa><a8><ec>&lt;97&gt;&lt;86&gt;<eb>&lt;8a&gt;&lt;94&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb>&lt;9d&gt;<bc><eb>&lt;8a&gt;&lt;94&gt; <ea><b2>&lt;83&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;9a&gt;<b0><eb><a6><ac><eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;9e&gt;&lt;98&gt; <ec>&lt;95&gt;&lt;8c&gt;<ea><b3><a0> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>. <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ea><b3><bc> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;9e&gt;&lt;98&gt; <ea><b5><ac><eb><b3>&lt;84&gt;<ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;<b4> <ec><a2>&lt;8b&gt;<ec>&lt;9d&gt;&lt;80&gt; <eb><b0><a9><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>.</a4></eb></b4></ec></b2></eb></a9></b0></eb></ec></a2></ec></b4></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></eb></ec></ec></a0></ed></b3></eb></ac></b5></ea></ec></ec></eb></ac></ec></b8></ec></b1></ec></ec></bc></b3></ea></eb></ac></ec></b8></ec></b1></ec></ec></a4></eb></ec></a0></b3></ea></ec></ec></eb></ac></a6></eb></b0></ec></ec></b2></ea></eb></bc></eb></ac></ec></b2></ea></eb></ec></a8></aa></eb></b8></ec></eb></a8></aa></eb></eb></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></ec></b0></b8></ea></ac></ec></a4></eb></b4></ec></ec></a0></a5></eb></ed></ec></a5></eb></a4></ec></eb></eb></a8></eb></ed></bb></aa></eb></ec></a1></eb></bc></ec></b1></ec></ec></b4></ec></eb></ac></ec></b8></ec></b1></ec></ec></b4></a9></eb></a4></eb></ed></a8></eb></ed></a0></b3></ea></bc></eb></b4></ec></b1></ec></ec></eb></a8></aa></eb></ec></eb></ac></ec></eb></b0></eb></bc></a5></eb></ac></ec></b2></ea></eb></b2></eb></b0></b8></ea></a8></eb></a7></ec></a1></eb></eb></b0></eb></a4></eb></b4></ec></ec></a0></a5></eb></ed></ec></a5></eb></a4></ec></eb></eb></a8></eb></ed></bb></aa></eb></ec></a1></eb></bc></ec></b1></ec></ec></b4></ec></eb></ac></ec></b8></ec></b1></ec></ec></b0></ec></bd></b2></ea></b4></ec></ec></ed></a0></b3></ea></a4></eb></ed></a8></eb></ed></a0></b3></ea></bc></eb></b4></ec></b1></ec></ec></eb></a8></aa></eb></ec></eb></ac></ec></eb></b0></eb></bc></a5></eb></ac></ec></b2></ea></eb></b2></eb></b0></b8></ea></a8></eb></a7></ec></eb></ed></a8></eb></ed></bc></a5></eb></b4></ac></eb></a0></ec></ec></bc></ec></b0></ea></a4></ec></ac></eb></b4></ec></b0></eb></eb></a1></eb></bd></ec></ec></b4></b3></eb></b4></ec></a4></eb></bc></a5></eb></ec></b8></ec></a0></ec></a8></eb></b9></b7></ea></p>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <ec>&lt;9a&gt;<b0><eb><a6><ac><eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <ed>&lt;8f&gt;&lt;89&gt;<ea><b0>&lt;80&gt;<ed>&lt;95&gt;<a0> <eb>&lt;95&gt;&lt;8c&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><eb>&lt;90&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;98&gt; <ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ec>&lt;95&gt;&lt;8c&gt;<ec>&lt;95&gt;&lt;84&gt;<eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;.</ec></b4></b3></eb></ec></ec></ac></ec></ed></eb></ec></eb></a1></b8></ec></ec></a0></a5></eb></ed></eb></eb></a9></ec></ac></ec></eb></a0></ed></b0></ea></ed></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></eb></ac></a6></eb></b0></ec></a0></ec></b4></ec></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><ec>&lt;9d&gt;<bc><eb><b0>&lt;98&gt;<ec><a0>&lt;81&gt;<ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1>(positive)<eb>&lt;8a&gt;&lt;94&gt; <eb><b0>&lt;94&gt;<ec>&lt;9d&gt;<b4><eb>&lt;9f&gt;<ac><ec>&lt;8a&gt;<a4><ec>&lt;97&gt;&lt;90&gt; <ea><b0>&lt;90&gt;<ec>&lt;97&gt;<bc><eb>&lt;90&gt;&lt;98&gt;<ec>&lt;97&gt;&lt;88&gt;<ea><b1><b0><eb>&lt;82&gt;&lt;98&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4><eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;82&gt;<ac><ea><b1><b4><ec>&lt;9d&gt;&lt;84&gt; <eb><a7>&lt;90&gt;<ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>. <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1>(negative)<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;&lt;98&gt; <eb><b0>&lt;98&gt;<eb>&lt;8c&gt;&lt;80&gt; <ec>&lt;82&gt;<ac><ea><b1><b4><ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <ed>&lt;95&gt;&lt;98&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ea><b3><bc> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;9d&gt;&lt;98&gt;<eb><af><b8><ea><b0>&lt;80&gt; <eb><b0>&lt;94&gt;<eb>&lt;80&gt;&lt;8c&gt;<eb>&lt;8a&gt;&lt;94&gt; <ea><b2><bd><ec>&lt;9a&gt;<b0><eb>&lt;8f&gt;&lt;84&gt; <ec><a2>&lt;85&gt;<ec><a2>&lt;85&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></a2></ec></a2></ec></eb></b0></ec></bd></b2></ea></eb></eb></b0></eb></b0></ea></b8></af></eb></ec></ec></b1></ec></ec></bc></b3></ea></b1></ec></ec></a7></eb></a7></ec></ed></a4></eb></b4></ec></b4></b1></ea></ac></ec></eb></b0></eb></ec></b1></ec></ec></eb></b1></ec></ec></a4></eb></ed></a7></eb></ec></b4></b1></ea></ac></ec></eb></a4></eb></ec></b4></ec></b3></eb></a7></ec></eb></b0></b1></ea></ec></eb></bc></ec></b0></ea></ec></a4></ec></ac></eb></b4></ec></b0></eb></eb></b1></ec></ec></a1></eb></bc></ec></a0></ec></b0></eb></bc></ec></p>
+</div>
+</div>
+<section id="f849980-8a9d8f84" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="f849980-8a9d8f84"><span class="header-section-number">4.1</span> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;</eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></h2>
+<p><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;84&gt; <ed>&lt;8f&gt;&lt;89&gt;<ea><b0>&lt;80&gt;<ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ea><b2><bd><ec>&lt;9a&gt;<b0> <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;&lt;80&gt; <eb>&lt;91&gt;&lt;90&gt; <ec><a7>&lt;88&gt;<eb><ac><b8><ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;<b4><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;83&gt;&lt;9d&gt;<ea><b0>&lt;81&gt;<ed>&lt;95&gt;<b4> <eb><b3><b4><ec>&lt;95&gt;&lt;84&gt;<ec>&lt;95&gt;<bc> <ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ed></bc></ec></ec></b4></b3></eb></b4></ed></b0></ea></ec></ec></b4></ed></eb></ec></b8></ac></eb></a7></ec></eb></ec></b0></ea></bc></b3></ea></ec></a4></eb></b0></ec></bd></b2></ea></eb></ed></b0></ea></ed></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></p>
+<ul>
+<li><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;96&gt;<bc><eb><a7>&lt;88&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;98&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt;<ea><b0>&lt;80&gt;?</b0></ea></eb></ed></a8></eb></ed></a1></eb></bc></ec></b1></ec></ec></ec></eb></a7></eb></bc></ec></ec></eb></ac></ec></b8></ec></b1></ec></ec></li>
+<li><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;96&gt;<bc><eb><a7>&lt;88&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;98&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt;<ea><b0>&lt;80&gt;?</b0></ea></eb></ed></a8></eb></ed></a1></eb></bc></ec></b1></ec></ec></ec></eb></a7></eb></bc></ec></ec></eb></ac></ec></b8></ec></b1></ec></ec></li>
+</ul>
+<p><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;96&gt;<bc><eb><a7>&lt;88&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;98&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ed>&lt;8f&gt;&lt;89&gt;<ea><b0>&lt;80&gt; <ea><b8><b0><ec><a4>&lt;80&gt;<ec>&lt;9d&gt;<b4> <strong><eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;(sensitivity)</eb></b0></ea></bc></af></eb></strong> <ec>&lt;9d&gt;<b4><ea><b3><a0> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;96&gt;<bc><eb><a7>&lt;88&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;98&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<eb>&lt;8b&gt;<a8><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ed>&lt;8f&gt;&lt;89&gt;<ea><b0>&lt;80&gt; <ea><b8><b0><ec><a4>&lt;80&gt;<ec>&lt;9d&gt;<b4> <strong><ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;(specificity)</eb></b4></ec></b9></ed></strong> <ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec><a0>&lt;95&gt;<eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><eb><a1>&lt;9c&gt;<ec>&lt;84&gt;&lt;9c&gt; <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;<bc> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></bc></eb></ed></eb></ec></a1></eb></a0></a5></eb></ed></eb></eb></a0></ec></ec></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></a4></eb></b4></ec></b4></ec></a4></ec></b0></b8></ea></b0></ea></ed></ed></eb></ec></a7></ec></eb></ed></a8></eb></ed></a1></eb></bc></ec></b1></ec></ec></ec></eb></a7></eb></bc></ec></ec></eb></ac></ec></b8></ec></b1></ec></ec></a0></b3></ea></b4></ec></b4></ec></a4></ec></b0></b8></ea></b0></ea></ed></ed></eb></ec></a7></ec></eb></ed></a8></eb></ed></a1></eb></bc></ec></b1></ec></ec></ec></eb></a7></eb></bc></ec></ec></eb></ac></ec></b8></ec></b1></ec></ec></p>
+<p><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt; <ec>&lt;97&gt;<b0><ea><b5><ac><eb><a5><bc> <ec>&lt;88&gt;&lt;98&gt;<ed>&lt;96&gt;&lt;89&gt;<ed>&lt;95&gt;&lt;98&gt;<eb><a9><b4> <ea><b7><b8> <ea><b2><b0><ea><b3><bc><eb>&lt;8a&gt;&lt;94&gt; <span class="math inline">\(2 \times 2\)</span> <eb><b6>&lt;84&gt;<ed>&lt;95&gt;<a0><ed>&lt;91&gt;&lt;9c&gt;<eb><a1>&lt;9c&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;9a&gt;&lt;94&gt;<ec>&lt;95&gt;<bd><ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>. <ec>&lt;9d&gt;<bc><eb><b0>&lt;98&gt;<ec><a0>&lt;81&gt;<ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;9a&gt;<a8><ea><b3><bc><eb><a5><bc> <ec><b8><a1><ec><a0>&lt;95&gt;<ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt;<ec>&lt;9d&gt;&lt;80&gt; <eb>&lt;8c&gt;&lt;80&gt;<ec>&lt;83&gt;&lt;81&gt;<ec>&lt;9e&gt;&lt;90&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;9c&gt;<a0><eb><ac><b4><eb><a5><bc> <ec>&lt;95&gt;&lt;8c&gt;<ea><b3><a0> <ec>&lt;8b&gt;&lt;9c&gt;<ec>&lt;9e&gt;&lt;91&gt;<ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ed></ec></ec></a0></b3></ea></ec></bc></a5></eb></b4></ac></eb></a0></ec></ec></b3></eb></a7></ec></ed></eb></ec></ec></ec></eb></ec></ed></a4></ec></eb></ed></a0></ec></a1></b8></ec></bc></a5></eb></bc></b3></ea></a8></ed></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></a1></eb></bc></ec></a0></ec></b0></eb></bc></ec></a4></eb></ec></ec></a0></ed></bd></ec></ec></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></a1></eb></ed></a0></ed></b6></eb></eb></bc></b3></ea></b0></b2></ea></b8></b7></ea></b4></a9></eb></ed></ed></ec></bc></a5></eb></ac></b5></ea></b0></ec></ed></a4></ec></ed></eb></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></p>
+<table class="table">
+<caption>(#tab:diagnose) <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b8><b0><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt; <ea><b2><b0><ea><b3><bc></bc></b3></ea></b0></b2></ea></ed></a4></ec></ec></b2></eb></b0></b8></ea></a8></eb></a7></ec></caption>
+<colgroup>
+<col style="width: 41%">
+<col style="width: 26%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8>(T) / <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;(D)</b3></eb></a7></ec></a8></eb></a7></ec></th>
+<th style="text-align: center;"><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(D+\)</span>)</b1></ec></ec></th>
+<th style="text-align: center;"><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(D-\)</span>)</b1></ec></ec></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(T+\)</span>)</b1></ec></ec></td>
+<td style="text-align: center;"><span class="math inline">\(TP\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(FP\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(T-\)</span>)</b1></ec></ec></td>
+<td style="text-align: center;"><span class="math inline">\(FN\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(TN\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><ec>&lt;9c&gt;&lt;84&gt;<ec>&lt;9d&gt;&lt;98&gt; <ed>&lt;91&gt;&lt;9c&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ea><b0>&lt;81&gt; <ec>&lt;85&gt;&lt;80&gt;<ec>&lt;97&gt;&lt;90&gt; <ed>&lt;95&gt;<b4><eb>&lt;8b&gt;<b9><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8> <ea><b2><b0><ea><b3><bc><eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;<bc> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></bc></eb></ed></eb></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></bc></b3></ea></b0></b2></ea></a8></eb></a7></ec></eb></ed></b9></eb></b4></ed></ec></ec></b0></ea></ec></ec></ed></ec></ec></p>
+<ul>
+<li><span class="math inline">\(TP\)</span> : True Positive</li>
+<li><span class="math inline">\(FP\)</span> : False Positive</li>
+<li><span class="math inline">\(FN\)</span> : False Nagative</li>
+<li><span class="math inline">\(TN\)</span> : True Negative</li>
+</ul>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <eb><b6>&lt;84&gt;<ed>&lt;95&gt;<a0><ed>&lt;91&gt;&lt;9c&gt; @ref(tab:diagnose) <ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ec><a0>&lt;95&gt;<ec>&lt;9d&gt;&lt;98&gt;<eb>&lt;90&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></eb></ec></a0></ec></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></ec></ec></ed></a0></ed></b6></eb></a0></ec></b4></ec></p>
+<p><span class="math display">\[\begin{align}
+\text{Sensitivity}(&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;) &amp; = \frac{TP}{TP+FN} \\
+\text{Specificity}(&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;) &amp; = \frac{TN}{FP+TN}
+(\#eq:sensitivity)
+\end{align}\]</span></p>
+<p><eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;9d&gt;&lt;80&gt; <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <eb><b0>&lt;94&gt;<ec>&lt;9d&gt;<b4><eb>&lt;9f&gt;<ac><ec>&lt;8a&gt;<a4> <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><b2>&lt;95&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;97&gt;<ac><eb>&lt;9f&gt;<ac> <ec>&lt;97&gt;<b0><ea><b5><ac><ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <eb>&lt;82&gt;&lt;98&gt;<ec>&lt;98&gt;<a8> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt; <ea><b2><b0><ea><b3><bc><eb><a5><bc> <eb><b3><b4><ec>&lt;97&gt;<ac> <ec><a4>&lt;80&gt;<eb>&lt;8b&gt;<a4> (<span class="citation" data-cites="butler2021comparison">(<a href="../references.html#ref-butler2021comparison" role="doc-biblioref"><strong>butler2021comparison?</strong></a>)</span>).</a4></eb></a4></ec></ac></ec></b4></b3></eb></bc></a5></eb></bc></b3></ea></b0></b2></ea></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></a8></ec></eb></ec></ec></ac></b5></ea></b0></ec></ac></eb></ac></ec></ed></eb></ec></b2></eb></ac></ec></b2></ea></a4></ec></ac></eb></b4></ec></b0></eb></eb></a1></eb></bd></ec></ec></ec></a4></eb></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../myimages/corona.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption"><ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><ec>&lt;9d&gt;&lt;98&gt; <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;</eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></ec></ac></ec></b2></ea></eb></a1></eb></bd></ec></figcaption>
+</figure>
+</div>
+<p><code>tablecorona, out.width='100%', echo=FALSE, fig.align='center', fig.cap="&lt;ec&gt;&lt;bd&gt;&lt;94&gt;&lt;eb&gt;&lt;a1&gt;&lt;9c&gt;&lt;eb&gt;&lt;82&gt;&lt;98&gt; &lt;ea&gt;&lt;b2&gt;&lt;80&gt;&lt;ec&gt;&lt;82&gt;&lt;ac&gt;&lt;ec&gt;&lt;9d&gt;&lt;98&gt; &lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;&lt;ec&gt;&lt;99&gt;&lt;80&gt; &lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt; "  } knitr::include_graphics("myimages/corona.png")</code></p>
+<p><ec>&lt;98&gt;&lt;88&gt;<ec><a0>&lt;9c&gt;<eb><a1>&lt;9c&gt;<ec>&lt;84&gt;&lt;9c&gt; <ea><b7><b8><eb><a6><bc> @ref(fig:tablecorona) <ec>&lt;97&gt;&lt;90&gt; <ec><a0>&lt;9c&gt;<ec>&lt;8b&gt;&lt;9c&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec><a2>&lt;85&gt;<ed>&lt;95&gt;<a9><ec><a0>&lt;81&gt;<ec>&lt;9d&gt;<b8> <ea><b2><b0><ea><b3><bc>(pooled counts)<eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ea><b5><ac><ed>&lt;95&gt;<b4><eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;.</ec></b4></b3></eb></b4></ed></ac></b5></ea></bc></a5></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></ac></ec></ed></a9></ec></b4></ec></bc></a5></eb></bc></b3></ea></b0></b2></ea></b8></ec></a0></ec></a9></ed></a2></ec></ed></ec></a0></ec></ec></bc></a6></eb></b8></b7></ea></ec></a1></eb></a0></ec></ec></p>
+<table class="table">
+<caption>(#tab:diagnose2) <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <eb><b0>&lt;94&gt;<ec>&lt;9d&gt;<b4><eb>&lt;9f&gt;<ac><ec>&lt;8a&gt;<a4> <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;&lt;98&gt; <ea><b2><b0><ea><b3><bc></bc></b3></ea></b0></b2></ea></ec></b2></eb></ac></ec></b2></ea></a4></ec></ac></eb></b4></ec></b0></eb></eb></a1></eb></bd></ec></caption>
+<colgroup>
+<col style="width: 41%">
+<col style="width: 26%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8>(T) / <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;(D)</b3></eb></a7></ec></a8></eb></a7></ec></th>
+<th style="text-align: center;"><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(D+\)</span>)</b1></ec></ec></th>
+<th style="text-align: center;"><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(D-\)</span>)</b1></ec></ec></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(T+\)</span>)</b1></ec></ec></td>
+<td style="text-align: center;"><span class="math inline">\(664\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(157\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1> (<span class="math inline">\(T-\)</span>)</b1></ec></ec></td>
+<td style="text-align: center;"><span class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4981\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ea><b5><ac><ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></a0></ed></ac></b5></ea></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></p>
+<p><span class="math display">\[\begin{align*}
+\text{Sensitivity} &amp; = \frac{664}{664+157} =  0.8087 \\
+\text{Specificity} &amp; = \frac{4891}{120+4891} =  0.9760
+\end{align*}\]</span></p>
+<p><ec>&lt;9c&gt;&lt;84&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ea><b5><ac><ed>&lt;95&gt;&lt;9c&gt; <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <span class="citation" data-cites="butler2021comparison">(<a href="../references.html#ref-butler2021comparison" role="doc-biblioref"><strong>butler2021comparison?</strong></a>)</span> <ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec><a0>&lt;9c&gt;<ec>&lt;8b&gt;&lt;9c&gt;<ed>&lt;95&gt;&lt;9c&gt; <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;(83.2%), <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;(99.2%) <ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9c&gt;<a0><ec>&lt;82&gt;<ac><ed>&lt;95&gt;&lt;98&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt; <ec>&lt;95&gt;<bd><ea><b0>&lt;84&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec><b0><a8><ec>&lt;9d&gt;<b4><ea><b0>&lt;80&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>. <ea><b7><b8> <ec>&lt;9d&gt;<b4><ec>&lt;9c&gt;<a0><eb>&lt;8a&gt;&lt;94&gt; <span class="citation" data-cites="butler2021comparison">(<a href="../references.html#ref-butler2021comparison" role="doc-biblioref"><strong>butler2021comparison?</strong></a>)</span> <eb>&lt;8a&gt;&lt;94&gt; <eb><aa><a8><eb>&lt;93&gt;<a0> <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt; <ea><b2><b0><ea><b3><bc><eb><a5><bc> <eb>&lt;8b&gt;<a8><ec>&lt;88&gt;&lt;9c&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b2>&lt;8c&gt; <eb>&lt;8d&gt;&lt;94&gt;<ed>&lt;95&gt;&lt;9c&gt; <ea><b2>&lt;83&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;95&gt;&lt;84&gt;<eb>&lt;8b&gt;&lt;88&gt;<eb>&lt;9d&gt;<bc> <eb><a9>&lt;94&gt;<ed>&lt;83&gt;&lt;80&gt;<eb><b6>&lt;84&gt;<ec>&lt;84&gt;&lt;9d&gt;(meta analysis)<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ec>&lt;96&gt;<bb><ec>&lt;9d&gt;&lt;80&gt; <ea><b2><b0><ea><b3><bc><ec>&lt;9d&gt;<b4><ea><b8><b0> <eb>&lt;95&gt;&lt;8c&gt;<eb><ac><b8><ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <eb><a9>&lt;94&gt;<ed>&lt;83&gt;&lt;80&gt;<eb><b6>&lt;84&gt;<ec>&lt;84&gt;&lt;9d&gt;<ec>&lt;9d&gt;&lt;80&gt; <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;&lt;80&gt; <ec><a3><bc><ec><a0>&lt;9c&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;97&gt;<ac><eb>&lt;9f&gt;<ac> <ea><b0>&lt;9c&gt;<ec>&lt;9d&gt;&lt;98&gt; <eb>&lt;8f&gt;&lt;85&gt;<eb><a6><bd><ec><a0>&lt;81&gt;<ec>&lt;9d&gt;<b8> <ec>&lt;97&gt;<b0><ea><b5><ac> <ea><b2><b0><ea><b3><bc><eb>&lt;93&gt;<a4><ec>&lt;9d&gt;&lt;84&gt; <ea><b2><b0><ed>&lt;95&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ea><b2><b0><eb><a1><a0><ec>&lt;9d&gt;&lt;84&gt; <ec><b6>&lt;94&gt;<eb><a1><a0><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;97&gt;<b0><ea><b5><ac> <eb><b0><a9><eb><b2>&lt;95&gt;<ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>.</a4></eb></b4></ec></b2></eb></a9></b0></eb></ac></b5></ea></b0></ec></eb></ed></a0></a1></eb></b6></ec></ec></a0></a1></eb></b0></b2></ea></ac></ec></ed></a9></ed></b0></b2></ea></ec></a4></eb></bc></b3></ea></b0></b2></ea></ac></b5></ea></b0></ec></b8></ec></a0></ec></bd></a6></eb></eb></ec></b0></ea></ac></eb></ac></ec></ed></eb></ec></a0></ec></bc></a3></ec></ec></b0></ea></ec></ec></b6></eb></ed></a9></eb></a4></eb></b4></ec></b8></ac></eb></eb></b0></b8></ea></b4></ec></bc></b3></ea></b0></b2></ea></ec></bb></ec></ac></ec></ed></a9></ec></ac></ec></ec></ec></b6></eb></ed></a9></eb></bc></eb></eb></ec></b4></ec></b2></ea></ed></eb></b2></ea></ed></ec></a8></eb></bc></a5></eb></bc></b3></ea></b0></b2></ea></ed></a4></ec></a0></eb></a8></aa></eb></eb></eb></a0></ec></b4></ec></b8></b7></ea></a4></eb></ec></b0></ea></b4></ec></a8></b0></ec></ec></b0></ea></bd></ec></a7></eb></a7></ec></ed></ac></ec></a0></ec></ec></eb></b4></ec></b9></ed></eb></b0></ea></bc></af></eb></ed></ec></a0></ec></ec></ec></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></ed></ac></b5></ea></ec></ec></ec></p>
+</section>
+<section id="f849980-9d8c8498888f84" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="f849980-9d8c8498888f84"><span class="header-section-number">4.2</span> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;</eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></h2>
+<p><ec>&lt;95&gt;&lt;9e&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;82&gt;<b4><ed>&lt;8e&gt;<b4><eb><b3><b8> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ea><b5><ac><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;8b&gt;<a4><ed>&lt;97&gt;&lt;98&gt; <eb>&lt;8c&gt;&lt;80&gt;<ec>&lt;83&gt;&lt;81&gt;<ec>&lt;9e&gt;&lt;90&gt;<ea><b0>&lt;80&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt; <ec>&lt;97&gt;&lt;86&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt; <ec>&lt;95&gt;&lt;8c&gt;<ea><b3><a0> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>. <ed>&lt;95&gt;&lt;98&gt;<ec><a7>&lt;80&gt;<eb><a7>&lt;8c&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><eb>&lt;8a&gt;&lt;94&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><ec>&lt;9d&gt;&lt;84&gt; <eb><b0>&lt;9b&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;<b4> <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt; <eb><aa><a8><eb><a5><b4><eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;83&gt;&lt;81&gt;<ed>&lt;83&gt;&lt;9c&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec><a7>&lt;84&gt;<ed>&lt;96&gt;&lt;89&gt;<eb>&lt;90&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.<br>
+<eb>&lt;94&gt;<b0><eb>&lt;9d&gt;<bc><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;9a&gt;<b0><eb><a6><ac><ea><b0>&lt;80&gt; <ec><a0>&lt;95&gt;<eb><a7>&lt;90&gt; <ea><b4>&lt;80&gt;<ec>&lt;8b&gt;<ac> <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8a&gt;&lt;94&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; <strong><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a8><eb>&lt;90&gt;&lt;9c&gt; <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<ec>&lt;9d&gt;<b4> <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt;<eb><a1>&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9d&gt;<b8><ec><a7>&lt;80&gt;?</a7></ec></b8></ec></b1></ec></ec></a1></eb></a0></ec></a4></ec></b4></ec></eb></ac></ec></eb></a8></eb></a7></ec></a1></eb></bc></ec></b1></ec></ec></strong><ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>.</a4></eb></b4></ec></a0></a5></eb></ed></ed></eb></ec></ec></a0></a5></eb></ed></eb></ec></ac></ec></b4></ea></a7></eb></a0></ec></b0></ea></ac></a6></eb></b0></ec></ec></bc></eb></b0></eb></a4></eb></eb></ed></a7></ec></ec></ec></ed></ec></eb></b4></a5></eb></a8></aa></eb></a7></ec></eb></ec></b4></ec></b3></eb></a7></ec></b4></ec></eb></ac></ec></eb></b0></eb></ec></a8></eb></a7></ec></eb></ac></ec></b2></ea></a0></ec></a4></ec></a7></eb></a7></ec></ed></a4></eb></ec></a0></b3></ea></ec></a7></ec></eb></ec></a7></ec></eb></ec></b4></ec></b3></eb></a7></ec></b0></ea></ec></ec></eb></ed></a4></ec></eb></ec></ec></ed></a4></ec></eb></ed></ac></b5></ea></bc></a5></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></b8></b3></eb></b4></ed></b4></ec></ec></ec></ec></p>
+<p><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<ec><a0>&lt;95&gt;<eb>&lt;90&gt;&lt;98&gt;<ec>&lt;97&gt;&lt;88&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb>&lt;95&gt;&lt;8c&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt;<eb><a1>&lt;9c&gt; <eb><b3>&lt;91&gt;<ec>&lt;97&gt;&lt;90&gt; <ea><b1><b8><eb><a0><b8><ec>&lt;9d&gt;&lt;84&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <strong><ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;(<span class="math inline">\(PV+\)</span>)</eb></a1></b8></ec></ec></b1></ec></ec></strong> (predicted value of positive test, predictive value positive) <eb>&lt;9d&gt;<bc><ea><b3><a0> <eb><b6>&lt;80&gt;<eb><a5><b4><eb><a9><b0> <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ed>&lt;8c&gt;&lt;90&gt;<ec><a0>&lt;95&gt;<eb>&lt;90&gt;&lt;98&gt;<ec>&lt;97&gt;&lt;88&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb>&lt;95&gt;&lt;8c&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt;<eb><a1>&lt;9c&gt; <eb><b3>&lt;91&gt;<ec>&lt;97&gt;&lt;90&gt; <ea><b1><b8><eb><a6><ac><ec><a7>&lt;80&gt; <ec>&lt;95&gt;&lt;8a&gt;<ec>&lt;95&gt;&lt;98&gt;<ec>&lt;9d&gt;&lt;84&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <strong><ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;(<span class="math inline">\(PV-\)</span>)</eb></a1></b8></ec></ec></b1></ec></ec></strong> (predicted value of negative test, predicted value negative) <eb>&lt;9d&gt;<bc><ea><b3><a0> <eb><b6>&lt;80&gt;<eb><a5><b8><eb>&lt;8b&gt;<a4>. <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec><a1><b0><ea><b1><b4><eb><b6>&lt;80&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><eb><a1>&lt;9c&gt; <ed>&lt;91&gt;&lt;9c&gt;<ed>&lt;98&gt;&lt;84&gt;<ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></a0></ed></ed></ed></a1></eb></a0></a5></eb></ed></b6></eb></b4></b1></ea></b0></a1></ec></eb></eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></a4></eb></b8></a5></eb></b6></eb></a0></b3></ea></bc></eb></ec></a0></a5></eb></ed></ec></ec></ec></a7></ec></ac></a6></eb></b8></b1></ea></ec></b3></eb></a1></eb></a0></ec></a4></ec></eb></ec></ec></eb></a0></ec></ed></a1></eb></bc></ec></b1></ec></ec></b0></a9></eb></b4></a5></eb></b6></eb></a0></b3></ea></bc></eb></ec></a0></a5></eb></ed></ec></b8></a0></eb></b8></b1></ea></ec></b3></eb></a1></eb></a0></ec></a4></ec></eb></ec></ec></eb></a0></ec></ed></a1></eb></bc></ec></b1></ec></ec></p>
+<p><span class="math display">\[\begin{align}
+PV+ &amp; = P( D+ | T+) \\
+PV- &amp; = P( D- | T-)
+(\#eq:pv)
+\end{align}\]</span></p>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <ec>&lt;95&gt;&lt;9e&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;82&gt;<b4><ed>&lt;8e&gt;<b4><eb><b3><b8> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8f&gt;&lt;84&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ec><a1><b0><ea><b1><b4><eb><b6>&lt;80&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><eb><a1>&lt;9c&gt; <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;<bc> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></bc></eb></ed></eb></a1></eb></a0></a5></eb></ed></b6></eb></b4></b1></ea></b0></a1></ec></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></b8></b3></eb></b4></ed></b4></ec></ec></ec></ec></a0></ec></b4></ec></p>
+<p><span class="math display">\[\begin{align}
+\text{Sensitivity} &amp; =  P(T+|D+) \\
+\text{Specificity} &amp; =  P(T-|D-)
+(\#eq:sensitivity2)
+\end{align}\]</span></p>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt;<eb><a1>&lt;9c&gt; <ec><a4>&lt;91&gt;<ec>&lt;9a&gt;&lt;94&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <eb><af><bc><ea><b0>&lt;90&gt;<eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ed>&lt;8a&gt;<b9><ec>&lt;9d&gt;<b4><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ec>&lt;9c&gt;<a0><eb>&lt;8f&gt;&lt;84&gt;<ed>&lt;95&gt;<b4> <eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;. <eb>&lt;91&gt;&lt;90&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; <ec>&lt;82&gt;<ac><ea><b1><b4><ea><b3><bc> <ec><a1><b0><ea><b1><b4><ec>&lt;9d&gt;<b4> <eb><b0>&lt;94&gt;<eb>&lt;80&gt;&lt;90&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0><ec>&lt;9d&gt;<b4><ea><b8><b0> <eb>&lt;95&gt;&lt;8c&gt;<eb><ac><b8><ec>&lt;97&gt;&lt;90&gt; <eb><b2><a0><ec>&lt;9d&gt;<b4><ec><a6>&lt;88&gt; <ec><a0>&lt;95&gt;<eb><a6><ac>(Bayes’ Theorem)<ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ea><b5><ac><ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></a0></ed></ac></b5></ea></ac></ec></ed></a9></ec></b4></ec></ec></ac></a6></eb></a0></ec></a6></ec></b4></ec></a0></b2></eb></ec></b8></ac></eb></eb></b0></b8></ea></b4></ec></a0></a5></eb></ed></eb></b0></eb></b4></ec></b4></b1></ea></b0></a1></ec></bc></b3></ea></b4></b1></ea></ac></ec></ec></a0></a5></eb></ed></eb></ec></b4></b3></eb></b4></ed></eb></a0></ec></ac></ec></ed></a9></ec></b4></ec></bc></a5></eb></eb></b4></ec></b9></ed></ec></eb></b0></ea></bc></af></eb></bc></a5></eb></eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></ed></ec></a4></ec></a1></eb></a0></ec></a4></ec></a0></ec></b4></ec></p>
+<p><ec>&lt;9d&gt;<bc><eb>&lt;8b&gt;<a8> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ea><b5><ac><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ec>&lt;8b&gt;&lt;9d&gt;<ec>&lt;9d&gt;&lt;84&gt; <eb><b2><a0><ec>&lt;9d&gt;<b4><ec><a6>&lt;88&gt; <ec><a0>&lt;95&gt;<eb><a6><ac><eb><a5><bc> <ec><a0>&lt;81&gt;<ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ec>&lt;9c&gt;<a0><eb>&lt;8f&gt;&lt;84&gt;<ed>&lt;95&gt;<b4> <eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;.</ec></b4></b3></eb></b4></ed></eb></a0></ec></ac></ec></ed></a9></ec></a0></ec></bc></a5></eb></ac></a6></eb></a0></ec></a6></ec></b4></ec></a0></b2></eb></ec></ec></eb></ed></ac></b5></ea></bc></a5></eb></eb></a1></b8></ec></ec></b1></ec></ec></a8></eb></bc></ec></p>
+<p><span class="math display">\[
+P( D+ | T+)  = \frac{ P(T+|D+)P(D+)} {  P(T+|D+)P(D+) +  P(T+|D-)P(D-)}
+\]</span></p>
+<p><ec>&lt;9c&gt;&lt;84&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;8b&gt;&lt;9d&gt;<ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <eb>&lt;82&gt;&lt;98&gt;<ed>&lt;83&gt;&lt;80&gt;<eb>&lt;82&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <ed>&lt;99&gt;&lt;95&gt;<eb><a5><a0> <span class="math inline">\(P(D+)\)</span> <eb>&lt;8a&gt;&lt;94&gt; <eb><aa><a8><ec><a7>&lt;91&gt;<eb>&lt;8b&gt;<a8><ec>&lt;97&gt;&lt;90&gt;<ec>&lt;84&gt;&lt;9c&gt; <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;97&gt;&lt;90&gt; <ea><b1><b8><eb><a6><b0> <ec>&lt;82&gt;<ac><eb>&lt;9e&gt;&lt;8c&gt;<eb>&lt;93&gt;<a4><ec>&lt;9d&gt;&lt;98&gt; <eb><b9>&lt;84&gt;<ec>&lt;9c&gt;<a8><ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;9d&gt;&lt;98&gt;<eb><af><b8><ed>&lt;95&gt;&lt;98&gt;<eb><a9><b0> <ec>&lt;9d&gt;<b4><eb><a5><bc> <strong><ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0>(prevalence)</a0></a5></eb></b3></eb></a0></ec></strong> <ec>&lt;9d&gt;<b4><eb>&lt;9d&gt;<bc><ea><b3><a0> <eb><b6>&lt;80&gt;<eb><a5><b8><eb>&lt;8b&gt;<a4>. <ec><a6>&lt;89&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ea><b5><ac><ed>&lt;95&gt;&lt;98&gt;<eb><a0><a4><eb><a9><b4> <ec><a7>&lt;88&gt;<eb><b3>&lt;91&gt;<ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;95&gt;&lt;8c&gt;<ec>&lt;95&gt;&lt;84&gt;<ec>&lt;95&gt;<bc> <ed>&lt;95&gt;&lt;9c&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ed></bc></ec></ec></ec></ec></a0></a5></eb></b3></eb></a0></ec></ec></b3></eb></a7></ec></b4></a9></eb></a4></a0></eb></ed></ac></b5></ea></bc></a5></eb></eb></a1></b8></ec></ec></b1></ec></ec></a6></ec></a4></eb></b8></a5></eb></b6></eb></a0></b3></ea></bc></eb></b4></ec></bc></a5></eb></b4></ec></b0></a9></eb></ed></b8></af></eb></ec></ec></a8></ec></b9></eb></ec></a4></eb></eb></ac></ec></b0></a6></eb></b8></b1></ea></ec></b3></eb></a7></ec></ec></ec></a8></eb></a7></ec></a8></aa></eb></eb></a0></a5></eb></ed></eb></eb></ed></eb></ec></ec></ec></ec></ec></p>
+<p><eb>&lt;8b&gt;<a4><ec>&lt;8b&gt;&lt;9c&gt; <ec>&lt;8b&gt;&lt;9d&gt;<ec>&lt;9d&gt;&lt;84&gt; <ec><a0>&lt;95&gt;<eb><a6><ac><ed>&lt;95&gt;<b4> <eb><b3><b4><eb><a9><b4> <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;8c&gt;&lt;80&gt;<ed>&lt;95&gt;&lt;9c&gt; <ea><b3><b5><ec>&lt;8b&gt;&lt;9d&gt;<ec>&lt;9d&gt;&lt;80&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></b0></ea></bc></b3></ea></ec></a4></eb></ec></ec></b5></b3></ea></ed></eb></ec></eb></a1></b8></ec></ec></b1></ec></ec></b4></a9></eb></b4></b3></eb></b4></ed></ac></a6></eb></a0></ec></ec></ec></ec></a4></eb></p>
+<p><span class="math display">\[\begin{align}
+P( D+ | T+)  &amp; = \frac{ P(T+|D+)P(D+)} {  P(T+|D+)P(D+) +  P(T+|D-)P(D-)} \\
+         &amp; = \frac{ P(T+|D+)P(D+)} {  P(T+|D+)P(D+) + [1- P(T-|D-)][1-P(D+)]} \\
+         &amp; = \frac{(&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}{(&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;) + (1-&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1-&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}
+(\#eq:pvplus)         
+\end{align}\]</span></p>
+<p><eb><b9>&lt;84&gt;<ec>&lt;8a&gt;<b7><ed>&lt;95&gt;&lt;9c&gt; <ea><b3>&lt;84&gt;<ec>&lt;82&gt;<b0> <eb><b0><a9><eb><b2>&lt;95&gt;<ec>&lt;9c&gt;<bc><eb><a1>&lt;9c&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ec><a3><bc><ec>&lt;96&gt;<b4><ec><a7>&lt;84&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></a7></ec></b4></ec></bc></a3></ec></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></eb></a1></b8></ec></ec></b1></ec></ec></a1></eb></bc></ec></b2></eb></a9></b0></eb></b0></ec></b3></ea></ed></b7></ec></b9></eb></p>
+<p><span class="math display">\[\begin{align}
+P( D - | T -)  &amp; = \frac{ P(T -|D -)P(D -)} {  P(T-|D-)P(D-) +  P(T-|D+)P(D+)} \\
+         &amp; = \frac{ P(T-|D-)[1-P(D+)]} {  P(T-|D-)[1-P(D+)] + [1- P(T+|D-)] P(D+)} \\
+         &amp; = \frac{(&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1- &lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}{(&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1-&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;) + (1-&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}
+(\#eq:pvminus)         
+\end{align}\]</span></p>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <ed>&lt;91&gt;&lt;9c&gt; @ref(tab:diagnose2) <ec>&lt;9d&gt;&lt;98&gt; <ea><b2><b0><ea><b3><bc><eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<ec>&lt;97&gt;<ac> <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb><a5><bc> <ea><b5><ac><ed>&lt;95&gt;<b4><eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;.</ec></b4></b3></eb></b4></ed></ac></b5></ea></bc></a5></eb></eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></ec></ac></ec></b2></ea></eb></a1></eb></bd></ec></ac></ec></ed></a9></ec></b4></ec></bc></a5></eb></bc></b3></ea></b0></b2></ea></ec></ed></a0></ec></b4></ec></p>
+<p><ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; <eb>&lt;82&gt;&lt;98&gt;<eb>&lt;9d&gt;<bc><eb><a7>&lt;88&gt;<eb>&lt;8b&gt;<a4> <eb>&lt;8b&gt;<a4><eb><a5><b4><ea><b3><a0> <ec><b6>&lt;94&gt;<ec><a0>&lt;95&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b8><b0><eb>&lt;8f&gt;&lt;84&gt; <ed>&lt;9e&gt;&lt;98&gt;<eb>&lt;93&gt;<a4><eb>&lt;8b&gt;<a4>. <eb>&lt;94&gt;<b0><eb>&lt;9d&gt;<bc><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;89&gt;<bd><ea><b2>&lt;8c&gt; <ed>&lt;98&gt;&lt;84&gt;<ec>&lt;9e&gt;<ac> <ea><b9>&lt;8c&gt;<ec><a7>&lt;80&gt; <eb>&lt;88&gt;&lt;84&gt;<ec><a0>&lt;81&gt;<ed>&lt;99&gt;&lt;98&gt;<ec>&lt;9e&gt;&lt;90&gt;<ec>&lt;88&gt;&lt;98&gt;<eb><a5><bc> <ec><a0>&lt;84&gt;<ec><b2><b4> <ec>&lt;9d&gt;<b8><ea><b5><ac><eb><a1>&lt;9c&gt; <eb>&lt;82&gt;&lt;98&gt;<eb>&lt;88&gt;&lt;88&gt; <eb>&lt;8b&gt;<a8><ec>&lt;88&gt;&lt;9c&gt;<ed>&lt;95&gt;&lt;9c&gt; <eb><b9>&lt;84&gt;<ec>&lt;9c&gt;<a8><ec>&lt;9d&gt;&lt;84&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><eb><a1>&lt;9c&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;<b4> <eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;(<ec><a3><bc><ec>&lt;9d&gt;&lt;98&gt;! <ec>&lt;9a&gt;<b0><eb><a6><ac><ea><b0>&lt;80&gt; <ec>&lt;97&gt;<ac><ea><b8><b0><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;82&gt;<ac><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;9c&gt; <eb><b9>&lt;84&gt;<ec>&lt;9c&gt;<a8><ec>&lt;9d&gt;&lt;80&gt; <ec>&lt;8b&gt;<a4><ec><a0>&lt;9c&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <ea><b3>&lt;84&gt;<ec>&lt;82&gt;<b0><ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb><b0><a9><eb><b2>&lt;95&gt;<ea><b3><bc> <eb>&lt;8b&gt;<a4><eb><a5><b4><eb>&lt;8b&gt;<a4>). 2021<eb>&lt;85&gt;&lt;84&gt; <ed>&lt;98&gt;&lt;84&gt;<ec>&lt;9e&gt;<ac> <eb>&lt;88&gt;&lt;84&gt;<ec><a0>&lt;81&gt; <ed>&lt;99&gt;&lt;98&gt;<ec>&lt;9e&gt;&lt;90&gt; <ec>&lt;88&gt;&lt;98&gt;<ea><b0>&lt;80&gt; 274,415 <eb><aa>&lt;85&gt;<ec>&lt;9d&gt;<b4><ea><b3><a0> 2020<eb>&lt;85&gt;&lt;84&gt; <ea><b8><b0><ec><a4>&lt;80&gt; <ec><b4>&lt;9d&gt;<ec>&lt;9d&gt;<b8><ea><b5><ac><eb>&lt;8a&gt;&lt;94&gt; 51,829,136 <eb><aa>&lt;85&gt;<ec>&lt;9d&gt;<b4><eb><af>&lt;80&gt;<eb><a1>&lt;9c&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;84&gt; <span class="math inline">\(274415/51829136= 0.0053\)</span> <ec>&lt;9d&gt;<b4><eb>&lt;9d&gt;<bc><ea><b3><a0> <ed>&lt;95&gt;&lt;98&gt;<ec>&lt;9e&gt;&lt;90&gt;.</ec></ed></a0></b3></ea></bc></eb></b4></ec></ec></a0></a5></eb></b3></eb></a0></ec></a1></eb></af></eb></b4></ec></aa></eb></eb></ac></b5></ea></b8></ec></b4></ec></a4></ec></b0></b8></ea></eb></a0></b3></ea></b4></ec></aa></eb></b0></ea></ec></ec></ed></a0></ec></eb></ac></ec></ed></eb></a4></eb></b4></a5></eb></a4></eb></bc></b3></ea></b2></eb></a9></b0></eb></eb></ed></b0></ec></b3></ea></ec></a0></a5></eb></b3></eb></a0></ec></a0></ec></a4></ec></ec></a8></ec></b9></eb></ed></a9></ec></ac></ec></ec></b0></b8></ea></ac></ec></b0></ea></ac></a6></eb></b0></ec></ec></bc></a3></ec></ec></b4></b3></eb></b4></ed></a9></ec></ac></ec></a1></eb></a0></a5></eb></b3></eb></a0></ec></ec></a8></ec></b9></eb></ed></ec></a8></eb></eb></eb></a1></eb></ac></b5></ea></b8></ec></b4></b2></ec></a0></ec></bc></a5></eb></ec></ec></ed></a0></ec></eb></a7></ec></b9></ea></ac></ec></ed></b2></ea></bd></ec></ec></bc></eb></b0></eb></a4></eb></a4></eb></ed></eb></b0></b8></ea></ed></a0></ec></b6></ec></a0></b3></ea></b4></a5></eb></a4></eb></a4></eb></a7></eb></bc></eb></eb></ec></a0></a5></eb></b3></eb></a0></ec></eb></a1></eb></bd></ec></p>
+<p><ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <ed>&lt;91&gt;&lt;9c&gt; @ref(tab:diagnose2) <ec>&lt;9d&gt;&lt;98&gt; <ea><b2><b0><ea><b3><bc><eb><a5><bc> <ec>&lt;9d&gt;<b4><ec>&lt;9a&gt;<a9><ed>&lt;95&gt;&lt;98&gt;<eb><a9><b4> <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ea><b2>&lt;80&gt;<ec>&lt;82&gt;<ac><ec>&lt;9d&gt;&lt;98&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<eb>&lt;8a&gt;&lt;94&gt; <eb>&lt;8b&gt;<a4><ec>&lt;9d&gt;&lt;8c&gt;<ea><b3><bc> <ea><b0>&lt;99&gt;<ec>&lt;9d&gt;<b4> <ec><b6>&lt;94&gt;<ec><a0>&lt;95&gt;<ed>&lt;95&gt;<a0> <ec>&lt;88&gt;&lt;98&gt; <ec>&lt;9e&gt;&lt;88&gt;<eb>&lt;8b&gt;<a4>.</a4></eb></ec></ec></a0></ed></a0></ec></b6></ec></b4></ec></b0></ea></bc></b3></ea></ec></a4></eb></eb></eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></ec></ac></ec></b2></ea></eb></a1></eb></bd></ec></b4></a9></eb></ed></a9></ec></b4></ec></bc></a5></eb></bc></b3></ea></b0></b2></ea></ec></ed></a0></ec></b4></ec></p>
+<p><span class="math display">\[\begin{align*}
+P( D+ | T+)  &amp; = \frac{(&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}{(&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;) + (1-&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1-&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)} \\
+     &amp; = \frac{(0.8087 )(0.0053)}{(0.8087 )(0.0053) + (1-0.9760)(1-0.0053)} \\
+     &amp; = 0.1522
+\end{align*}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1522115</code></pre>
+</div>
+</div>
+<p><span class="math display">\[\begin{align}
+P( D - | T -)  &amp; = \frac{(&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1- &lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}{(&lt;ed&gt;&lt;8a&gt;&lt;b9&gt;&lt;ec&gt;&lt;9d&gt;&lt;b4&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(1-&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;) + (1-&lt;eb&gt;&lt;af&gt;&lt;bc&gt;&lt;ea&gt;&lt;b0&gt;&lt;90&gt;&lt;eb&gt;&lt;8f&gt;&lt;84&gt;)(&lt;ec&gt;&lt;9c&gt;&lt;a0&gt;&lt;eb&gt;&lt;b3&gt;&lt;91&gt;&lt;eb&gt;&lt;a5&gt;&lt;a0&gt;)}\\
+&amp; = \frac{(0.9760)(1- 0.0053)}{(0.9760)(1-0.0053) + (1-0.8087)(0.0053)} \\
+&amp; = 0.9989
+(\#eq:pvminus)         
+\end{align}\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span> <span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.8087</span>)<span class="sc">*</span>(<span class="fl">0.0053</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9989567</code></pre>
+</div>
+</div>
+<p><ec>&lt;82&gt;<ac><ec>&lt;8b&gt;<a4> <ec><bd>&lt;94&gt;<eb><a1>&lt;9c&gt;<eb>&lt;82&gt;&lt;98&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;9d&gt;&lt;80&gt; <ec><a0>&lt;95&gt;<ed>&lt;99&gt;&lt;95&gt;<ed>&lt;95&gt;&lt;98&gt;<ea><b2>&lt;8c&gt; <ec>&lt;95&gt;&lt;8c&gt; <ec>&lt;88&gt;&lt;98&gt;<eb>&lt;8f&gt;&lt;84&gt; <ec>&lt;97&gt;&lt;86&gt;<ea><b3><a0> <ec>&lt;8b&gt;&lt;9c&gt;<ea><b0>&lt;84&gt;<ec>&lt;97&gt;&lt;90&gt; <eb>&lt;94&gt;<b0><eb>&lt;9d&gt;<bc> <eb><b3>&lt;80&gt;<ed>&lt;95&gt;<a0> <ea><b2>&lt;83&gt;<ec>&lt;9d&gt;<b4><eb>&lt;8b&gt;<a4>. <ec>&lt;9d&gt;<b4><ec><a0>&lt;9c&gt; <eb>&lt;8b&gt;<a4><ec>&lt;96&gt;&lt;91&gt;<ed>&lt;95&gt;&lt;9c&gt; <ec>&lt;9c&gt;<a0><eb><b3>&lt;91&gt;<eb><a5><a0><ec>&lt;97&gt;&lt;90&gt; <eb>&lt;94&gt;<b0><eb>&lt;9d&gt;<bc><ec>&lt;84&gt;&lt;9c&gt; <ec>&lt;96&gt;&lt;91&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ec>&lt;99&gt;&lt;80&gt; <ec>&lt;9d&gt;&lt;8c&gt;<ec>&lt;84&gt;<b1><ec>&lt;98&gt;&lt;88&gt;<ec><b8><a1><eb>&lt;8f&gt;&lt;84&gt;<ea><b0>&lt;80&gt; <ec>&lt;96&gt;<b4><eb>&lt;96&gt;<bb><ea><b2>&lt;8c&gt; <eb><b3>&lt;80&gt;<ed>&lt;95&gt;&lt;98&gt;<eb>&lt;8a&gt;&lt;94&gt;<ec><a7>&lt;80&gt; <ea><b3>&lt;84&gt;<ec>&lt;82&gt;<b0><ed>&lt;95&gt;<b4> <eb><b3><b4><ec>&lt;9e&gt;&lt;90&gt;.</ec></b4></b3></eb></b4></ed></b0></ec></b3></ea></a7></ec></eb></ed></b3></eb></b2></ea></bb></eb></b4></ec></b0></ea></eb></a1></b8></ec></ec></b1></ec></ec></ec></eb></a1></b8></ec></ec></b1></ec></ec></ec></bc></eb></b0></eb></ec></a0></a5></eb></b3></eb></a0></ec></ed></ec></a4></eb></a0></ec></b4></ec></a4></eb></b4></ec></b2></ea></a0></ed></b3></eb></bc></eb></b0></eb></ec></b0></ea></ec></a0></b3></ea></ec></eb></ec></ec></b2></ea></ed></ed></a0></ec></ec></a0></a5></eb></b3></eb></a0></ec></eb></a1></eb></bd></ec></a4></ec></ac></ec></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>calpred <span class="ot">&lt;-</span> <span class="cf">function</span>(prev, sen, spe){</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    pred.pos <span class="ot">&lt;-</span> sen<span class="sc">*</span>prev<span class="sc">/</span>(sen<span class="sc">*</span>prev <span class="sc">+</span> (<span class="dv">1</span><span class="sc">-</span>spe)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  pred.neg <span class="ot">&lt;-</span> spe<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev)<span class="sc">/</span>(spe<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">-</span>sen)<span class="sc">*</span>(prev))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sen, spe, prev, pred.pos, pred.neg)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sensitivity"</span>, <span class="st">"SPecificity"</span>,<span class="st">"Prevalnce"</span>, <span class="st">"Pred. Post."</span>, <span class="st">"Pred. Nega."</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  res</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>preval.range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.02</span>, <span class="fl">0.002</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8087</span>, <span class="fl">0.9760</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sensitivity SPecificity Prevalnce Pred. Post. Pred. Nega.
+1       0.8087       0.976     0.000   0.0000000   1.0000000
+2       0.8087       0.976     0.002   0.0632553   0.9996074
+3       0.8087       0.976     0.004   0.1191947   0.9992135
+4       0.8087       0.976     0.006   0.1690179   0.9988183
+5       0.8087       0.976     0.008   0.2136761   0.9984218
+6       0.8087       0.976     0.010   0.2539329   0.9980241
+7       0.8087       0.976     0.012   0.2904083   0.9976250
+8       0.8087       0.976     0.014   0.3236113   0.9972247
+9       0.8087       0.976     0.016   0.3539633   0.9968231
+10      0.8087       0.976     0.018   0.3818165   0.9964201
+11      0.8087       0.976     0.020   0.4074671   0.9960159</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8320</span>, <span class="fl">0.9920</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Sensitivity SPecificity Prevalnce Pred. Post. Pred. Nega.
+1        0.832       0.992     0.000   0.0000000   1.0000000
+2        0.832       0.992     0.002   0.1724710   0.9996607
+3        0.832       0.992     0.004   0.2946176   0.9993203
+4        0.832       0.992     0.006   0.3856613   0.9989788
+5        0.832       0.992     0.008   0.4561404   0.9986361
+6        0.832       0.992     0.010   0.5123153   0.9982923
+7        0.832       0.992     0.012   0.5581395   0.9979473
+8        0.832       0.992     0.014   0.5962326   0.9976011
+9        0.832       0.992     0.016   0.6283988   0.9972538
+10       0.832       0.992     0.018   0.6559215   0.9969053
+11       0.832       0.992     0.020   0.6797386   0.9965557</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/association-test.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
