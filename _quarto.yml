@@ -8,6 +8,8 @@ book:
   title: "데이터 분석 방법론 "
   author: "이용희"
   date: "9/5/2023"
+  repo-url: https://github.com/ilovedata/statmehods
+  downloads: [pdf]
   chapters:
     - index.qmd
     - notes/intro.qmd
