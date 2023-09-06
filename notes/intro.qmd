@@ -27,3 +27,9 @@
 - @agresti2007
 - @agresti2012
 
+
+## 유용한 사이트 
+
+- [Data sets for "An Introduction to Categorical Data Analysis"](https://github.com/alanagresti/categorical-data)
+
+- [R codes for "An Introduction to Categorical Data Analysis"](https://github.com/RaymondBalise/Agresti_IntroToCategorical)

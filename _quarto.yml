@@ -34,6 +34,7 @@ format:
     theme: cosmo
     code-block-bg: true
     code-block-border-left: "#31BAE9"
+    fig-cap-location: top
     css: styles.css
 #    include-in-header:
 #      - latex/preamble-mathjax.tex
