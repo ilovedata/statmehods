@@ -201,8 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#이항변수" id="toc-이항변수" class="nav-link" data-scroll-target="#이항변수"><span class="header-section-number">2.2</span> 이항변수</a></li>
   <li><a href="#분할표와-연관성의-측도" id="toc-분할표와-연관성의-측도" class="nav-link" data-scroll-target="#분할표와-연관성의-측도"><span class="header-section-number">2.3</span> 분할표와 연관성의 측도</a></li>
   <li><a href="#신뢰구간" id="toc-신뢰구간" class="nav-link" data-scroll-target="#신뢰구간"><span class="header-section-number">2.4</span> 신뢰구간</a></li>
-  <li><a href="#예제-아스피린-임상실험" id="toc-예제-아스피린-임상실험" class="nav-link" data-scroll-target="#예제-아스피린-임상실험"><span class="header-section-number">2.5</span> 예제: 아스피린 임상실험</a></li>
-  <li><a href="#예제-약물남용-사례-대조-연구" id="toc-예제-약물남용-사례-대조-연구" class="nav-link" data-scroll-target="#예제-약물남용-사례-대조-연구"><span class="header-section-number">2.6</span> 예제: 약물남용 사례-대조 연구</a></li>
+  <li><a href="#casecontrol" id="toc-casecontrol" class="nav-link" data-scroll-target="#casecontrol"><span class="header-section-number">2.5</span> 사례-대조 연구</a></li>
   </ul>
 </nav>
     </div>
@@ -229,31 +228,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="필요한-패키지" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="필요한-패키지"><span class="header-section-number">2.1</span> 필요한 패키지</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#: warning: flase</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#: output: false</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#: message: false</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.2     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: survival
-Package epiR 2.0.63 is loaded
-Type help(epi.about) for summary information
-Type browseVignettes(package = 'epiR') to learn how to use epiR for applied epidemiological analyses</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="이항변수" class="level2" data-number="2.2">
@@ -307,8 +285,9 @@ Y =
 \end{cases}
 \]</span></p>
 <p>코로나 19에 대한 치료약의 효과에 대한 임상실험의 결과를 다음과 같은 <strong>분할표(contingency table)</strong>로 요약할 수 있다.</p>
+<div id="tbl-conttable22" class="anchored">
 <table class="table">
-<caption>(#tab:conttable22) <span class="math inline">\(2 \times 2\)</span> 분할표</caption>
+<caption>Table&nbsp;2.1: <span class="math inline">\(2 \times 2\)</span> 분할표</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">치료/결과</th>
@@ -338,6 +317,7 @@ Y =
 </tr>
 </tbody>
 </table>
+</div>
 <p>많은 임상실험이나 의학연구의 결과들을 위와 같은 <span class="math inline">\(2 \times 2\)</span> 분할표로 요약할 수 있다. 이제 우리의 관심은 분할표를 통해서 임상실험의 결과를 어떻게 통계적으로 추론할 수 있는지이다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -357,16 +337,17 @@ Note
 </section>
 <section id="상대위험" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="상대위험"><span class="header-section-number">2.3.2</span> 상대위험</h3>
-<p><span class="math inline">\(2 \times 2\)</span> 분할표 @ref(tab:conttable22) 에서 두 개의 처리군, 즉 치료약을 받은 집단과 위약을 받은 집단의 효과를 비교할 때 가장 많이 사용되는 측도(measure)는 <strong>상대위험(relative risk, risk ratio, prevalnce ratio;RR)</strong>이다.</p>
-<p>주어진 집단의 위험율을 그 집단에 속한 환자의 수에서 사망한 사람의 비율이다. 분할표 @ref(tab:conttable22) 에서 위약 집단의 위험율은 <span class="math inline">\(n_{11}/n_{1+}\)</span> 이며 이는 치료를 받지 않는 경우에 나타나는 기준점인 위험율(baseline risk)을 의미한다. 치료약 집단의 위험율은 <span class="math inline">\(n_{21}/n_{2+}\)</span> 이다. 통상적으로 위험율은 비율(proportion, percent)로 나타내며 발생률(rate,예를 들어 인구 1000명당 X명)로 나타내기도 한다.</p>
+<p><span class="math inline">\(2 \times 2\)</span> 분할표 <a href="#tbl-conttable22">Table&nbsp;<span>2.1</span></a> 에서 두 개의 처리군, 즉 치료약을 받은 집단과 위약을 받은 집단의 효과를 비교할 때 가장 많이 사용되는 측도(measure)는 <strong>상대위험(relative risk, risk ratio, prevalnce ratio;RR)</strong>이다.</p>
+<p>주어진 집단의 위험율을 그 집단에 속한 환자의 수에서 사망한 사람의 비율이다. 분할표 <a href="#tbl-conttable22">Table&nbsp;<span>2.1</span></a> 에서 위약 집단의 위험율은 <span class="math inline">\(n_{11}/n_{1+}\)</span> 이며 이는 치료를 받지 않는 경우에 나타나는 기준점인 위험율(baseline risk)을 의미한다. 치료약 집단의 위험율은 <span class="math inline">\(n_{21}/n_{2+}\)</span> 이다. 통상적으로 위험율은 비율(proportion, percent)로 나타내며 발생률(rate,예를 들어 인구 1000명당 X명)로 나타내기도 한다.</p>
 <p>상대위험은 두 위험율의 비율로서 다음과 같이 정의한다.</p>
 <p><span class="math display">\[\begin{equation}
 RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}}} { \tfrac{n_{21}}{n_{21} + n_{22}}}
 \end{equation}\]</span></p>
 <p>상대위험이 1보다 크면 분자에 위치한 집단이 위험(위의 예제에서는 위험이 사망을 의미한다)에 처할 가능성이 분모에 위치한 집단보다 <span class="math inline">\(RR\)</span> 배 높다는 것을 의미한다. 상대위험이 1이면 두 집단에 대한 위험이 동일하다는 것을 의미한다.</p>
 <p>예를 들어 특정한 코로나 치료제의 효과를 실험하는 임상실험에서 다음과 결과를 얻었다.</p>
+<div id="tbl-conttable23" class="anchored">
 <table class="table">
-<caption>(#tab:conttable23) 코로나 치료제 실험 결과</caption>
+<caption>Table&nbsp;2.2: 코로나 치료제 실험 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">치료/결과</th>
@@ -396,6 +377,7 @@ RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}
 </tr>
 </tbody>
 </table>
+</div>
 <p>상대위험은 다음과 같이 계산된다.</p>
 <p><span class="math display">\[ RR = \frac{10/1222}{5/2360} = 3.8625 \approx 4 \]</span></p>
 <p>상대위험이 약 4 배란 의미는 치료약을 받은 집단보다 위약집단이 사망할 가능성이 약 4배 높다는 것이다.</p>
@@ -448,8 +430,9 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p>오즈비는 향후 학습할 통계적 가설검정에서 중요한 모수(parameter)로 사용되며 특히 실험의 방법이 사례-대조 연구와 같은 특별한 방법을 사용하는 경우 오즈비가 중요한 역할을 하게 된다.</p>
 <hr>
 <p>예를 들어 다음과 같은 분할표에서 비율의 차이, 상대위험, 오즈비를 구하여 비교해 보자.</p>
+<div id="tbl-conttable24" class="anchored">
 <table class="table">
-<caption>(#tab:conttable24) <span class="math inline">\(2 \times 2\)</span> 분할표 예제</caption>
+<caption>Table&nbsp;2.3: <span class="math inline">\(2 \times 2\)</span> 분할표 예제</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">처리 /결과</th>
@@ -479,6 +462,7 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 </tr>
 </tbody>
 </table>
+</div>
 <p>비율의 차이(DP)은 다음과 같이 계산된다.</p>
 <p><span class="math display">\[ DP(0/1) =  6/10 - 4/10 = 0.2 \]</span></p>
 <p>상대위험은 다음과 같이 계산된다.</p>
@@ -491,30 +475,28 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <h2 data-number="2.4" class="anchored" data-anchor-id="신뢰구간"><span class="header-section-number">2.4</span> 신뢰구간</h2>
 <p>상대위험과 오즈비는 분할표에서 연관성을 나타내는 하나의 측도, 즉 점추정량(point estimation) 이다. 하나의 숫자로 표현되는 점추정은 표본으로 부터 발생한 불확실성을 반영하지 못한다. 따라서 점추정량을 보완하기 위하여 신뢰구간(confidence interval)을 제시할 수 있다.</p>
 <p>상대위험과 오즈비는 표본비율 또는 셀 도수의 함수로 나타난다. 하지만 함수의 형태가 비율로서 비선형이기 때문에 상대위험과 오즈비의 근사적인 표준오차(standard error)는 쉽게 구할 수 없다.</p>
-<p>부록 @ref(multiclat) 에서 다항분포를 가정하고 로그 오즈비의 점근적 분산을 식 @ref(eq:logoddratiovar) 에서 다음과 같이 유도 하였다.</p>
+<p>다항분포를 가정하고 로그 오즈비의 점근적 분산을 다음과 같이 유도할 수 있다.</p>
 <p><span class="math display">\[ v_1 =V ( \log OR)   \approx \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}} \]</span></p>
 <p>따라서 로그 오즈비의 <span class="math inline">\(100(1-\alpha)\)</span> % 근사 신뢰구간을 다음과 같이 구할 수 있다.</p>
 <p><span class="math display">\[\begin{equation*}
    \log OR \pm z_{\alpha/2} \sqrt{v_1}
 \end{equation*}\]</span></p>
 <p>위의 신뢰구간을 오즈비로 역변환하면 오즈비 <span class="math inline">\(OR\)</span> 의 <span class="math inline">\(100(1-\alpha)\)</span> % 근사 신뢰구간을 다음과 같다.</p>
-<p><span class="math display">\[\begin{equation}
+<p><span id="eq-oddratiovar"><span class="math display">\[
    ( OR \times \exp [ - z_{\alpha/2} \sqrt{v_1}], ~~OR \times \exp [  z_{\alpha/2} \sqrt{v_1}] )
-  (\#eq:oddratiovar)   
-\end{equation}\]</span></p>
+\tag{2.1}\]</span></span></p>
 <p>상대위험(RR)의 신뢰구간도 오즈비의 신뢰구간을 유도하는 방법과 유사하게 델타 방법을 사용하며 다음과 같이 구할 수 있다.</p>
-<p><span class="math display">\[\begin{equation}
+<p><span id="eq-rrratiovar"><span class="math display">\[
    ( RR \times \exp [ - z_{\alpha/2} \sqrt{v_2}], ~~OR \times \exp [  z_{\alpha/2} \sqrt{v_2}] )
-  (\#eq:rrratiovar)   
-\end{equation}\]</span></p>
-<p>위의 식 @ref(eq:rrratiovar) 에서 <span class="math inline">\(v_2\)</span> 는 다음과 같이 계산한다.</p>
+\tag{2.2}\]</span></span></p>
+<p>위의 식 <a href="#eq-rrratiovar">Equation&nbsp;<span>2.2</span></a> 에서 <span class="math inline">\(v_2\)</span> 는 다음과 같이 계산한다.</p>
 <p><span class="math display">\[ v_2 =V ( \log RR)   \approx \frac{1-n_{11}/n_{1+}}{n_{11}} + \frac{1-n_{21}/n_{2+}}{n_{21}} \]</span></p>
-</section>
-<section id="예제-아스피린-임상실험" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="예제-아스피린-임상실험"><span class="header-section-number">2.5</span> 예제: 아스피린 임상실험</h2>
+<section id="예제-아스피린-임상실험" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="예제-아스피린-임상실험"><span class="header-section-number">2.4.1</span> 예제: 아스피린 임상실험</h3>
 <p>소량의 아스피린 복용이 심장병으로 인한 위험을 줄이는데 효과가 있는지 알아보고자 임상실험을 실시하였다. 22,701명의 남성을 <strong>임의화(randomization)</strong> 을 통해서 두 그룹으로 나눈 후, 한 그룹은 매일 일정량의 아스피린을 복용시키고 다른 그룹은 위약(palcebo)를 복용하게 한 후 약 5년간 심근경색이 일어나는지 알아보았다. 임상실험의 결과는 아래 표와 같다.</p>
+<div id="tbl-conttable25" class="anchored">
 <table class="table">
-<caption>(#tab:conttable25) 아스피린 임상실험 결과</caption>
+<caption>Table&nbsp;2.4: 아스피린 임상실험 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
@@ -538,6 +520,7 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 </tr>
 </tbody>
 </table>
+</div>
 <p>위약 집단과 아스피린 집단의 상대위험은 다음과 같다.</p>
 <p><span class="math display">\[ RR = \frac{139/11037}{239/11034} = 0.581 \]</span></p>
 <p>상대위험을 보면 1보다 작으므로 아스피린을 복용한 집단이 위약 집단에 비해서 심근 경색이 일어날 위험이 적어진 다는 것을 알 수 있다.</p>
@@ -552,8 +535,8 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p>이제 <code>epiR</code> 패키지를 사용하여 위에서 분석한 내용을 다시 구해보자.</p>
 <p>먼저 위의 임상실험 자료를 <code>R</code> 의 <code>matrix</code> 형태로 저장한다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ex1dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">139</span>, <span class="dv">10898</span>, <span class="dv">239</span>, <span class="dv">10795</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ex1dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ex1dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">139</span>, <span class="dv">10898</span>, <span class="dv">239</span>, <span class="dv">10795</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ex1dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]  [,2]
 [1,]  139 10898
@@ -563,8 +546,8 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p>이제 함수 <code>epi.2by2</code>를 이용하여 상대위험과 싱대구간을 구해보자. 임의화를 사용한 임상실험 자료인 경우 <code>method = "cross.sectional"</code> 으로 지정한다. 관심이 있는 사건(심근경색, outcome)의 도수가 첫 번째 열(column)에 있으니 <code>outcome = "as.columns"</code>이라고 지정한다.</p>
 <p>아래 결과에 <code>Prevalence ratio</code>라고 나오는 것이 상대위험이다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex1dat, <span class="at">method =</span> <span class="st">"cross.sectional"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex1dat, <span class="at">method =</span> <span class="st">"cross.sectional"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Outcome +    Outcome -      Total               Prev risk *
 Exposed +          139        10898      11037       1.26 (1.06 to 1.49)
@@ -588,11 +571,13 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 </div>
 </div>
 </section>
-<section id="예제-약물남용-사례-대조-연구" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="예제-약물남용-사례-대조-연구"><span class="header-section-number">2.6</span> 예제: 약물남용 사례-대조 연구</h2>
-<p>심작발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있느지 조사한 <strong>사례-대조 연구(case-control study)</strong> 의 결과가 아래 표에 있다.</p>
+</section>
+<section id="casecontrol" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="casecontrol"><span class="header-section-number">2.5</span> 사례-대조 연구</h2>
+<p>심장발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있는지 조사한 사례-대조 연구의 자료이다.</p>
+<div id="tbl-conttable26" class="anchored">
 <table class="table">
-<caption>(#tab:conttable26) 약물 남용 사례-대조 연구 결과</caption>
+<caption>Table&nbsp;2.5: 약물 남용 사례-대조 연구 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
@@ -618,8 +603,70 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 </tr>
 </tbody>
 </table>
+</div>
+<p>이 연구의 목표는 약물남용과 심장발작의 연관성이 있는지를 알아보는 것이다. 이제 다음과 같은 사건들을 정의해 보자.</p>
+<ul>
+<li><span class="math inline">\(H+\)</span>: 심장발작이 발생했다.</li>
+<li><span class="math inline">\(H-\)</span>: 심장발작이 발생하지 않았다.</li>
+<li><span class="math inline">\(D+\)</span>: 약물남용을 했다.</li>
+<li><span class="math inline">\(D-\)</span>: 약물남용을 하지 않았다.</li>
+</ul>
+<p>위에서 정의된 사건들을 고려할 때 사례-대조 연구의 자료에서 다음과 같은 조건부 확률에 대한 추정값을 구할 수 있다.</p>
+<p><span class="math display">\[\begin{align*}
+P(\textrm{약물남용을 했다} | \textrm{심장발작이 발생했다}) &amp; =P(D+|H+) = \frac{73}{214} \\
+P(\textrm{약물남용을 하지 않았다} | \textrm{심장발작이 발생했다}) &amp; =P(D-|H+) = 1- P(D+|H+) = \frac{141}{214} \\
+  &amp; \\
+P(\textrm{약물남용을 했다} | \textrm{심장발작이 발생하지 않았다}) &amp; =P(D+|H-) = \frac{18}{214} \\
+  P(\textrm{약물남용을 하지 않았다} | \textrm{심장발작이 발생하지 않았다}) &amp; =P(D-|H-) = 1- P(D+|H-) = \frac{196}{214}
+\end{align*}\]</span></p>
+<section id="사례대조-연구의-목표와-가설" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="사례대조-연구의-목표와-가설"><span class="header-section-number">2.5.1</span> 사례대조 연구의 목표와 가설</h3>
+<p>연구에서 비교하고 싶은 비율은 위에서 추정한 확률이 아니고 조건과 결과가 바뀐 다음과 같은 조건부 확률이다. <span class="math display">\[\begin{align*}
+P( \textrm{심장발작이 발생했다} | \textrm{약물남용을 했다} ) &amp; = P(H+|D+) \\
+P( \textrm{심장발작이 발생했다} | \textrm{약물남용을 하지 않았다} ) &amp; = P(H+|D-) \\
+\end{align*}\]</span></p>
+<p>즉 연구의 목표는 다음과 같은 가설을 검정하는 것이다.</p>
+<p><span id="eq-hypo01"><span class="math display">\[
+H_0: P(H+|D+) = P(H+|D-)  ~~~\text{ vs } ~~~H_1: P(H+|D+) \ne P(H+|D-)
+\tag{2.3}\]</span></span></p>
+<p>전체 모집단을 약물남용을 한 사람들과 하지 않은 사람들로 두 집단으로 나누었을 때 두 집단에 대한 심장발작의 확률이 같은지 다른지 비교하고 싶은 것이다.</p>
+<p>위의 식에서 보듯이 추정하고 싶은 확률인 <span class="math inline">\(P(H+|D+)\)</span>와 <span class="math inline">\(P(H+|D-)\)</span>를 추정하려면 전체 모집단에 대한 심장발작 발병률 <span class="math inline">\(P(H+)\)</span>와 약물남용의 비율 <span class="math inline">\(P(D+)\)</span>를 알아야 한다. 즉</p>
+<p><span class="math display">\[\begin{align*}
+P(H+|D+) &amp; = \frac{ P(H+ \cap D+)} { P(D+)} \\
+          &amp; = \frac{ P(D+|H+) P(H+)} { P(D+)} \\
+          &amp; \approx  (73/214) \frac{ P(H+)} { P(D+)} \\
+\end{align*}\]</span></p>
+<p>위의 식은 다음의 조건부 확률 공식을 각 단계마다 적용한 결과이다.</p>
+<p><span class="math display">\[ P(A \cap B) = P(A|B)P(B) = P(B|A) P(A) \]</span></p>
+<p>사례-대조 연구의 자료만으로는 모집단에 대한 심장발작 발병률 <span class="math inline">\(P(H+)\)</span>와 약물남용의 비율 <span class="math inline">\(P(D+)\)</span>을 구할 수 없다. 또한 다른 외부의 자료가 있다 하더라도 약물남용의 비율을 정확하게 추정하는 것은 매우 어렵다.</p>
+</section>
+<section id="오즈비의-비교" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="오즈비의-비교"><span class="header-section-number">2.5.2</span> 오즈비의 비교</h3>
+<p>이러한 문제는 두 집단의 비율의 차이나 상대위험을 비교하지 않고 오즈비를 구하여 비교하면 심장발작 발병률와 약물남용의 비율을 추정하지 않고 사례-대조 연구의 자료만으로 추론이 가능하다.</p>
+<p>다음의 가설은 두 비율의 비교를 오즈비로 표현한 것이다.</p>
+<p><span id="eq-hypo02"><span class="math display">\[
+H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
+\frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} \ne 1
+\tag{2.4}\]</span></span></p>
+<p>위의 가설 <a href="#eq-hypo02">Equation&nbsp;<span>2.4</span></a> 는 단순한 비율을 비교하는 가설 <a href="#eq-hypo01">Equation&nbsp;<span>2.3</span></a> 과 동일한 가설이다.</p>
+<p>가설 <a href="#eq-hypo02">Equation&nbsp;<span>2.4</span></a> 에서 나타는 오즈비는 심장발작 발병률와 약물남용의 비율을 이용하지 않고 사례-대조 연구에서 추정할 수 있는 조건부 확률만으로 추정할 수 있다.</p>
+<p><span class="math display">\[\begin{align*}
+\frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)}  
+   &amp; =  \frac{[P(H+|D+)P(D+)]/[P(H-|D+)P(D+)]}{[P(H+|D-)P(D-)] / [P(H-|D-)P(D-)]} \\
+   &amp; =  \frac{P(H+ \cap D+)/P(H- \cap D+)}{P(H+ \cap D-) / P(H- \cap D-)}\\
+   &amp; =  \frac{[P(D+|H+)P(H+)]/ [P(D+|H-) P(H-)]} {[P( D-|H+)P(H+)] / [P(D-|H-)P(H-)]}\\
+   &amp; =  \frac{P(D+|H+)/ P(D+|H-)} {P( D-|H+) / P(D-|H-)} \\
+   &amp;=   \frac{(73/214)/ (142/214)} {(18/214)/ (196/214)} \\
+   &amp; = \frac{(73)(196)}{(141)(18)} \\
+   &amp; = 5.64
+\end{align*}\]</span></p>
+<p>결론적으로 사례-대조 연구에서는 연구의 목표에 대한 가설 검정을 비율의 차이나 상대위험으로 표현하여 수행할 수 없다. 하지만 오즈비를 검정하는 것으로 가설을 세우면 자료에서 쉽게 유도할 수 있는 오즈비로 가설 검정을 쉽게 수행할 수 있다.</p>
+</section>
+<section id="예제-약물남용-사례-대조-연구" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="예제-약물남용-사례-대조-연구"><span class="header-section-number">2.5.3</span> 예제: 약물남용 사례-대조 연구</h3>
+<p>심작발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있느지 조사한 <strong>사례-대조 연구(case-control study)</strong> 의 결과가 표 <a href="#tbl-conttable26">Table&nbsp;<span>2.5</span></a> 에 있다.</p>
 <p>사례-대조 연구는 사례(case)가 발견되면, 즉 위의 연구와 같이 심장발작이 일어난 환자가 발생하면 그 환자와 유사한 나이와 성별 등을 가진 일반사람을 찾아 매칭하여 환자와 일반인의 과거 경력을 조사하는 후향적인 연구(restrspective study)이다. 반대로 앞의 예제에서 본 임의화를 이용한 임상실험은 전향적 연구(prospective study)이다.</p>
-<p>이러한 사례-대조 연구에서는 상대위험을 이용하여 연관성을 알아낼 수 없다. 하지만 사례-대조 연구에서 상대위험 대신 오즈비를 이용하여 연관성을 추론할 수 있다. 사례-대조 연구에서 상대위험을 사용할 수 없지만 오즈비를 이용할 수 있는 이유는 부록 @ref(casecontrol) 에 자세하게 설명되어 있다.</p>
+<p>이러한 사례-대조 연구에서는 상대위험을 이용하여 연관성을 알아낼 수 없다. 하지만 사례-대조 연구에서 상대위험 대신 오즈비를 이용하여 연관성을 추론할 수 있다.</p>
 <p>위의 심장발작에 대한 사례-대조 연구의 결과에서 오즈비와 그 신뢰구간을 구해보자.</p>
 <p>먼저 오즈비는 다음과 같다.</p>
 <p><span class="math display">\[ OR = \frac{(73)(196)}{(18)(141)} = 5.64 \]</span></p>
@@ -634,8 +681,8 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 <p>이제 <code>epiR</code> 패키지를 사용하여 위에서 분석한 내용을 다시 구해보자.</p>
 <p>먼저 위의 사례-대조 연구 자료를 <code>R</code> 의 <code>matrix</code> 형태로 저장한다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ex2dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">73</span>,<span class="dv">18</span>,<span class="dv">141</span>,<span class="dv">196</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ex2dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ex2dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">73</span>,<span class="dv">18</span>,<span class="dv">141</span>,<span class="dv">196</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ex2dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]   73   18
@@ -644,8 +691,8 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 </div>
 <p>이제 함수 <code>epi.2by2</code>를 이용하여 오즈비과 싱대구간을 구해보자. 사례-대조 연구의 자료인 경우 <code>method = "case.control"</code> 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다. 관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니 <code>outcome = "as.columns"</code>이라고 지정한다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex2dat, <span class="at">method =</span> <span class="st">"case.control"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex2dat, <span class="at">method =</span> <span class="st">"case.control"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Outcome +    Outcome -      Total                       Odds
 Exposed +           73           18         91        4.06 (2.50 to 7.27)
@@ -666,6 +713,7 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
