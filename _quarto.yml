@@ -18,6 +18,9 @@ book:
         - notes/association.qmd
         - notes/association-test.qmd
         - notes/diagnose.qmd
+    - part: "일반화 선형모형"
+      chapters:
+        - notes/logistic.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -30,7 +33,8 @@ format:
     code-overflow: wrap
     embed-resources: false
     toc: true
-    toc-depth: 2
+    toc-depth: 3
+    number-depth: 3
     theme: cosmo
     code-block-bg: true
     code-block-border-left: "#31BAE9"

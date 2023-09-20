@@ -96,7 +96,6 @@
 \begin{align}
 PV+ & = P( D+ | T+) \\
 PV- & = P( D- | T-)
-(\#eq:pv)
 \end{align}
 
 이제 앞에서 살펴본 민감도와 특이도도 다음과 같이 조건부 확률로 나타낼 수 있다.
@@ -104,7 +103,6 @@ PV- & = P( D- | T-)
 \begin{align}
 \text{Sensitivity} & =  P(T+|D+) \\
 \text{Specificity} & =  P(T-|D-)
-(\#eq:sensitivity2)
 \end{align}
 
 이제 실제로 중요한 양성예측도와 음성예측도를 민감도와 특이도를 이용하여 유도해 보자.
