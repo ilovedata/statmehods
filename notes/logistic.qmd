@@ -32,8 +32,7 @@ library(kableExtra)
 
 ```{r}
 #data(orings)
-orings %>% 
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+orings %>% kbl() %>%
   kable_styling( full_width = F)
 ```
 
@@ -58,8 +57,7 @@ plot(damage/6 ~ temp, orings, xlim=c(25,85), ylim = c(0,1), xlab="Temperature", 
 
 
 ```{r}
-head(Blowdown) %>% 
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+head(Blowdown) %>% kbl() %>%
   kable_styling( full_width = F)
 ```
 
@@ -73,8 +71,7 @@ BlowBS_raw <- Blowdown %>% dplyr::filter(spp=='black spruce')
 
 dim(BlowBS_raw)
 
-head(BlowBS_raw) %>% 
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+head(BlowBS_raw) %>% kbl() %>%
   kable_styling( full_width = F)
 ```
 
@@ -95,8 +92,7 @@ legend(3.2,.9,legend=c("Y=0","Y=1"),lty=c(1,2))
 또한 R package `alr4` 에 수록된 데이터셋 `BlowBS` 는 위에서 본 O-rings 예제와 동일하게 `black spruce`인 자료만 모아서 전체 횟수와 성공의 횟수로 요약된 자료이다. 
 
 ```{r}
-head(BlowBS) %>% 
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+head(BlowBS) %>% kbl() %>%
   kable_styling( full_width = F)
 ```
 
@@ -659,8 +655,7 @@ $$ D= D_0 - D_1 $$
 
 ```{r}
 cancer <- read.table("remission.txt",header=T, sep="")
-cancer %>% 
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+cancer %>% kbl() %>%
   kable_styling( full_width = F)
 ```
 
@@ -846,7 +841,7 @@ $$ Var(\hat {\pmb \beta}) = \hat \sigma^2(X'\hat W X)^{-1} $$
 
 ```{r}
 troutegg %>% dplyr::arrange(location, period) %>% dplyr::relocate(`location`, `period`, `survive`, `total`) %>%
-  kable(table.attr = 'data-quarto-disable-processing="true"') %>%
+ kbl() %>%
   kable_styling( full_width = F)
 ```
 
