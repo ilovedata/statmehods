@@ -83,7 +83,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references.html" rel="next">
+<link href="../notes/logistic.html" rel="next">
 <link href="../notes/association-test.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -200,6 +200,23 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">일반화 선형모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -215,7 +232,7 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
+  <ul>
   <li><a href="#민감도와-특이도" id="toc-민감도와-특이도" class="nav-link active" data-scroll-target="#민감도와-특이도"><span class="header-section-number">4.1</span> 민감도와 특이도</a></li>
   <li><a href="#양성예측도와-음성예측도" id="toc-양성예측도와-음성예측도" class="nav-link" data-scroll-target="#양성예측도와-음성예측도"><span class="header-section-number">4.2</span> 양성예측도와 음성예측도</a></li>
   </ul>
@@ -352,13 +369,11 @@ Note
 <p><span class="math display">\[\begin{align}
 PV+ &amp; = P( D+ | T+) \\
 PV- &amp; = P( D- | T-)
-(\#eq:pv)
 \end{align}\]</span></p>
 <p>이제 앞에서 살펴본 민감도와 특이도도 다음과 같이 조건부 확률로 나타낼 수 있다.</p>
 <p><span class="math display">\[\begin{align}
 \text{Sensitivity} &amp; =  P(T+|D+) \\
 \text{Specificity} &amp; =  P(T-|D-)
-(\#eq:sensitivity2)
 \end{align}\]</span></p>
 <p>이제 실제로 중요한 양성예측도와 음성예측도를 민감도와 특이도를 이용하여 유도해 보자. 두 확률은 사건과 조건이 바뀐 확률이기 때문에 베이즈 정리(Bayes’ Theorem)을 이용하여 구할 수 있다.</p>
 <p>일단 양성예측도를 구하는 식을 베이즈 정리를 적용하여 유도해 보자.</p>
@@ -697,8 +712,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/logistic.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -181,6 +181,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">일반화 선형모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
@@ -196,12 +213,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
-  <ul class="collapse">
+  <ul>
   <li><a href="#필요한-패키지" id="toc-필요한-패키지" class="nav-link active" data-scroll-target="#필요한-패키지"><span class="header-section-number">2.1</span> 필요한 패키지</a></li>
   <li><a href="#이항변수" id="toc-이항변수" class="nav-link" data-scroll-target="#이항변수"><span class="header-section-number">2.2</span> 이항변수</a></li>
-  <li><a href="#분할표와-연관성의-측도" id="toc-분할표와-연관성의-측도" class="nav-link" data-scroll-target="#분할표와-연관성의-측도"><span class="header-section-number">2.3</span> 분할표와 연관성의 측도</a></li>
-  <li><a href="#신뢰구간" id="toc-신뢰구간" class="nav-link" data-scroll-target="#신뢰구간"><span class="header-section-number">2.4</span> 신뢰구간</a></li>
-  <li><a href="#casecontrol" id="toc-casecontrol" class="nav-link" data-scroll-target="#casecontrol"><span class="header-section-number">2.5</span> 사례-대조 연구</a></li>
+  <li><a href="#분할표와-연관성의-측도" id="toc-분할표와-연관성의-측도" class="nav-link" data-scroll-target="#분할표와-연관성의-측도"><span class="header-section-number">2.3</span> 분할표와 연관성의 측도</a>
+  <ul class="collapse">
+  <li><a href="#분할표" id="toc-분할표" class="nav-link" data-scroll-target="#분할표"><span class="header-section-number">2.3.1</span> 분할표</a></li>
+  <li><a href="#상대위험" id="toc-상대위험" class="nav-link" data-scroll-target="#상대위험"><span class="header-section-number">2.3.2</span> 상대위험</a></li>
+  <li><a href="#기여위험과-백신효과" id="toc-기여위험과-백신효과" class="nav-link" data-scroll-target="#기여위험과-백신효과"><span class="header-section-number">2.3.3</span> 기여위험과 백신효과</a></li>
+  <li><a href="#오즈비" id="toc-오즈비" class="nav-link" data-scroll-target="#오즈비"><span class="header-section-number">2.3.4</span> 오즈비</a></li>
+  </ul></li>
+  <li><a href="#신뢰구간" id="toc-신뢰구간" class="nav-link" data-scroll-target="#신뢰구간"><span class="header-section-number">2.4</span> 신뢰구간</a>
+  <ul class="collapse">
+  <li><a href="#예제-아스피린-임상실험" id="toc-예제-아스피린-임상실험" class="nav-link" data-scroll-target="#예제-아스피린-임상실험"><span class="header-section-number">2.4.1</span> 예제: 아스피린 임상실험</a></li>
+  </ul></li>
+  <li><a href="#casecontrol" id="toc-casecontrol" class="nav-link" data-scroll-target="#casecontrol"><span class="header-section-number">2.5</span> 사례-대조 연구</a>
+  <ul class="collapse">
+  <li><a href="#사례대조-연구의-목표와-가설" id="toc-사례대조-연구의-목표와-가설" class="nav-link" data-scroll-target="#사례대조-연구의-목표와-가설"><span class="header-section-number">2.5.1</span> 사례대조 연구의 목표와 가설</a></li>
+  <li><a href="#오즈비의-비교" id="toc-오즈비의-비교" class="nav-link" data-scroll-target="#오즈비의-비교"><span class="header-section-number">2.5.2</span> 오즈비의 비교</a></li>
+  <li><a href="#예제-약물남용-사례-대조-연구" id="toc-예제-약물남용-사례-대조-연구" class="nav-link" data-scroll-target="#예제-약물남용-사례-대조-연구"><span class="header-section-number">2.5.3</span> 예제: 약물남용 사례-대조 연구</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
