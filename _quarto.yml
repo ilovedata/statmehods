@@ -8,6 +8,7 @@ book:
   title: "데이터 분석 방법론 "
   author: "이용희"
   date: last-modified
+  date-format: YYYY-MM-DD, A hh 시
   repo-url: https://github.com/ilovedata/statmehods
   downloads: [pdf]
   chapters:
