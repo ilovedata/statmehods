@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.395">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,19 +102,41 @@ div.csl-indent {
   "panel-placement": "start",
   "type": "textbox",
   "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -127,12 +150,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/diagnose.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/diagnose.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -147,14 +170,14 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">데이터 분석 방법론</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/ilovedata/statmehods" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../데이터-분석-방법론-.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="검색"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -175,7 +198,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">분할표의 분석</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -204,7 +227,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">일반화 선형모형</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -213,6 +236,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,7 +259,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">목차</h2>
    
   <ul>
   <li><a href="#민감도와-특이도" id="toc-민감도와-특이도" class="nav-link active" data-scroll-target="#민감도와-특이도"><span class="header-section-number">4.1</span> 민감도와 특이도</a></li>
@@ -241,7 +270,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/diagnose.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="sensitivity" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span></h1>
 </div>
@@ -256,7 +285,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p>의학에서 진단은 환자의 상태나 질병의 징후를 판단하는 일이다. 진단을 수행하기 위해서 의사는 전통적인 진단법도 사용하지만 다양한 계측 기계를 이용하는 진단 기법도 사용한다. 최근에는 첨단 분석 장비를 이용하여 다양한 질병에 대한 진단을 정확하고 쉽게 할 수 있다. 특히 최근 코로나 시대에 들면서 일반인도 여러 가지 이유로 진단 검사를 받는 경우가 자주 일어난다.</p>
 <p>진단 기법을 사용하여 감염 여부 등을 판단하는 경우 언제나 오류가 발생한다. 최근에는 첨단 기술 덕분으로 이러한 오류율이 많이 줄어 들었지만 오류가 없는 진단 기법은 개발하기 힘들다.</p>
@@ -270,7 +301,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -287,8 +318,12 @@ Note
 <p>양성인 사람을 얼마나 잘 양성으로 판단하는지에 대한 평가 기준이 <strong>민감도(sensitivity)</strong> 이고 음성인 사람을 얼마나 잘 음성으로 판단하는지에 대한 평가 기준이 <strong>특이도(specificity)</strong> 이다. 민감도와 특이도의 정도는 확률로서 나타낼 수 있다.</p>
 <p>진단 기법에 대한 실험 연구를 수행하면 그 결과는 <span class="math inline">\(2 \times 2\)</span> 분할표로 다음과 같이 요약할 수 있다. 일반적으로 진단 기법의 효과를 측정하는 실험은 대상자에 대한 질병의 유무를 알고 시작한다.</p>
 <div id="tbl-diagnose" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-diagnose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;4.1: 진단 기법의 실험 결과
+</figcaption>
+<div aria-describedby="tbl-diagnose-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;4.1: 진단 기법의 실험 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">진단(T) / 질병(D)</th>
@@ -310,6 +345,8 @@ Note
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>위의 표에서 각 셀에 해당하는 진단 결과는 다음과 같이 나타낼 수 있다.</p>
 <ul>
 <li><span class="math inline">\(TP\)</span> : True Positive</li>
@@ -317,22 +354,30 @@ Note
 <li><span class="math inline">\(FN\)</span> : False Nagative</li>
 <li><span class="math inline">\(TN\)</span> : True Negative</li>
 </ul>
-<p>이제 분할표 <a href="#tbl-diagnose">Table&nbsp;<span>4.1</span></a> 에서 민감도와 특이도는 다음과 같이 정의된다.</p>
+<p>이제 분할표 <a href="#tbl-diagnose" class="quarto-xref">표&nbsp;<span>4.1</span></a> 에서 민감도와 특이도는 다음과 같이 정의된다.</p>
 <p><span class="math display">\[\begin{align}
 \text{Sensitivity}(민감도) &amp; = \frac{TP}{TP+FN} \\
 \text{Specificity}(특이도) &amp; = \frac{TN}{FP+TN}
 \end{align}\]</span></p>
-<p>다음은 코로나 바이러스 검사법에 대한 여러 연구에서 나온 민감도와 특이도 결과를 보여 준다 (<span class="citation" data-cites="butler2021comparison">Butler-Laporte et al. (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span>).</p>
+<p>다음은 코로나 바이러스 검사법에 대한 여러 연구에서 나온 민감도와 특이도 결과를 보여 준다 (<span class="citation" data-cites="butler2021comparison">Butler-Laporte 기타 (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span>).</p>
 <div id="fig-tablecorona" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<figcaption class="figure-caption">Figure&nbsp;4.1: 코로나 검사의 민감도와 특이도</figcaption>
-<p><img src="../myimages/corona.png" class="img-fluid figure-img"></p>
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-tablecorona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;4.1: 코로나 검사의 민감도와 특이도
+</figcaption>
+<div aria-describedby="fig-tablecorona-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../myimages/corona.png" class="img-fluid figure-img">
+</div>
 </figure>
 </div>
-<p>예제로서 그림 <a href="#fig-tablecorona">Figure&nbsp;<span>4.1</span></a> 에 제시한 종합적인 결과(pooled counts)를 이용하여 민감도와 특이도를 구해보자.</p>
+<p>예제로서 그림 <a href="#fig-tablecorona" class="quarto-xref">그림&nbsp;<span>4.1</span></a> 에 제시한 종합적인 결과(pooled counts)를 이용하여 민감도와 특이도를 구해보자.</p>
 <div id="tbl-diagnose2" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-diagnose2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;4.2: 코로나 바이러스 검사법의 결과
+</figcaption>
+<div aria-describedby="tbl-diagnose2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;4.2: 코로나 바이러스 검사법의 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">진단(T) / 질병(D)</th>
@@ -354,12 +399,14 @@ Note
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>민감도와 특이도는 다음과 같이 구할 수 있다.</p>
 <p><span class="math display">\[\begin{align*}
 \text{Sensitivity} &amp; = \frac{664}{664+157} =  0.8087 \\
 \text{Specificity} &amp; = \frac{4891}{120+4891} =  0.9760
 \end{align*}\]</span></p>
-<p>위에서 구한 민감도와 특이도는 <span class="citation" data-cites="butler2021comparison">Butler-Laporte et al. (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span> 에서 제시한 민감도(83.2%), 특이도(99.2%) 와 유사하지만 약간의 차이가 있다. 그 이유는 <span class="citation" data-cites="butler2021comparison">Butler-Laporte et al. (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span> 는 모든 실험 결과를 단순하게 더한 것이 아니라 메타분석(meta analysis)을 사용하여 얻은 결과이기 때문이다. 메타분석은 같은 주제에 대한 여러 개의 독립적인 연구 결과들을 결합하여 결론을 추론하는 연구 방법이다.</p>
+<p>위에서 구한 민감도와 특이도는 <span class="citation" data-cites="butler2021comparison">Butler-Laporte 기타 (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span> 에서 제시한 민감도(83.2%), 특이도(99.2%) 와 유사하지만 약간의 차이가 있다. 그 이유는 <span class="citation" data-cites="butler2021comparison">Butler-Laporte 기타 (<a href="../references.html#ref-butler2021comparison" role="doc-biblioref">2021</a>)</span> 는 모든 실험 결과를 단순하게 더한 것이 아니라 메타분석(meta analysis)을 사용하여 얻은 결과이기 때문이다. 메타분석은 같은 주제에 대한 여러 개의 독립적인 연구 결과들을 결합하여 결론을 추론하는 연구 방법이다.</p>
 </section>
 <section id="양성예측도와-음성예측도" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="양성예측도와-음성예측도"><span class="header-section-number">4.2</span> 양성예측도와 음성예측도</h2>
@@ -393,16 +440,16 @@ P( D - | T -)  &amp; = \frac{ P(T -|D -)P(D -)} {  P(T-|D-)P(D-) +  P(T-|D+)P(D+
          &amp; = \frac{ P(T-|D-)[1-P(D+)]} {  P(T-|D-)[1-P(D+)] + [1- P(T+|D-)] P(D+)} \\
          &amp; = \frac{(특이도)(1- 유병률)}{(특이도)(1-유병률) + (1-민감도)(유병률)}
 \end{align}\]</span></p>
-<p>이제 표 <a href="#tbl-diagnose2">Table&nbsp;<span>4.2</span></a> 의 결과를 이용하여 코로나 검사의 양성예측도와 음성예측도를 구해보자.</p>
+<p>이제 표 <a href="#tbl-diagnose2" class="quarto-xref">표&nbsp;<span>4.2</span></a> 의 결과를 이용하여 코로나 검사의 양성예측도와 음성예측도를 구해보자.</p>
 <p>코로나 유병률은 나라마다 다르고 추정하기도 힘들다. 따라서 쉽게 현재 까지 누적환자수를 전체 인구로 나눈 단순한 비율을 유병률로 사용해 보자(주의! 우리가 여기서 사용한 비율은 실제 유병률을 계산하는 방법과 다르다). 2021년 현재 누적 환자 수가 274,415 명이고 2020년 기준 총인구는 51,829,136 명이므로 유병률을 <span class="math inline">\(274415/51829136= 0.0053\)</span> 이라고 하자.</p>
-<p>이제 표 <a href="#tbl-diagnose2">Table&nbsp;<span>4.2</span></a> 의 결과를 이용하면 코로나 검사의 양성예측도와 음성예측도는 다음과 같이 추정할 수 있다.</p>
+<p>이제 표 <a href="#tbl-diagnose2" class="quarto-xref">표&nbsp;<span>4.2</span></a> 의 결과를 이용하면 코로나 검사의 양성예측도와 음성예측도는 다음과 같이 추정할 수 있다.</p>
 <p><span class="math display">\[\begin{align*}
 P( D+ | T+)  &amp; = \frac{(민감도)(유병률)}{(민감도)(유병률) + (1-특이도)(1-유병률)} \\
      &amp; = \frac{(0.8087 )(0.0053)}{(0.8087 )(0.0053) + (1-0.9760)(1-0.0053)} \\
      &amp; = 0.1522
 \end{align*}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.8087</span> )<span class="sc">*</span>(<span class="fl">0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1522115</code></pre>
 </div>
@@ -413,7 +460,7 @@ P( D - | T -)  &amp; = \frac{(특이도)(1- 유병률)}{(특이도)(1-유병률)
 &amp; = 0.9989
 \end{align}\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span> <span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.8087</span>)<span class="sc">*</span>(<span class="fl">0.0053</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span> <span class="fl">0.0053</span>)<span class="sc">/</span>((<span class="fl">0.9760</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="fl">-0.0053</span>) <span class="sc">+</span> (<span class="dv">1</span><span class="fl">-0.8087</span>)<span class="sc">*</span>(<span class="fl">0.0053</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9989567</code></pre>
 </div>
@@ -429,7 +476,7 @@ P( D - | T -)  &amp; = \frac{(특이도)(1- 유병률)}{(특이도)(1-유병률)
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>preval.range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="fl">0.02</span>, <span class="fl">0.002</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8087</span>, <span class="fl">0.9760</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8087</span>, <span class="fl">0.9760</span> )</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Sensitivity SPecificity Prevalnce Pred. Post. Pred. Nega.
 1       0.8087       0.976     0.000   0.0000000   1.0000000
@@ -446,7 +493,7 @@ P( D - | T -)  &amp; = \frac{(특이도)(1- 유병률)}{(특이도)(1-유병률)
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8320</span>, <span class="fl">0.9920</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(preval.range ,<span class="fl">0.8320</span>, <span class="fl">0.9920</span> )</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Sensitivity SPecificity Prevalnce Pred. Post. Pred. Nega.
 1        0.832       0.992     0.000   0.0000000   1.0000000
@@ -464,9 +511,9 @@ P( D - | T -)  &amp; = \frac{(특이도)(1- 유병률)}{(특이도)(1-유병률)
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-butler2021comparison" class="csl-entry" role="listitem">
-Butler-Laporte, Guillaume, Alexander Lawandi, Ian Schiller, Mandy Yao, Nandini Dendukuri, Emily G McDonald, and Todd C Lee. 2021. <span>“Comparison of Saliva and Nasopharyngeal Swab Nucleic Acid Amplification Testing for Detection of SARS-CoV-2: A Systematic Review and Meta-Analysis.”</span> <em>JAMA Intern Med</em> 181 (3): 353–58.
+Butler-Laporte, Guillaume, Alexander Lawandi, Ian Schiller, Mandy Yao, Nandini Dendukuri, Emily G McDonald, 와/과 Todd C Lee. 2021. <span>“Comparison of saliva and nasopharyngeal swab nucleic acid amplification testing for detection of SARS-CoV-2: a systematic review and meta-analysis”</span>. <em>JAMA Intern Med</em> 181 (3): 353–58.
 </div>
 </div>
 </section>
@@ -526,12 +573,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -551,10 +598,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -564,8 +610,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -578,6 +633,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -621,6 +798,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -646,6 +824,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -718,6 +922,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

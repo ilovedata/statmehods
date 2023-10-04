@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.395">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -82,19 +82,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "panel-placement": "start",
   "type": "textbox",
   "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,12 +130,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/association.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/association.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -128,14 +150,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="../">데이터 분석 방법론</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/ilovedata/statmehods" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../데이터-분석-방법론-.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="검색"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -156,7 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">분할표의 분석</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -185,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">일반화 선형모형</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -194,6 +216,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">목차</h2>
    
   <ul>
   <li><a href="#필요한-패키지" id="toc-필요한-패키지" class="nav-link active" data-scroll-target="#필요한-패키지"><span class="header-section-number">2.1</span> 필요한 패키지</a></li>
@@ -239,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/association.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="association" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span></h1>
 </div>
@@ -254,7 +282,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="필요한-패키지" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="필요한-패키지"><span class="header-section-number">2.1</span> 필요한 패키지</h2>
@@ -262,7 +292,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="이항변수" class="level2" data-number="2.2">
@@ -317,8 +347,12 @@ Y =
 \]</span></p>
 <p>코로나 19에 대한 치료약의 효과에 대한 임상실험의 결과를 다음과 같은 <strong>분할표(contingency table)</strong>로 요약할 수 있다.</p>
 <div id="tbl-conttable22" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-conttable22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;2.1: <span class="math inline">\(2 \times 2\)</span> 분할표
+</figcaption>
+<div aria-describedby="tbl-conttable22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.1: <span class="math inline">\(2 \times 2\)</span> 분할표</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">치료/결과</th>
@@ -349,6 +383,8 @@ Y =
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>많은 임상실험이나 의학연구의 결과들을 위와 같은 <span class="math inline">\(2 \times 2\)</span> 분할표로 요약할 수 있다. 이제 우리의 관심은 분할표를 통해서 임상실험의 결과를 어떻게 통계적으로 추론할 수 있는지이다.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -356,7 +392,7 @@ Y =
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -368,8 +404,8 @@ Note
 </section>
 <section id="상대위험" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="상대위험"><span class="header-section-number">2.3.2</span> 상대위험</h3>
-<p><span class="math inline">\(2 \times 2\)</span> 분할표 <a href="#tbl-conttable22">Table&nbsp;<span>2.1</span></a> 에서 두 개의 처리군, 즉 치료약을 받은 집단과 위약을 받은 집단의 효과를 비교할 때 가장 많이 사용되는 측도(measure)는 <strong>상대위험(relative risk, risk ratio, prevalnce ratio;RR)</strong>이다.</p>
-<p>주어진 집단의 위험율을 그 집단에 속한 환자의 수에서 사망한 사람의 비율이다. 분할표 <a href="#tbl-conttable22">Table&nbsp;<span>2.1</span></a> 에서 위약 집단의 위험율은 <span class="math inline">\(n_{11}/n_{1+}\)</span> 이며 이는 치료를 받지 않는 경우에 나타나는 기준점인 위험율(baseline risk)을 의미한다. 치료약 집단의 위험율은 <span class="math inline">\(n_{21}/n_{2+}\)</span> 이다. 통상적으로 위험율은 비율(proportion, percent)로 나타내며 발생률(rate,예를 들어 인구 1000명당 X명)로 나타내기도 한다.</p>
+<p><span class="math inline">\(2 \times 2\)</span> 분할표 <a href="#tbl-conttable22" class="quarto-xref">표&nbsp;<span>2.1</span></a> 에서 두 개의 처리군, 즉 치료약을 받은 집단과 위약을 받은 집단의 효과를 비교할 때 가장 많이 사용되는 측도(measure)는 <strong>상대위험(relative risk, risk ratio, prevalnce ratio;RR)</strong>이다.</p>
+<p>주어진 집단의 위험율을 그 집단에 속한 환자의 수에서 사망한 사람의 비율이다. 분할표 <a href="#tbl-conttable22" class="quarto-xref">표&nbsp;<span>2.1</span></a> 에서 위약 집단의 위험율은 <span class="math inline">\(n_{11}/n_{1+}\)</span> 이며 이는 치료를 받지 않는 경우에 나타나는 기준점인 위험율(baseline risk)을 의미한다. 치료약 집단의 위험율은 <span class="math inline">\(n_{21}/n_{2+}\)</span> 이다. 통상적으로 위험율은 비율(proportion, percent)로 나타내며 발생률(rate,예를 들어 인구 1000명당 X명)로 나타내기도 한다.</p>
 <p>상대위험은 두 위험율의 비율로서 다음과 같이 정의한다.</p>
 <p><span class="math display">\[\begin{equation}
 RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}}} { \tfrac{n_{21}}{n_{21} + n_{22}}}
@@ -377,8 +413,12 @@ RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}
 <p>상대위험이 1보다 크면 분자에 위치한 집단이 위험(위의 예제에서는 위험이 사망을 의미한다)에 처할 가능성이 분모에 위치한 집단보다 <span class="math inline">\(RR\)</span> 배 높다는 것을 의미한다. 상대위험이 1이면 두 집단에 대한 위험이 동일하다는 것을 의미한다.</p>
 <p>예를 들어 특정한 코로나 치료제의 효과를 실험하는 임상실험에서 다음과 결과를 얻었다.</p>
 <div id="tbl-conttable23" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-conttable23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;2.2: 코로나 치료제 실험 결과
+</figcaption>
+<div aria-describedby="tbl-conttable23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.2: 코로나 치료제 실험 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">치료/결과</th>
@@ -409,6 +449,8 @@ RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>상대위험은 다음과 같이 계산된다.</p>
 <p><span class="math display">\[ RR = \frac{10/1222}{5/2360} = 3.8625 \approx 4 \]</span></p>
 <p>상대위험이 약 4 배란 의미는 치료약을 받은 집단보다 위약집단이 사망할 가능성이 약 4배 높다는 것이다.</p>
@@ -418,7 +460,7 @@ RR = \frac{n_{11}/n_{1+}}{n_{21}/n_{2+}} = \frac{ \tfrac{n_{11}}{n_{11} + n_{12}
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+노트
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -462,8 +504,12 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <hr>
 <p>예를 들어 다음과 같은 분할표에서 비율의 차이, 상대위험, 오즈비를 구하여 비교해 보자.</p>
 <div id="tbl-conttable24" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-conttable24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;2.3: <span class="math inline">\(2 \times 2\)</span> 분할표 예제
+</figcaption>
+<div aria-describedby="tbl-conttable24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.3: <span class="math inline">\(2 \times 2\)</span> 분할표 예제</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">처리 /결과</th>
@@ -494,6 +540,8 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>비율의 차이(DP)은 다음과 같이 계산된다.</p>
 <p><span class="math display">\[ DP(0/1) =  6/10 - 4/10 = 0.2 \]</span></p>
 <p>상대위험은 다음과 같이 계산된다.</p>
@@ -520,14 +568,18 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p><span id="eq-rrratiovar"><span class="math display">\[
    ( RR \times \exp [ - z_{\alpha/2} \sqrt{v_2}], ~~OR \times \exp [  z_{\alpha/2} \sqrt{v_2}] )
 \tag{2.2}\]</span></span></p>
-<p>위의 식 <a href="#eq-rrratiovar">Equation&nbsp;<span>2.2</span></a> 에서 <span class="math inline">\(v_2\)</span> 는 다음과 같이 계산한다.</p>
+<p>위의 식 <a href="#eq-rrratiovar" class="quarto-xref">식&nbsp;<span>2.2</span></a> 에서 <span class="math inline">\(v_2\)</span> 는 다음과 같이 계산한다.</p>
 <p><span class="math display">\[ v_2 =V ( \log RR)   \approx \frac{1-n_{11}/n_{1+}}{n_{11}} + \frac{1-n_{21}/n_{2+}}{n_{21}} \]</span></p>
 <section id="예제-아스피린-임상실험" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="예제-아스피린-임상실험"><span class="header-section-number">2.4.1</span> 예제: 아스피린 임상실험</h3>
 <p>소량의 아스피린 복용이 심장병으로 인한 위험을 줄이는데 효과가 있는지 알아보고자 임상실험을 실시하였다. 22,701명의 남성을 <strong>임의화(randomization)</strong> 을 통해서 두 그룹으로 나눈 후, 한 그룹은 매일 일정량의 아스피린을 복용시키고 다른 그룹은 위약(palcebo)를 복용하게 한 후 약 5년간 심근경색이 일어나는지 알아보았다. 임상실험의 결과는 아래 표와 같다.</p>
 <div id="tbl-conttable25" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-conttable25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;2.4: 아스피린 임상실험 결과
+</figcaption>
+<div aria-describedby="tbl-conttable25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.4: 아스피린 임상실험 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
@@ -552,6 +604,8 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>위약 집단과 아스피린 집단의 상대위험은 다음과 같다.</p>
 <p><span class="math display">\[ RR = \frac{139/11037}{239/11034} = 0.581 \]</span></p>
 <p>상대위험을 보면 1보다 작으므로 아스피린을 복용한 집단이 위약 집단에 비해서 심근 경색이 일어날 위험이 적어진 다는 것을 알 수 있다.</p>
@@ -567,7 +621,7 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p>먼저 위의 임상실험 자료를 <code>R</code> 의 <code>matrix</code> 형태로 저장한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ex1dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">139</span>, <span class="dv">10898</span>, <span class="dv">239</span>, <span class="dv">10795</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ex1dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ex1dat</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1]  [,2]
 [1,]  139 10898
@@ -578,7 +632,7 @@ AR = \frac{ (n_{11}/n_{1+}) - (n_{21}/n_{2+})} {n_{11}/n_{1+} } \times 100
 <p>아래 결과에 <code>Prevalence ratio</code>라고 나오는 것이 상대위험이다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex1dat, <span class="at">method =</span> <span class="st">"cross.sectional"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Outcome +    Outcome -      Total               Prev risk *
 Exposed +          139        10898      11037       1.26 (1.06 to 1.49)
@@ -607,8 +661,12 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 <h2 data-number="2.5" class="anchored" data-anchor-id="casecontrol"><span class="header-section-number">2.5</span> 사례-대조 연구</h2>
 <p>심장발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있는지 조사한 사례-대조 연구의 자료이다.</p>
 <div id="tbl-conttable26" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-conttable26-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;2.5: 약물 남용 사례-대조 연구 결과
+</figcaption>
+<div aria-describedby="tbl-conttable26-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.5: 약물 남용 사례-대조 연구 결과</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;"></th>
@@ -634,6 +692,8 @@ Fisher exact test that OR = 1: Pr&gt;chi2 = &lt;0.001
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
 </div>
 <p>이 연구의 목표는 약물남용과 심장발작의 연관성이 있는지를 알아보는 것이다. 이제 다음과 같은 사건들을 정의해 보자.</p>
 <ul>
@@ -679,8 +739,8 @@ P(H+|D+) &amp; = \frac{ P(H+ \cap D+)} { P(D+)} \\
 H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} \ne 1
 \tag{2.4}\]</span></span></p>
-<p>위의 가설 <a href="#eq-hypo02">Equation&nbsp;<span>2.4</span></a> 는 단순한 비율을 비교하는 가설 <a href="#eq-hypo01">Equation&nbsp;<span>2.3</span></a> 과 동일한 가설이다.</p>
-<p>가설 <a href="#eq-hypo02">Equation&nbsp;<span>2.4</span></a> 에서 나타는 오즈비는 심장발작 발병률와 약물남용의 비율을 이용하지 않고 사례-대조 연구에서 추정할 수 있는 조건부 확률만으로 추정할 수 있다.</p>
+<p>위의 가설 <a href="#eq-hypo02" class="quarto-xref">식&nbsp;<span>2.4</span></a> 는 단순한 비율을 비교하는 가설 <a href="#eq-hypo01" class="quarto-xref">식&nbsp;<span>2.3</span></a> 과 동일한 가설이다.</p>
+<p>가설 <a href="#eq-hypo02" class="quarto-xref">식&nbsp;<span>2.4</span></a> 에서 나타는 오즈비는 심장발작 발병률와 약물남용의 비율을 이용하지 않고 사례-대조 연구에서 추정할 수 있는 조건부 확률만으로 추정할 수 있다.</p>
 <p><span class="math display">\[\begin{align*}
 \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)}  
    &amp; =  \frac{[P(H+|D+)P(D+)]/[P(H-|D+)P(D+)]}{[P(H+|D-)P(D-)] / [P(H-|D-)P(D-)]} \\
@@ -695,7 +755,7 @@ H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 </section>
 <section id="예제-약물남용-사례-대조-연구" class="level3" data-number="2.5.3">
 <h3 data-number="2.5.3" class="anchored" data-anchor-id="예제-약물남용-사례-대조-연구"><span class="header-section-number">2.5.3</span> 예제: 약물남용 사례-대조 연구</h3>
-<p>심작발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있느지 조사한 <strong>사례-대조 연구(case-control study)</strong> 의 결과가 표 <a href="#tbl-conttable26">Table&nbsp;<span>2.5</span></a> 에 있다.</p>
+<p>심작발작을 일으킨 환자와 그렇지 않은 사람들을 각각 214명씩 조사하여 과거에 약물남용을 한 경력이 있느지 조사한 <strong>사례-대조 연구(case-control study)</strong> 의 결과가 표 <a href="#tbl-conttable26" class="quarto-xref">표&nbsp;<span>2.5</span></a> 에 있다.</p>
 <p>사례-대조 연구는 사례(case)가 발견되면, 즉 위의 연구와 같이 심장발작이 일어난 환자가 발생하면 그 환자와 유사한 나이와 성별 등을 가진 일반사람을 찾아 매칭하여 환자와 일반인의 과거 경력을 조사하는 후향적인 연구(restrspective study)이다. 반대로 앞의 예제에서 본 임의화를 이용한 임상실험은 전향적 연구(prospective study)이다.</p>
 <p>이러한 사례-대조 연구에서는 상대위험을 이용하여 연관성을 알아낼 수 없다. 하지만 사례-대조 연구에서 상대위험 대신 오즈비를 이용하여 연관성을 추론할 수 있다.</p>
 <p>위의 심장발작에 대한 사례-대조 연구의 결과에서 오즈비와 그 신뢰구간을 구해보자.</p>
@@ -713,7 +773,7 @@ H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 <p>먼저 위의 사례-대조 연구 자료를 <code>R</code> 의 <code>matrix</code> 형태로 저장한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ex2dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">73</span>,<span class="dv">18</span>,<span class="dv">141</span>,<span class="dv">196</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ex2dat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ex2dat</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]   73   18
@@ -723,7 +783,7 @@ H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 <p>이제 함수 <code>epi.2by2</code>를 이용하여 오즈비과 싱대구간을 구해보자. 사례-대조 연구의 자료인 경우 <code>method = "case.control"</code> 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다. 관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니 <code>outcome = "as.columns"</code>이라고 지정한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex2dat, <span class="at">method =</span> <span class="st">"case.control"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Outcome +    Outcome -      Total                       Odds
 Exposed +           73           18         91        4.06 (2.50 to 7.27)
@@ -802,12 +862,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -827,10 +887,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -840,8 +899,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -854,6 +922,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -897,6 +1087,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -922,6 +1113,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -994,6 +1211,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

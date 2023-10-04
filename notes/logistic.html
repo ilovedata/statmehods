@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.395">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -83,7 +84,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references.html" rel="next">
+<link href="../notes/poisson.html" rel="next">
 <link href="../notes/diagnose.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -101,22 +102,43 @@ div.csl-indent {
   "panel-placement": "start",
   "type": "textbox",
   "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
   }
 }</script>
-
 <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -130,12 +152,12 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic.html">일반화 선형모형</a></li><li class="breadcrumb-item"><a href="../notes/logistic.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic.html">일반화 선형모형</a></li><li class="breadcrumb-item"><a href="../notes/logistic.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -150,14 +172,14 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">데이터 분석 방법론</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/ilovedata/statmehods" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../데이터-분석-방법론-.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="검색"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
@@ -178,7 +200,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">분할표의 분석</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -207,7 +229,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text">일반화 선형모형</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -216,6 +238,12 @@ div.csl-indent {
   <div class="sidebar-item-container"> 
   <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
   </div>
 </li>
       </ul>
@@ -233,7 +261,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">목차</h2>
    
   <ul>
   <li><a href="#필요한-패키지" id="toc-필요한-패키지" class="nav-link active" data-scroll-target="#필요한-패키지"><span class="header-section-number">5.1</span> 필요한 패키지</a></li>
@@ -266,7 +294,7 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic.html">일반화 선형모형</a></li><li class="breadcrumb-item"><a href="../notes/logistic.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span id="logistic" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></h1>
 </div>
@@ -281,7 +309,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="필요한-패키지" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="필요한-패키지"><span class="header-section-number">5.1</span> 필요한 패키지</h2>
@@ -294,7 +324,7 @@ div.csl-indent {
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sm)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="이항변수-예제" class="level2" data-number="5.2">
@@ -306,7 +336,7 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#data(orings)</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>orings <span class="sc">%&gt;%</span> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -417,7 +447,7 @@ div.csl-indent {
 <p>위의 자료에서 <code>temp</code>는 실험에서 적용된 온도(화씨 F)이고 <code>damage</code>는 각 실험마다 6개의 링중에서 손상된 개수를 나타낸다. 참고로 1986년 챌린져호가 발사될 때의 온도는 31F 였다.</p>
 <p>먼저 그림을 통하여 온도의 변화에 따른 손상비율을 살펴보자.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(damage<span class="sc">/</span><span class="dv">6</span> <span class="sc">~</span> temp, orings, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">85</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"Temperature"</span>, <span class="at">ylab=</span><span class="st">"Prob of damage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(damage<span class="sc">/</span><span class="dv">6</span> <span class="sc">~</span> temp, orings, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">85</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"Temperature"</span>, <span class="at">ylab=</span><span class="st">"Prob of damage"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -435,7 +465,7 @@ div.csl-indent {
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Blowdown) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -494,12 +524,12 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>BlowBS_raw <span class="ot">&lt;-</span> Blowdown <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(spp<span class="sc">==</span><span class="st">'black spruce'</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(BlowBS_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(BlowBS_raw)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 659   4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(BlowBS_raw) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -556,14 +586,14 @@ div.csl-indent {
 <p>아래 그림은 쓰러진 나무와 살아남은 나무들의 지름의 분포를 비교한 것이다. 이를 통하여 지름이 큰 나무가 살아남을 확률이 더 커짐을 알수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sm.density.compare</span>(BlowBS_raw<span class="sc">$</span>d, BlowBS_raw<span class="sc">$</span>y,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">xlab=</span><span class="st">"D"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">30</span>,.<span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">30</span>,.<span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sm.density.compare</span>(<span class="fu">log</span>(BlowBS_raw<span class="sc">$</span>d), BlowBS_raw<span class="sc">$</span>y,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">3.2</span>,.<span class="dv">9</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">3.2</span>,.<span class="dv">9</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -571,7 +601,7 @@ div.csl-indent {
 <p>또한 R package <code>alr4</code> 에 수록된 데이터셋 <code>BlowBS</code> 는 위에서 본 O-rings 예제와 동일하게 <code>black spruce</code>인 자료만 모아서 전체 횟수와 성공의 횟수로 요약된 자료이다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(BlowBS) <span class="sc">%&gt;%</span> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -625,14 +655,14 @@ div.csl-indent {
 </ul>
 <p>이제 데이터셋 <code>BlowBS</code> 를 이용하여 나무의 지름과 나무 피해의 관계에 대해서 살펴보자.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> d, BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"D"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> d, BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"D"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>나무의 지름 <span class="math inline">\(d\)</span>을 <span class="math inline">\(\log(d)\)</span>로 변환하여 예측변수(predictor) <span class="math inline">\(x\)</span>로 하려고 한다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> <span class="fu">I</span>(<span class="fu">log</span>(d)), BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> <span class="fu">I</span>(<span class="fu">log</span>(d)), BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -658,12 +688,12 @@ y =
 \]</span></p>
 <p>왜냐하면 반응변수의 기대값이 0과 1사이의 확률로 나타나기 때문이다.</p>
 <p><span class="math display">\[ E(y|x) = 1\cdot P(y=1|x) + 0 \cdot P(y=0|x) = P(y=1|x) \]</span></p>
-<p>따라서 반응변수의 기대값의 범위와 예측변수가 있는 선형예측식(linear predictor) <span class="math inline">\(\beta_0 + \beta_1 x\)</span>의 범위가 일치하지 않아서 선형회귀식 <a href="#eq-ordinaryreg">Equation&nbsp;<span>5.1</span></a> 을 그대로 사용할 수 없다.</p>
-<div class="cell" data-layout-align="center" data-fig.asp="0.75">
+<p>따라서 반응변수의 기대값의 범위와 예측변수가 있는 선형예측식(linear predictor) <span class="math inline">\(\beta_0 + \beta_1 x\)</span>의 범위가 일치하지 않아서 선형회귀식 <a href="#eq-ordinaryreg" class="quarto-xref">식&nbsp;<span>5.1</span></a> 을 그대로 사용할 수 없다.</p>
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<figcaption class="figure-caption">범위의 불일치</figcaption>
+<figcaption>범위의 불일치</figcaption>
 <p><img src="logistic_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
 </figure>
 </div>
@@ -683,14 +713,14 @@ P(y=1|x) = \frac{ \exp(\beta_0 + \beta_1 x) }{ 1+ \exp(\beta_0 + \beta_1 x) } = 
 <p><span id="eq-logit"><span class="math display">\[
 \log \left [ \frac{P(y=1|x)}{1-P(y=1|x)} \right ] = \log \frac{p(x)}{1-p(x)}=\beta_0 + \beta_1 x
 \tag{5.5}\]</span></span></p>
-<p>식 <a href="#eq-logit">Equation&nbsp;<span>5.5</span></a> 에서 나타난 함수 <span class="math inline">\(g\)</span>,</p>
+<p>식 <a href="#eq-logit" class="quarto-xref">식&nbsp;<span>5.5</span></a> 에서 나타난 함수 <span class="math inline">\(g\)</span>,</p>
 <p><span class="math display">\[ g(p)=\log \frac{p}{1-p} \]</span></p>
 <p>를 <strong>로짓함수(logit function)</strong> 라고 부르며 이는 로지스틱 함수의 역함수로서 0과 1 사이의 값을 가지는 확률을 실수 전체로 변환하는 함수로서 선형 예측식의 범위와 일치하게 한다.</p>
-<div class="cell" data-layout-align="center" data-fig.asp="0.75">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<figcaption class="figure-caption">로지스틱 연결함수</figcaption>
+<figcaption>로지스틱 연결함수</figcaption>
 <p><img src="logistic_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
 </figure>
 </div>
@@ -709,12 +739,12 @@ g[E(y|x)] = g[p(x)] =  \log \frac{p(x)}{1-p(x)}=\beta_0 + \beta_1 x
 </section>
 <section id="예제" class="level3" data-number="5.3.2">
 <h3 data-number="5.3.2" class="anchored" data-anchor-id="예제"><span class="header-section-number">5.3.2</span> 예제</h3>
-<p>위의 o-ring 예제(<a href="#sec-oring"><span>Section&nbsp;5.2.1</span></a>)에서 성공(<span class="math inline">\(y=1\)</span>)은 O-ring이 손상된 경우이며 주어진 온도 <span class="math inline">\(x\)</span>에서의 손상확률을 <span class="math inline">\(p=(Y=1|x)=p(x)\)</span>라고 하면 다음과 같은 로지스틱회귀식을 생각할 수 있다.</p>
+<p>위의 o-ring 예제(<a href="#sec-oring" class="quarto-xref"><span>섹션&nbsp;5.2.1</span></a>)에서 성공(<span class="math inline">\(y=1\)</span>)은 O-ring이 손상된 경우이며 주어진 온도 <span class="math inline">\(x\)</span>에서의 손상확률을 <span class="math inline">\(p=(Y=1|x)=p(x)\)</span>라고 하면 다음과 같은 로지스틱회귀식을 생각할 수 있다.</p>
 <p><span class="math display">\[ \log \frac{p(x)}{1-p(x)}=\beta_0 + \beta_1 x \]</span></p>
 <p>다음과 같은 함수 <code>glm</code>을 이용하여 위의 로지스틱 회귀식을 적합할 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>logit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(damage,<span class="dv">6</span><span class="sc">-</span>damage) <span class="sc">~</span> temp, <span class="at">family=</span>binomial, orings)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -736,7 +766,7 @@ AIC: 33.675
 
 Number of Fisher Scoring iterations: 6</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        temp 
  11.6629897  -0.2162337 </code></pre>
@@ -749,7 +779,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(damage<span class="sc">/</span><span class="dv">6</span> <span class="sc">~</span> temp, orings, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">85</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"Temperature"</span>, <span class="at">ylab=</span><span class="st">"Prob of damage"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">85</span>,<span class="dv">1</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit1)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit1)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -757,16 +787,16 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <p>또한 온도가 31F인 경우 고장확률의 추정값은 <span class="math inline">\(\hat p =\)</span> 0.9930342이며 R 에서 다음과 같이 계산한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">31</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ilogit</span>(<span class="fu">coef</span>(logit1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit1)[<span class="dv">2</span>]<span class="sc">*</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ilogit</span>(<span class="fu">coef</span>(logit1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit1)[<span class="dv">2</span>]<span class="sc">*</span>x)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
   0.9930342 </code></pre>
 </div>
 </div>
-<p>이제 강풍에 의한 나무의 피해에 대한 예제(<a href="#sec-blowdown"><span>Section&nbsp;5.2.2</span></a>)에 대하여 로지스틱 회귀식을 적합해보자.나무의 상태 <span class="math inline">\(y\)</span> 가 이항 변수이고 나무의 지름 <span class="math inline">\(x=\log(d)\)</span>을 예측변수로 하는 로지스틱회귀 모형을 고려하고 추정해보면 다음과 같은 회귀식을 얻는다</p>
+<p>이제 강풍에 의한 나무의 피해에 대한 예제(<a href="#sec-blowdown" class="quarto-xref"><span>섹션&nbsp;5.2.2</span></a>)에 대하여 로지스틱 회귀식을 적합해보자.나무의 상태 <span class="math inline">\(y\)</span> 가 이항 변수이고 나무의 지름 <span class="math inline">\(x=\log(d)\)</span>을 예측변수로 하는 로지스틱회귀 모형을 고려하고 추정해보면 다음과 같은 회귀식을 얻는다</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>logit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span> <span class="fu">I</span>(<span class="fu">log</span>(d)),<span class="at">family=</span><span class="fu">binomial</span>(),<span class="at">data=</span>BlowBS_raw)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -793,7 +823,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> <span class="fu">I</span>(<span class="fu">log</span>(d)), BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fl">3.5</span>,<span class="fl">0.1</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit2)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit2)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="logistic_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -801,10 +831,10 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="회귀계수의-해석" class="level3" data-number="5.3.3">
 <h3 data-number="5.3.3" class="anchored" data-anchor-id="회귀계수의-해석"><span class="header-section-number">5.3.3</span> 회귀계수의 해석</h3>
-<p>일반적인 회귀분석의 모형 <a href="#eq-ordinaryreg">Equation&nbsp;<span>5.1</span></a> 에서 계수 <span class="math inline">\(\beta_1\)</span>은 기울기로서 예측변수 <span class="math inline">\(x\)</span>의 단위가 1 증가할 때 반응변수의 평균이 <span class="math inline">\(\beta_1\)</span>만큼 증가하는 것으로 해석할 수 있다. 하지만 로지스틱 회귀모형 <a href="#eq-logisticregression">Equation&nbsp;<span>5.4</span></a> 에서는 이러한 해석을 할 수 없다.</p>
+<p>일반적인 회귀분석의 모형 <a href="#eq-ordinaryreg" class="quarto-xref">식&nbsp;<span>5.1</span></a> 에서 계수 <span class="math inline">\(\beta_1\)</span>은 기울기로서 예측변수 <span class="math inline">\(x\)</span>의 단위가 1 증가할 때 반응변수의 평균이 <span class="math inline">\(\beta_1\)</span>만큼 증가하는 것으로 해석할 수 있다. 하지만 로지스틱 회귀모형 <a href="#eq-logisticregression" class="quarto-xref">식&nbsp;<span>5.4</span></a> 에서는 이러한 해석을 할 수 없다.</p>
 <p>로지스틱 회귀모형에서 기울기 <span class="math inline">\(\beta_1\)</span>의 의미를 알아보기 위하여 예측변수 <span class="math inline">\(x\)</span> 에 대한 베르누이 변수 <span class="math inline">\(y\)</span>의 성공 확률 <span class="math inline">\(P(y=1|x)\)</span>에 대한 오드(odd)를 정의하자.</p>
 <p><span class="math display">\[ odd(x) = \frac{P(y=1|x)}{1-P(y=1|x)} \]</span></p>
-<p>이제 단순 로지스틱 회귀식 <a href="#eq-logit">Equation&nbsp;<span>5.5</span></a> 을 생각하고 예측변수 <span class="math inline">\(x\)</span>를 0과 1의 값을 가지는 이항변수로 가정한다.</p>
+<p>이제 단순 로지스틱 회귀식 <a href="#eq-logit" class="quarto-xref">식&nbsp;<span>5.5</span></a> 을 생각하고 예측변수 <span class="math inline">\(x\)</span>를 0과 1의 값을 가지는 이항변수로 가정한다.</p>
 <p><span class="math inline">\(x=1\)</span> 인 경우는</p>
 <p><span class="math display">\[  \frac{P(y=1|x=1)}{1-P(y=1|x=1)}  = \exp( \beta_0 + \beta_1)  \]</span></p>
 <p>이며 <span class="math inline">\(x=0\)</span> 인 경우는</p>
@@ -817,10 +847,14 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <p>따라서 <span class="math inline">\(\exp (\beta_1)\)</span>는 반응변수의 오드의 증가량으로 볼 수 있다. 이는 두 성공확률의 오즈비가 <span class="math inline">\(\exp (\beta_1)\)</span>을 말한다. 위의 식에 로그를 취하면 다음과 같은 관계를 얻는다.</p>
 <p><span class="math display">\[  \log   \left [ \frac{P(y=1|x=1)}{1-P(y=1|x=1)}  / \frac{P(y=1|x=0)}{1-P(y=1|x=0)} \right ]  = \beta_1 \]</span></p>
 <p>즉 오즈비의 로그값이 단순 로지스틱 회귀식에서 기울기 <span class="math inline">\(\beta_1\)</span>으로 나타난다.</p>
-<p>간단한 예제를 통하여 오즈비와 로지스틱 회귀의 기울기의 관계를 명확히 해보자. 100명의 사람들을 55세 이상의 사람(<span class="math inline">\(x=1\)</span>)과 55세 미만의 사람(<span class="math inline">\(x=0\)</span>)의 그룹으로 나누었을 떄 각 그룹에서 만성심장질환(CHD)가 있는 사람(<span class="math inline">\(y=1\)</span>)과 없는 사람(<span class="math inline">\(y=0\)</span>)의 수가 표 <a href="#tbl-chd">Table&nbsp;<span>5.1</span></a> 에 주어져있다.</p>
+<p>간단한 예제를 통하여 오즈비와 로지스틱 회귀의 기울기의 관계를 명확히 해보자. 100명의 사람들을 55세 이상의 사람(<span class="math inline">\(x=1\)</span>)과 55세 미만의 사람(<span class="math inline">\(x=0\)</span>)의 그룹으로 나누었을 떄 각 그룹에서 만성심장질환(CHD)가 있는 사람(<span class="math inline">\(y=1\)</span>)과 없는 사람(<span class="math inline">\(y=0\)</span>)의 수가 표 <a href="#tbl-chd" class="quarto-xref">표&nbsp;<span>5.1</span></a> 에 주어져있다.</p>
 <div id="tbl-chd" class="anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-chd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+표&nbsp;5.1: 나이와 만성심장질환의 관계
+</figcaption>
+<div aria-describedby="tbl-chd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;5.1: 나이와 만성심장질환의 관계</caption>
 <thead>
 <tr class="header">
 <th style="text-align: center;">CHD/나이</th>
@@ -851,17 +885,19 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>여기서 나이에 대한 CHD 유무의 오즈비는 다음과 같이 계산된다.</p>
 <p><span class="math display">\[ \text{Odds Ratio } = \frac{ \tfrac{21/27}{6/27}}{ \tfrac{22/73}{51/73}} =  \frac{(21)(51)}{(6)(22)} = 8.11 \]</span></p>
-<p>위의 표 <a href="#tbl-chd">Table&nbsp;<span>5.1</span></a> 의 자료를 이용하여 로지스틱회귀를 적합시키면 결과가 아래와 같고 회귀계수 <span class="math inline">\(\beta_1\)</span>의 추정값은 오즈비의 로그값임을 알 수 있다.</p>
+<p>위의 표 <a href="#tbl-chd" class="quarto-xref">표&nbsp;<span>5.1</span></a> 의 자료를 이용하여 로지스틱회귀를 적합시키면 결과가 아래와 같고 회귀계수 <span class="math inline">\(\beta_1\)</span>의 추정값은 오즈비의 로그값임을 알 수 있다.</p>
 <p><span class="math display">\[ \hat \beta_1 = \log (8.11) = 2.094  \]</span></p>
-<p>표 <a href="#tbl-chd">Table&nbsp;<span>5.1</span></a> 의 자료에 대하여 로지스틱 회귀모형은 다음과 같이 적합할 수 있다.</p>
+<p>표 <a href="#tbl-chd" class="quarto-xref">표&nbsp;<span>5.1</span></a> 의 자료에 대하여 로지스틱 회귀모형은 다음과 같이 적합할 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>yes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">21</span>,<span class="dv">22</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>no  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">51</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span> (<span class="dv">1</span>,<span class="dv">0</span>)</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>( <span class="fu">cbind</span>(yes,no) <span class="sc">~</span> x, <span class="at">family=</span><span class="fu">binomial</span>() )</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -968,7 +1004,7 @@ l(\pmb y | \pmb y)  &amp; =l_{saturated} \\
 &amp; = \sum_i \log {{m_i}\choose{y_i}} + \sum_i y_i \log \hat p(x_i) + \sum_i (m_i -y_i) \log (1- \hat p(x_i))  \\
 &amp; = \sum_i \log {{m_i}\choose{y_i}} + \sum_i y_i \log  \frac{y_i}{m_i} + \sum_i (m_i -y_i) \log (1- \frac{y_i}{m_i})
 \end{align*}\]</span></p>
-<p>따라서 위에서 주어진 포화함수의 로그가능도함수에서 로지스틱회귀식의 로그가능도함수 <a href="#eq-bionom-loglike">Equation&nbsp;<span>5.7</span></a> 를 빼고 2를 곱해서 편차를 정의할 수 있다.</p>
+<p>따라서 위에서 주어진 포화함수의 로그가능도함수에서 로지스틱회귀식의 로그가능도함수 <a href="#eq-bionom-loglike" class="quarto-xref">식&nbsp;<span>5.7</span></a> 를 빼고 2를 곱해서 편차를 정의할 수 있다.</p>
 <p><span class="math display">\[\begin{align*}
 D(\pmb y;\hat {\pmb \mu}) &amp;=  2 \left [ l(\pmb y | \pmb y) - l(\hat {\pmb \mu} | \pmb y) \right ] \\
 &amp;= 2 ( l_{saturated}-l_{regession})  \\
@@ -995,12 +1031,12 @@ D(\pmb y;\hat {\pmb \mu}) &amp;=  2 \left [ l(\pmb y | \pmb y) - l(\hat {\pmb \m
 <p>여기서 <span class="math inline">\(n= \sum_i m_i\)</span> 이고 <span class="math inline">\(p\)</span> 는 회귀계수의 갯수이다.</p>
 </div>
 </div>
-<p>정규분포와 이항분포의 편차를 비교하면 정규분포의 편차에는 산포를 나타내는 모수 <span class="math inline">\(\sigma^2\)</span> 이 포함되어 있지만 이항분포의 편차에는 다른 모수가 나타나지 않는다. 식 <a href="#eq-deviance">Equation&nbsp;<span>5.8</span></a> 에서 주어진 편차를 척도 모수(scaled parameter) 또는 산포 모수(dispersion parameter) <span class="math inline">\(\phi\)</span> 를 곱해준 값을 척도화 편차(scaled deviance) <span class="math inline">\(D^*(\pmb y;\hat {\pmb \mu})\)</span> 라고 부른다.</p>
+<p>정규분포와 이항분포의 편차를 비교하면 정규분포의 편차에는 산포를 나타내는 모수 <span class="math inline">\(\sigma^2\)</span> 이 포함되어 있지만 이항분포의 편차에는 다른 모수가 나타나지 않는다. 식 <a href="#eq-deviance" class="quarto-xref">식&nbsp;<span>5.8</span></a> 에서 주어진 편차를 척도 모수(scaled parameter) 또는 산포 모수(dispersion parameter) <span class="math inline">\(\phi\)</span> 를 곱해준 값을 척도화 편차(scaled deviance) <span class="math inline">\(D^*(\pmb y;\hat {\pmb \mu})\)</span> 라고 부른다.</p>
 <p><span id="eq-scaleddeviance"><span class="math display">\[ D^*(\pmb y;\hat {\pmb \mu}) = \phi D(\pmb y;\hat {\pmb \mu})  \tag{5.9}\]</span></span></p>
 <p>정규분포에서 산포 모수가 분산 <span class="math inline">\(\phi=\sigma^2\)</span> 이므로 척도화 편차는 잔차제곱합 <span class="math inline">\(D^*(\pmb y;\hat {\pmb \mu}) = SSE\)</span> 가 되며 이항분포에서는 편차와 척도화 편차가 같다.</p>
-<p>이제 다시 o-ring 의 예제(<a href="#sec-oring"><span>Section&nbsp;5.2.1</span></a>)에 대한 로지스틱 회귀식의ㅣ 결과를 보자.</p>
+<p>이제 다시 o-ring 의 예제(<a href="#sec-oring" class="quarto-xref"><span>섹션&nbsp;5.2.1</span></a>)에 대한 로지스틱 회귀식의ㅣ 결과를 보자.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1028,18 +1064,18 @@ Number of Fisher Scoring iterations: 6</code></pre>
 \log \left [ \frac{P(y=1|x)}{1-P(y=1|x)} \right ] =\beta_0 + \beta_1 x \quad \rightarrow D(\pmb y;\hat {\pmb \mu}) = 16.9122785
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 16.91228</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 21</code></pre>
 </div>
 </div>
 <p>위에서 언급하였듯이 모형이 옪다는 가정하에서 편차 <span class="math inline">\(D(\pmb y;\hat {\pmb \mu})\)</span> 는 자유도가 21 인 <span class="math inline">\(\chi^2\)</span>-분포를 따르므로 아래에서 구한 <span class="math inline">\(P(\chi^2 \ge 16.9122785 )\)</span> 가 크게 나오는 것은 모형이 적절하다는 의미이다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fu">deviance</span>(logit1), <span class="fu">df.residual</span>(logit1),<span class="at">lower=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fu">deviance</span>(logit1), <span class="fu">df.residual</span>(logit1),<span class="at">lower=</span><span class="cn">FALSE</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7164099</code></pre>
 </div>
@@ -1055,9 +1091,9 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <p><span class="math display">\[ H_0 : \beta_i =0 \quad vs. \quad H_1: \beta_i \ne 0 \]</span> 다음과 같은 표준화된 통계량을 이용하여 정규분포 검정을적용할 수 있다.</p>
 <p><span class="math display">\[ z = \frac{ \hat \beta_i}{SE(\hat \beta_i)} \]</span> 또한 회귀 계수 <span class="math inline">\(\beta_i\)</span> 에 대한 <span class="math inline">\((1-\alpha)100\%\)</span> 신뢰구간은 다음과 같이 구할 수 있다.</p>
 <p><span class="math display">\[  [ \hat \beta_i - z_{\alpha/2 } SE(\hat \beta_i) , `` \hat \beta_i + z_{\alpha/2 } SE(\hat \beta_i) ] \]</span></p>
-<p>위의 o-ring 예제(<a href="#sec-oring"><span>Section&nbsp;5.2.1</span></a>)에서 온도에 대한 회귀 계수의 <span class="math inline">\(95\%\)</span> 신뢰구간은 다음과 같이 <code>MASS</code> 패키지의 함수 <code>confint</code>를 이용해서 구한다.</p>
+<p>위의 o-ring 예제(<a href="#sec-oring" class="quarto-xref"><span>섹션&nbsp;5.2.1</span></a>)에서 온도에 대한 회귀 계수의 <span class="math inline">\(95\%\)</span> 신뢰구간은 다음과 같이 <code>MASS</code> 패키지의 함수 <code>confint</code>를 이용해서 구한다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(logit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(logit1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Waiting for profiling to be done...</code></pre>
 </div>
@@ -1085,7 +1121,7 @@ H_0: {\pmb \beta}_2 =0  \quad \text{vs.} \quad H_1: {\pmb \beta}_2 \ne 0
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>cancer <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"remission.txt"</span>,<span class="at">header=</span>T, <span class="at">sep=</span><span class="st">""</span>)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>cancer <span class="sc">%&gt;%</span> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1380,7 +1416,7 @@ H_0: {\pmb \beta}_2 =0  \quad \text{vs.} \quad H_1: {\pmb \beta}_2 \ne 0
 <p>다음은 6개의 독립변수를 모두 적합한 완전모형(full model)의 추정 결과이다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>logit3_L <span class="ot">&lt;-</span> <span class="fu">glm</span>(remiss<span class="sc">~</span>cell <span class="sc">+</span> smear <span class="sc">+</span> infil <span class="sc">+</span> li <span class="sc">+</span> blast <span class="sc">+</span> temp,<span class="at">family=</span>binomial,<span class="at">data=</span>cancer)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_L)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1411,7 +1447,7 @@ Number of Fisher Scoring iterations: 8</code></pre>
 <p>위의 회귀분석 결과를 보면 변수들 중 세 개의 변수 <code>li</code>, <code>temp</code> , <code>cell</code> 만 포함한 축소된 모형(reduced model)을 생각해보자.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>logit3_S <span class="ot">&lt;-</span> <span class="fu">glm</span>(remiss<span class="sc">~</span>cell <span class="sc">+</span> li <span class="sc">+</span> temp,<span class="at">family=</span>binomial,<span class="at">data=</span>cancer)</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_S)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1438,7 +1474,7 @@ Number of Fisher Scoring iterations: 7</code></pre>
 <p>위에서 적합한 두개의 모형이 유의한 차이가 있는지 위에서 논의한 편차의 차이를 이용하여 검정해 보자. 다음과 같은 가설을 검정하는 검정은 다음과 같이 <code>anova</code>함수로 수행할 수 있다.</p>
 <p>앞에서 두 모형을 적합한 결과에서 잔차 편차(Residual deviance)의 차이를 이용하여 검정을 실시하였다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(logit3_S, logit3_L,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(logit3_S, logit3_L,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
 
@@ -1453,7 +1489,7 @@ Model 2: remiss ~ cell + smear + infil + li + blast + temp
 <p>다시 하나의 독립변수 <code>li</code> 만 가지는 축소모형을 고려해 보자.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>logit3_S2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(remiss<span class="sc">~</span>li,<span class="at">family=</span>binomial,<span class="at">data=</span>cancer)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit3_S2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1477,7 +1513,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <p>완전모형과의 차이에 대한검정을 실시하며 다음과 같은 결과가 나오고 cencer remission 자료는 사실상 변수 <code>li</code>만으로도 충분히 설명할 수 있다는 결론이다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(logit3_S2, logit3_L,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(logit3_S2, logit3_L,<span class="at">test=</span><span class="st">"Chisq"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
 
@@ -1491,7 +1527,7 @@ Model 2: remiss ~ cell + smear + infil + li + blast + temp
 <p>모형을 선택하는 경우 AIC(Akaike Information Criteria)를 자주 이용한다. AIC는 다음과 같이 정의되며</p>
 <p><span class="math display">\[ AIC = -2*log(\text{Likelihood}) +2*(\text{number of parameter}) \]</span> 모형의 AIC값이 작을수록 좋은 모형이다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(logit3_L, logit3_S, logit3_S2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(logit3_L, logit3_S, logit3_S2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          df      AIC
 logit3_L   7 35.75065
@@ -1502,22 +1538,22 @@ logit3_S2  2 30.07296</code></pre>
 <p>위에서 나타난 AIC로 모형을 선택한다면 독립변수가 3개(<code>li</code>, <code>temp</code> , <code>cell</code> )인 모형이 가장 좋은 모형이다. AIC는 모형에 위에서 주어진 두 번째 항에서 독립변수의 수(number of parameter)를 더해주므로 모형이 복잡할수록 그 값이 증가하여 모형의 선택에서 벌칙(penalty)를 주는 것으로 이해할 수 있다.</p>
 <p>AIC는 로그우도함수와 모형의 자유도로 직접 계산할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(logit3_S)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(logit3_S)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29.95337</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># value of log likelihood</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(logit3_S))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(logit3_S))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -10.97668</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co">#number of parameter = 3+1</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">logLik</span>(logit3_S),<span class="st">"df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(<span class="fu">logLik</span>(logit3_S),<span class="st">"df"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#AIC</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(logit3_S))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="fu">attr</span>(<span class="fu">logLik</span>(logit3_S),<span class="st">"df"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="dv">2</span><span class="sc">*</span><span class="fu">as.numeric</span>(<span class="fu">logLik</span>(logit3_S))<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="fu">attr</span>(<span class="fu">logLik</span>(logit3_S),<span class="st">"df"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 29.95337</code></pre>
 </div>
@@ -1532,7 +1568,7 @@ logit3_S2  2 30.07296</code></pre>
 <p><span class="math display">\[ r_i = \frac{ y_i - m_i \hat p(x_i)}{\sqrt{var(\hat y_i)}} \]</span> 자료의 수가 많으면 <span class="math inline">\(\chi^2\)</span>-통계량은 <span class="math inline">\(\chi^2\)</span> 분포를 따른다.</p>
 <p><span class="math inline">\(\chi^2\)</span>-통계량은 다음과 같이 계산할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(logit1,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(logit1,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 28.06738</code></pre>
 </div>
@@ -1595,7 +1631,7 @@ Var(y) &amp; = \sum_i Var(z_i) \\
 <p><span class="math display">\[Var(y) = \sigma^2 mp(1-p) &gt; kp(1-p)\]</span> 산포모수(<span class="math inline">\(\sigma^2\)</span>)는 과산포가 없으면 1 이고 과산포가 존재하면 1 보다 큰 값을 가진다.</p>
 </div>
 </div>
-<p>산포모수는 식 <a href="#eq-chisquare">Equation&nbsp;<span>5.11</span></a> 에 주어진 <span class="math inline">\(\chi^2\)</span>-통계량에 의해 추정될 수 있다.</p>
+<p>산포모수는 식 <a href="#eq-chisquare" class="quarto-xref">식&nbsp;<span>5.11</span></a> 에 주어진 <span class="math inline">\(\chi^2\)</span>-통계량에 의해 추정될 수 있다.</p>
 <p><span class="math display">\[ \hat \sigma^2 = \chi^2/(n-p) \]</span> 주의할 점은 overidspersion이 있다 하더라도 회귀계수의 추정치 <span class="math inline">\(\beta\)</span>의 추정에는 영향을 미치지 않는다.</p>
 <p>위와 같이 overidspersion이 있다고 판단되는 경우에는 추가로 산포모수(dispersion parameter) <span class="math inline">\(\sigma^2\)</span>를 고려하고 이를 추정하여 회귀계수 <span class="math inline">\(\beta\)</span>의 분산 계산 시 다음과 같이 추가해서 계산한다.</p>
 <p><span class="math display">\[ Var(\hat {\pmb \beta}) = \hat \sigma^2(X'\hat W X)^{-1} \]</span></p>
@@ -1614,7 +1650,7 @@ Var(y) &amp; = \sum_i Var(z_i) \\
 <div class="cell">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>troutegg <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(location, period) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">relocate</span>(<span class="st">`</span><span class="at">location</span><span class="st">`</span>, <span class="st">`</span><span class="at">period</span><span class="st">`</span>, <span class="st">`</span><span class="at">survive</span><span class="st">`</span>, <span class="st">`</span><span class="at">total</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">kbl</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>( <span class="at">full_width =</span> F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
@@ -1774,7 +1810,7 @@ Var(y) &amp; = \sum_i Var(z_i) \\
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(troutegg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(troutegg)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    survive           total        location period
  Min.   :  0.00   Min.   : 86.00   1:4      4 :5  
@@ -1788,7 +1824,7 @@ Var(y) &amp; = \sum_i Var(z_i) \\
 <p>이제 자료 <code>troutegg</code> 에 로지스틱 회귀식을 다음과 같이 적합해보자.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>bmod <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="fu">cbind</span>(survive,total<span class="sc">-</span>survive) <span class="sc">~</span>      location<span class="sc">+</span>period,         <span class="at">family=</span>binomial,troutegg)</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bmod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bmod)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1819,15 +1855,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <p>앞의 예제와 같이 결과의 잔차 편차가 <span class="math inline">\(\chi^2\)</span>-분포를 기준으로 얼마나 큰지 살펴보자.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fu">deviance</span>(bmod), <span class="fu">df.residual</span>(bmod),<span class="at">lower=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pchisq</span>(<span class="fu">deviance</span>(bmod), <span class="fu">df.residual</span>(bmod),<span class="at">lower=</span><span class="cn">FALSE</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.379416e-09</code></pre>
 </div>
 </div>
-<p>잔차 편차가 매우 큰 것을 알 수 있으며 산포모수 <span class="math inline">\(\sigma^2\)</span> 는 식 <a href="#eq-chisquare">Equation&nbsp;<span>5.11</span></a> 에 주어진 것 처럼 다음과 같이 추정될 수 있다.</p>
+<p>잔차 편차가 매우 큰 것을 알 수 있으며 산포모수 <span class="math inline">\(\sigma^2\)</span> 는 식 <a href="#eq-chisquare" class="quarto-xref">식&nbsp;<span>5.11</span></a> 에 주어진 것 처럼 다음과 같이 추정될 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(bmod,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span><span class="dv">12</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>sigma2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>sigma2</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.330322</code></pre>
 </div>
@@ -1835,16 +1871,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p>위에서 구한 산포 모수가 크다는 것은 다음과 같이 o-ring 자료에 대한 로지스틱 회귀의 산포 모수와 비교하면 알 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>sigma2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">residuals</span>(logit1,<span class="at">type=</span><span class="st">"pearson"</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span><span class="dv">21</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>sigma2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>sigma2</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.336542</code></pre>
 </div>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-faraway2016ext" class="csl-entry" role="listitem">
-Faraway, Julian J. 2016. <em>Extending the Linear Model with r: Generalized Linear, Mixed Effects and Nonparametric Regression Models</em>. CRC press.
+Faraway, Julian J. 2016. <em>Extending the linear model with R: generalized linear, mixed effects and nonparametric regression models</em>. CRC press.
 </div>
 <div id="ref-weisberg4" class="csl-entry" role="listitem">
 Weisberg, Sanford. 2014. <em>Applied Linear Regression</em>. Fourth. Hoboken <span>NJ</span>: Wiley. <a href="http://z.umn.edu/alr4ed">http://z.umn.edu/alr4ed</a>.
@@ -1908,12 +1944,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "복사완료!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "복사완료!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
@@ -1933,10 +1969,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1946,8 +1981,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1960,6 +2004,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2003,6 +2169,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2028,6 +2195,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2094,12 +2287,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/poisson.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
