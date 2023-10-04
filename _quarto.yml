@@ -21,13 +21,14 @@ book:
     - part: "일반화 선형모형"
       chapters:
         - notes/logistic.qmd
+        - notes/poisson.qmd
     - references.qmd
 
 bibliography: references.bib
 
 format:
   html:
-#    lang: kr
+    lang: ko
     language: custom.yml
     code-fold: false
     code-overflow: wrap
@@ -39,14 +40,37 @@ format:
     code-block-bg: true
     code-block-border-left: "#31BAE9"
     fig-cap-location: top
+    crossref:
+      fig-prefix: 그림   # (default is "Figure")
+      tbl-prefix: 표    # (default is "Table")
+      eq-prefix: 식     # (default is "Equation")
+      ref-hyperlink: true # (default is true)
     css: styles.css
+    include-in-header:
+      - text: |
+          <script type="text/javascript">
+           window.MathJax = {
+            tex: {
+              macros: {
+              RR: '{\\mathbb R}',                    // a simple string replacement
+              hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+              bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+              pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+              pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+            },
+            environments: {
+            braced: ["\\left\\{", "\\right\\}"]
+            }
+           }
+          };
+          </script>
 #    include-in-header:
 #      - latex/preamble-mathjax.tex
   pdf:
     documentclass: scrbook
-    #documentclass: scrreprt
+    classoption: oneside
     papersize: A4
-    lang: kr
+    lang: ko
     fontsize: 10pt
     lof: true
     lot: true
@@ -55,4 +79,9 @@ format:
     latex-auto-install: true
     latex-tinytex: true
     pdf-engine: xelatex
+    crossref:
+      fig-prefix: 그림   # (default is "Figure")
+      tbl-prefix: 표    # (default is "Table")
+      eq-prefix: 식     # (default is "Equation")
+      ref-hyperlink: true # (default is true)
     include-in-header: latex/preamble.tex
