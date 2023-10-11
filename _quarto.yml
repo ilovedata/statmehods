@@ -23,6 +23,10 @@ book:
       chapters:
         - notes/logistic.qmd
         - notes/poisson.qmd
+    - part: "실습"
+      chapters:
+        - notes/logistic_practice.qmd
+    
     - references.qmd
 
 bibliography: references.bib

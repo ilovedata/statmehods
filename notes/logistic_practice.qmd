@@ -1,0 +1,444 @@
+# 로지스틱 회귀모형 실습 {#logistic_practice}
+
+
+## 필요한 패키지와 함수 
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(ggplot2)
+library(epiR)
+library(faraway)
+library(alr4)
+library(sm)
+library(MASS)
+library(knitr)
+library(kableExtra)
+```
+
+```{r}
+source("../R/functions.R")
+```
+
+## 분석 자료 
+
+로지스틱 회귀모형에 대한 분석은 교과서 @faraway2016ext 에서 사용된 `wcgs` 데이터프레임을 사용한다.
+
+데이터프레임 `wcgs` 은 Western Collaborative Group Study 에 참가한 3154명의 39-59 세 남성에 대한 신체 자료와 관상동맥질환(coronary heat disease)의 발병 여부에 대한 자료이다. 
+
+```{r}
+help(wcgs)
+```
+
+```{r}
+head(wcgs)
+```
+
+반응 변수는 `chd` 로서  만약 coronary heat disease 가 발생한 여부를 `yes` 와 `no` 로 표시한다.
+
+```{r}
+str(wcgs)
+```
+  
+  
+이번 분석에서는 `wcgs` 자료에서 `dibep` 와 마지막 3개 변수를 제외하고 사용하겠다.
+  
+```{r}
+wcgs_1 <- wcgs %>%
+  dplyr::select(!(typechd:arcus) ) %>% dplyr::select(!dibep )
+head(wcgs_1)
+```
+
+## 로지스틱 회귀모형 
+
+이제 다음과 같이 개의 설명 변수가 포함된 로지스틱 회귀모형을 적합해 보자.
+
+```{r}
+fit_all <- glm(chd ~ age +  height +  weight + sdp + dbp +  chol + behave +  cigs , family = binomial, wcgs_1)
+summary(fit_all)
+```
+
+### 회귀계수의 의미
+
+위의 결과에서 회귀계수의 의미에 대하여 살펴보자. 먼저 하루에 평균 피우는 담배의 개수 `cigs` 의 의미는 다음과 같다.
+
+```{r}
+fit_all$coefficients['cigs']
+```
+
+
+설명변수 `cigs` 의 계수가 `r fit_all$coefficients['cigs']` 이므로 담배의 개수가 1개 증가하면 심장병 관련 질환의발생 확률이 다음과 같이 오즈비 단위로 증가 한다.
+
+
+아래 식에서 유의할 점은 다른 설명변수들은 모두 같다는 가정하에서 성립한다는 것이다.
+
+$$ \frac{\text{odd(cigs = a+1)}}{\text{odd(cigs = a)}} = 
+\frac{\tfrac{P(\text{chd =  y} | \text{cigs = a+1})}{1- P(\text{chd = y} | \text{cigs = a+1} )}}
+{\tfrac{P(\text{chd = y} | \text{cigs = a})}{1- P(\text{chd = y} | \text{cigs = a})}}= \exp(`r fit_all$coefficients['cigs']`) = `r exp(fit_all$coefficients['cigs'])`
+$$ {#eq-coeff-mean}
+
+이제 좀 더 이해하기 쉬운 상대위험으로 회귀계수의 영향에 대하여 알아보자.
+
+먼저 연속형 변수들의 평균을 구하고 데이터프레임으로 만들자. 또한 범주형 변수인 
+`behave` 도 하나의 레벨을 추가하자.
+
+
+```{r}
+mean_vars <- get_means(wcgs_1) %>% t() %>% as.data.frame()
+mean_vars$behave <- 'A2'
+mean_vars
+```
+
+이제 데이터프레임 `mean_vars` 에서 주어진 설명변수의 값에서 성공의 확률을 예측해 보자 
+
+$$ \hat P(y=1| \pmb x) = \frac{1}{1+\exp(-[\hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p])}$$ {#eq-prob-logit}
+
+```{r}
+predict(fit_all, newdata=mean_vars, type = "response")
+```
+
+참고로 함수 `prediction` 은 선형예측식의 값만을 구할 수 있다.
+
+$$ \hat \eta = \hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p $$
+
+```{r}
+predict(fit_all, newdata=mean_vars, type = "link")
+```
+
+위에서 `type = "link"` 는 default 선택문이다.
+
+```{r}
+predict(fit_all, newdata=mean_vars)
+```
+
+확률로 바꿀려면 다음과 같이 @eq-prob-logit 을 이용하면 된다.
+
+```{r}
+1/(1+exp(-predict(fit_all, newdata=mean_vars, type = "link")))
+```
+
+위와 같이 계산은 `logit` 함수의 역함수인 `ilogit` 함수를 이용하여 구할 수 있다
+
+```{r}
+faraway::ilogit(predict(fit_all, newdata=mean_vars, type = "link"))
+```
+
+
+이제 데이터프레임 `mean_vars` 의 두 번째 행에 `cigs` 가 1 증가한 관측값을 추가하자.
+
+```{r}
+sel_var <- 'cigs'
+mean_vars_df <- rbind(mean_vars,mean_vars)
+mean_vars_df[2,c(sel_var)] <- mean_vars_df[2,c(sel_var)] + 1
+mean_vars_df
+```
+
+다시 예측값을 구해보면 다음과 같다.
+```{r}
+pre_p <- predict(fit_all, newdata=mean_vars_df, type = "response")
+pre_p
+```
+
+위의 결과로 오즈비를 구해보면 @eq-coeff-mean 에 나타난 값과 같다.
+
+```{r}
+(pre_p[2]/(1-pre_p[2]))/(pre_p[1]/(1-pre_p[1]))
+```
+
+이제 우리는 확률의 예측값을 계산할 수 있으므로 상대위험을 구해보면 다음과 같다.
+
+```{r}
+pre_p[2]/pre_p[1]
+```
+
+
+이제 `age` 도 비슷한 분석을 해보자. 나이는 30세와 60세의 상대위험을 계산해 보자.
+
+```{r}
+sel_var <- 'age'
+mean_vars_df <- rbind(mean_vars,mean_vars)
+mean_vars_df[1,c(sel_var)] <- 30
+mean_vars_df[2,c(sel_var)] <- 60
+pre_p <- predict(fit_all, newdata=mean_vars_df, type = "response")
+pre_p[2]/pre_p[1]
+```
+
+
+이제 범주형 변수에 대한 회귀계수의 의미를 살펴보자. 먼저 범주형변수 `behave` 가 가질 수 있는 범주를 보자.
+
+```{r}
+levels(wcgs_1$behave)
+```
+
+또한 범주형변수 `behave` 에 관련된 회귀계수의 추정값을 보자.
+
+```{r}
+coef1 <- fit_all$coefficients 
+coef1
+```
+
+위의 결과에서 `behave` 의 `A0` 에 대한 게수의 값은 0이다. 즉 다음과 같은 식이 성립한다.
+
+$$ 
+\begin{aligned}
+\text{logit} [ P(y=1 | \text{behave = A0}) ] = \cdots & + 0 + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = A2}) ] = \cdots & + (`r  fit_all$coefficients['behaveA2']`) + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = B3}) ]= \cdots & + (`r  fit_all$coefficients['behaveB3']`) + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = B4}) ]= \cdots & + (`r  fit_all$coefficients['behaveB4']`) + \cdots 
+\end{aligned}
+$$
+  
+따라서 다른 설명 변수들의 값이 고정되어 있다면, 예를 들어  `behave` 의 두 범주 `A0` 와 `A2` 에 대한 오즈비는 다음과 같다.    
+
+
+$$ 
+\frac{\text{odd(behave = A2)}}{\text{odd(behave = A0)}} = 
+\frac{\tfrac{P(\text{chd =  y} | \text{ehave = A2})}{1- P(\text{chd = y} | \text{behave = A2)} )}}
+{\tfrac{P(\text{chd = y} | \text{ehave = A0})}{1- P(\text{chd = y} | \text{ehave = A0})}}= \exp(`r fit_all$coefficients['behaveA2']` - 0) = `r exp(fit_all$coefficients['behaveA2'])`
+$$ {#eq-coeff-mean2}
+
+
+
+
+### 모형의 비교: 내포된 모형 
+
+
+이제 몇 개의 변수를 제외한 모형을 더적합해 보자. 모형에서 `height` 와 `dbp` 를 제외하고 적합해 보자.
+
+
+```{r}
+fit_1 <- glm(chd ~ age +  weight + sdp  +  chol + behave +  cigs , family = binomial, wcgs_1)
+summary(fit_1)
+```
+
+이제 두 개의 모형 `fit_all` 과 `fit_1` 을 비교해 보자. 두 모형의 편차(deviance)는  다음과 같다.
+
+```{r}
+deviance(fit_all)
+deviance(fit_1)
+```
+
+두 개의 모형 `fit_all` 과 `fit_1` 의 편차가 거의 차이가 없으므로 모형에서 `height` 와 `dbp` 를 제외하더라도 모형의 설명력이 거의 차이가 없다고 볼 수 있다.
+
+
+이제 3개의 설명변수 `height` , `dbp`, `weight` 를 제외한  모형을 적합해 보자.
+
+
+```{r}
+fit_2 <- glm(chd ~ age  + sdp  +  chol + behave +  cigs , family = binomial, wcgs_1)
+summary(fit_2)
+```
+
+
+```{r}
+deviance(fit_all)
+deviance(fit_1)
+deviance(fit_2)
+```
+
+이제 두 모형 `fit_1` 과 `fit_2` 의 편처의 차이를 보면 다음과 같다.
+
+```{r}
+deviance(fit_2) - deviance(fit_1)
+```
+
+이제 질문은 모형에서 `weight` 를 제외하면 모형의 설명력에 유의한 영향이 있는지에 대한 것이다. 이는 다음과 같은 가설로 표현할 수 있다.
+
+$$ H_0 : \beta_{\text{weight}} = 0 \quad \text{vs.} \quad \beta_{\text{weight}} \ne 0 $$
+
+
+이제 함수 `anova`  를 통해서 가설검정을 해보자.
+
+```{r}
+anova(fit_2, fit_1, test = "Chisq")
+```
+
+위의 결과에서 `weight` 를 제외하면 모형의 설명력에 유의한 영향이 있다고 할 수 있다. 즉 `weight` 는 모형에서 유의한 변수이다.
+
+참고로  두 개의 설명 변수 `height`,  `dbp` 를 제외한 경우는 큰 차이가 유의한 차이가 있는지 알아보자.
+
+```{r}
+anova(fit_1, fit_all, test = "Chisq")
+```
+
+위의 결과를 보면   $H_0 : \beta_{\text{height}} =\beta_{\text{dbp}} = 0$를 기각할 수 없다는 것을 알 수 있다.
+
+주어진 모형에서 1개의 변수를 제거할 수 있는지는 다음과 같은 함수 `drop1` 으로 알아볼 수 있다. 아래 결과를 보면 각 독립변수를 제거한 경우에 얻어진 편차를 보여주고 그 편차의 차이가 유의한 지를 알려준다.
+
+아래 결과를 보면 설명 변수 `height` 와  `dbp` 는 모형에서 제외해도 유의한 차이가 없음을 알려준다.
+
+```{r}
+drop1(fit_all, test = "Chisq")
+```
+
+적합한 모형에서 각 회귀계수의 신뢰구간은 다음과 같이 구할 수 있다.
+
+```{r}
+confint(fit_all)
+```
+
+
+### 모형의 비교: 일반적인 모형
+
+
+일반적으로 두 개 이상의 모형을 비교하는 경우 가장 자주 사용되는 측도는 정보기준 측도인 AIC(Akaike Information Criteris) 와 BIC(Bayesian Information Criteria) 가 이 있다. AIC와 BIC 모두 값이 작은 것이 좋으 모형이다.
+
+이제 앞에서 살펴본 3개의 모형의 AIC 와 BIC 를 구해보자.
+
+```{r}
+AIC(fit_all, fit_1, fit_2)
+```
+```{r}
+BIC(fit_all, fit_1, fit_2)
+```
+
+AIC 기준으로는 모형 `fit_1` 이 제일 좋으며 BIC 기준으로는 `fit_2` 가 가장 좋다.
+ BIC 가 AIC 보다 설명변수의 수가 적은 성김 모형을 선호하는 일반적인 결과이다. 
+
+## 회귀모형의 진단
+
+### 잔차 
+
+선형회귀 모형처럼 관측값(로지스틱 회귀에서는 0 또는 1)에서 예측값을 뺀 잔차 $r_i$  (residual, raw residual)을 구할 수 있다.
+
+$$ r_i = y_i - \hat P(y_i=1| \pmb x_i) $$ {#eq-residual-raw}
+
+다음과 같이 `residuals` 함수에 `type="response"`를 이용하면 @eq-residual-raw 의 잔차 를 구할 수 있다.
+
+```{r}
+head(residuals(fit_all, type="response")) # 너무 많아서 일부만 출력
+```
+
+이제 잔차를 표준화한 피어슨 잔차(pearson residual)은 다음과 같이 구할 수 있다.
+
+$$ r^*_i = \frac{y_i - \hat p_i}{\sqrt{\hat p_i (1-\hat p_i)}} $$ {#eq-raw-pearson}
+
+
+```{r}
+head(residuals(fit_all, type="pearson")) 
+```
+
+참고로 피어슨 잔차를 제곱한 합은 적합도 분석에 사용하는 카이제곱 통계량이다.
+
+$$ \chi^2 = \sum_{i=1}^n \left [ r^*_i \right ]^2 $$
+
+
+그리고 잔차를 분석하는 그림도 다음과 같이 출력할 수 있다.
+
+
+
+```{r}
+plot(fit_all)
+```
+
+다른 잔차로서 편차 잔차(deviance residual) 이 있으며 이는 편차의 합으로 표시될 수 있도록 잔차를 로그가능도 함수의 값으로 정의한 것이다. 
+
+$$ d_i = sign(y-\hat p_i) \sqrt{-2\{  y_i \log \hat p_i + (1-y_i) \log (1- \hat p_i)\}} $$ {#eq-raw-deviance}
+
+여기서 정의된 편차 잔차는 다음의 식을 만족하도록 구한 잔차이다.
+
+$$ \text{deviance} = D(\hat {\pmb y} ; \hat {\pmb \mu } ) = \sum_{i=1}^n d^2_i $$
+
+
+로지스틱 회귀모형에서의 정의된 모든 잔차는 선형모형과의 잔차와는 많이 다르다. 로지스틱 회귀모형에서 반응값은 0 또는 1 의 값만 가지기 때문에 잔차의 범위가 제약되어 있고 두 개의 패턴으로 몰려서 나오기 때문에 이상점을 찾거나 등분산성을 판단하는 진단으로 이용하기는 힘들다.
+
+### 다중공선성
+
+
+로지스틱 회귀모형에서도 다중공선성(colliearity)는 쉽게 진단할 수 있다. 
+
+함수`vif` 를 이용하면 분산팽창계수(variance inflation factor; vif)의 값을 구하고 상대적으로 큰 값을 보이는 설명변수들이  다중공선성의 위험이 높다.
+
+다음의 결과에서 두 개의 혈압 `sdp` 와 `dbp` 의 vif 값이 높다는 것을 알 수 있다.
+```{r}
+vif(fit_all)
+```
+
+다음과 같이 설명변수들의 상관계수를 보면  두 개의 혈압 `sdp` 와 `dbp` 이 상관계수가 0.77로 다른 조합보다 높게 나타난다.
+
+```{r}
+cor(model.matrix(fit_all)[,-1])
+```
+
+
+## 예측 
+
+
+이제 적합된 성공 확률을 이용하여 반응변수의 값과 예측값을이 얼마나 일치하는지 알아보자. 
+
+$$ 
+\hat y_i =
+\begin{cases}
+\text{yes} & \text{ if } \hat p_i \ge \text{threshold} \\
+\text{no} & \text{ if } \hat p_i < \text{threshold} 
+\end{cases}
+$$
+
+
+먼저 자주 사용되는 분류기준 $\text{threshold}=0.5$ 이용하여 반응값을 예측해보자.
+
+```{r}
+TH <- 0.5
+pred_y <- ifelse(predict(fit_2, type="response") < TH , 0, 1)
+pred_df <- data.frame(response=fit_1$y , predicted=pred_y)
+head(pred_df)
+```
+
+```{r}
+class_table <- xtabs(~response+predicted, data=pred_df)
+class_table
+```
+
+이제 분류기준을 정하면 위의 분류표와 민감도와 특이도를 계산하는 함수를 만들어 보자
+
+```{r}
+classify_func <- function(fit_glm, th){
+  pred_y <- ifelse(predict(fit_glm, type="response") < th , 0, 1)
+  pred_df <- data.frame(response=fit_glm$y , predicted=pred_y)
+  class_table <- xtabs(~response+predicted, data=pred_df)
+  sensitivity <- class_table[2,2]/(class_table[2,1] + class_table[2,2])
+  specificity <- class_table[1,1]/(class_table[1,1] + class_table[1,2])
+  
+  list(class_table, sensitivity, specificity)
+}
+```
+
+분류기준을 0.5 로 하면 다음과 같은 결과가 얻어진다.
+
+
+```{r}
+classify_func(fit_1, 0.5)
+```
+
+분류기준을 0.3으로 낮추면 민감도가 조금 증가하는 것을 알 수 있다.
+
+```{r}
+classify_func(fit_1, 0.3)
+```
+
+
+양성예측도와 음성예측도를 구하는 함수를 다음과 같이 만들 수 있다.
+
+```{r}
+classify_func(fit_1, 0.3)[[2]][1]
+```
+
+```{r}
+# prev : 유병률
+calpred <- function(prev, sen, spe){
+    pred.pos <- sen*prev/(sen*prev + (1-spe)*(1-prev))
+  pred.neg <- spe*(1-prev)/(spe*(1-prev) + (1-sen)*(prev))
+  res <- data.frame(sen, spe, prev, pred.pos, pred.neg)
+  colnames(res) <- c("Sensitivity", "SPecificity","Prevalnce", "Pred. Post.", "Pred. Nega.")
+  res
+}
+```
+
+분류기준을 0.3, 관상동맥질환의  한국 유병율을 $3.0\%$ 로 놓고  양성예측도와 음성예측도를 구해보자.
+
+```{r}
+calpred(0.03, classify_func(fit_1, 0.3)[[2]][1], classify_func(fit_1, 0.3)[[3]][1])
+```
+
+
