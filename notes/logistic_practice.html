@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.395">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>데이터 분석 방법론 - 7&nbsp; 로지스틱 회귀모형 실습</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../notes/poisson.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">데이터 분석 방법론</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="검색"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">분할표의 분석</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">일반화 선형모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">실습</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#필요한-패키지와-함수" id="toc-필요한-패키지와-함수" class="nav-link active" data-scroll-target="#필요한-패키지와-함수"><span class="header-section-number">7.1</span> 필요한 패키지와 함수</a></li>
+  <li><a href="#분석-자료" id="toc-분석-자료" class="nav-link" data-scroll-target="#분석-자료"><span class="header-section-number">7.2</span> 분석 자료</a></li>
+  <li><a href="#로지스틱-회귀모형" id="toc-로지스틱-회귀모형" class="nav-link" data-scroll-target="#로지스틱-회귀모형"><span class="header-section-number">7.3</span> 로지스틱 회귀모형</a>
+  <ul class="collapse">
+  <li><a href="#회귀계수의-의미" id="toc-회귀계수의-의미" class="nav-link" data-scroll-target="#회귀계수의-의미"><span class="header-section-number">7.3.1</span> 회귀계수의 의미</a></li>
+  <li><a href="#모형의-비교-내포된-모형" id="toc-모형의-비교-내포된-모형" class="nav-link" data-scroll-target="#모형의-비교-내포된-모형"><span class="header-section-number">7.3.2</span> 모형의 비교: 내포된 모형</a></li>
+  <li><a href="#모형의-비교-일반적인-모형" id="toc-모형의-비교-일반적인-모형" class="nav-link" data-scroll-target="#모형의-비교-일반적인-모형"><span class="header-section-number">7.3.3</span> 모형의 비교: 일반적인 모형</a></li>
+  </ul></li>
+  <li><a href="#회귀모형의-진단" id="toc-회귀모형의-진단" class="nav-link" data-scroll-target="#회귀모형의-진단"><span class="header-section-number">7.4</span> 회귀모형의 진단</a>
+  <ul class="collapse">
+  <li><a href="#잔차" id="toc-잔차" class="nav-link" data-scroll-target="#잔차"><span class="header-section-number">7.4.1</span> 잔차</a></li>
+  <li><a href="#다중공선성" id="toc-다중공선성" class="nav-link" data-scroll-target="#다중공선성"><span class="header-section-number">7.4.2</span> 다중공선성</a></li>
+  </ul></li>
+  <li><a href="#예측" id="toc-예측" class="nav-link" data-scroll-target="#예측"><span class="header-section-number">7.5</span> 예측</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="logistic_practice" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="필요한-패키지와-함수" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="필요한-패키지와-함수"><span class="header-section-number">7.1</span> 필요한 패키지와 함수</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(alr4)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sm)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/functions.R"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="분석-자료" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="분석-자료"><span class="header-section-number">7.2</span> 분석 자료</h2>
+<p>로지스틱 회귀모형에 대한 분석은 교과서 <span class="citation" data-cites="faraway2016ext">Faraway (<a href="../references.html#ref-faraway2016ext" role="doc-biblioref">2016</a>)</span> 에서 사용된 <code>wcgs</code> 데이터프레임을 사용한다.</p>
+<p>데이터프레임 <code>wcgs</code> 은 Western Collaborative Group Study 에 참가한 3154명의 39-59 세 남성에 대한 신체 자료와 관상동맥질환(coronary heat disease)의 발병 여부에 대한 자료이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(wcgs)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wcgs)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age height weight sdp dbp chol behave cigs dibep chd  typechd timechd   arcus
+1  49     73    150 110  76  225     A2   25     A  no     none    1664  absent
+2  42     70    160 154  84  177     A2   20     A  no     none    3071 present
+3  42     69    160 110  78  181     B3    0     B  no     none    3071  absent
+4  41     68    152 124  78  132     B4   20     B  no     none    3064  absent
+5  59     70    150 144  86  255     B3   20     B yes infdeath    1885 present
+6  44     72    204 150  90  182     B4    0     B  no     none    3102  absent</code></pre>
+</div>
+</div>
+<p>반응 변수는 <code>chd</code> 로서 만약 coronary heat disease 가 발생한 여부를 <code>yes</code> 와 <code>no</code> 로 표시한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(wcgs)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   3154 obs. of  13 variables:
+ $ age    : int  49 42 42 41 59 44 44 40 43 42 ...
+ $ height : int  73 70 69 68 70 72 72 71 72 70 ...
+ $ weight : int  150 160 160 152 150 204 164 150 190 175 ...
+ $ sdp    : int  110 154 110 124 144 150 130 138 146 132 ...
+ $ dbp    : int  76 84 78 78 86 90 84 60 76 90 ...
+ $ chol   : int  225 177 181 132 255 182 155 140 149 325 ...
+ $ behave : Factor w/ 4 levels "A1","A2","B3",..: 2 2 3 4 3 4 4 2 3 2 ...
+ $ cigs   : int  25 20 0 20 20 0 0 0 25 0 ...
+ $ dibep  : Factor w/ 2 levels "A","B": 1 1 2 2 2 2 2 1 2 1 ...
+ $ chd    : Factor w/ 2 levels "no","yes": 1 1 1 1 2 1 1 1 1 1 ...
+ $ typechd: Factor w/ 4 levels "angina","infdeath",..: 3 3 3 3 2 3 3 3 3 3 ...
+ $ timechd: int  1664 3071 3071 3064 1885 3102 3074 3071 3064 1032 ...
+ $ arcus  : Factor w/ 2 levels "absent","present": 1 2 1 1 2 1 1 1 1 2 ...</code></pre>
+</div>
+</div>
+<p>이번 분석에서는 <code>wcgs</code> 자료에서 <code>dibep</code> 와 마지막 3개 변수를 제외하고 사용하겠다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>wcgs_1 <span class="ot">&lt;-</span> wcgs <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span>(typechd<span class="sc">:</span>arcus) ) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span>dibep )</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(wcgs_1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age height weight sdp dbp chol behave cigs chd
+1  49     73    150 110  76  225     A2   25  no
+2  42     70    160 154  84  177     A2   20  no
+3  42     69    160 110  78  181     B3    0  no
+4  41     68    152 124  78  132     B4   20  no
+5  59     70    150 144  86  255     B3   20 yes
+6  44     72    204 150  90  182     B4    0  no</code></pre>
+</div>
+</div>
+</section>
+<section id="로지스틱-회귀모형" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="로지스틱-회귀모형"><span class="header-section-number">7.3</span> 로지스틱 회귀모형</h2>
+<p>이제 다음과 같이 개의 설명 변수가 포함된 로지스틱 회귀모형을 적합해 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_all <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> age <span class="sc">+</span>  height <span class="sc">+</span>  weight <span class="sc">+</span> sdp <span class="sc">+</span> dbp <span class="sc">+</span>  chol <span class="sc">+</span> behave <span class="sc">+</span>  cigs , <span class="at">family =</span> binomial, wcgs_1)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = chd ~ age + height + weight + sdp + dbp + chol + 
+    behave + cigs, family = binomial, data = wcgs_1)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -12.989034   2.336470  -5.559 2.71e-08 ***
+age           0.065068   0.012125   5.367 8.03e-08 ***
+height        0.015824   0.033141   0.477  0.63302    
+weight        0.007874   0.003881   2.029  0.04248 *  
+sdp           0.017536   0.006395   2.742  0.00611 ** 
+dbp           0.000121   0.010833   0.011  0.99109    
+chol          0.011076   0.001522   7.278 3.38e-13 ***
+behaveA2      0.088266   0.222589   0.397  0.69171    
+behaveB3     -0.602705   0.244216  -2.468  0.01359 *  
+behaveB4     -0.499214   0.320978  -1.555  0.11988    
+cigs          0.020998   0.004280   4.906 9.32e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1779.2  on 3141  degrees of freedom
+Residual deviance: 1580.4  on 3131  degrees of freedom
+  (12 observations deleted due to missingness)
+AIC: 1602.4
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<section id="회귀계수의-의미" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="회귀계수의-의미"><span class="header-section-number">7.3.1</span> 회귀계수의 의미</h3>
+<p>위의 결과에서 회귀계수의 의미에 대하여 살펴보자. 먼저 하루에 평균 피우는 담배의 개수 <code>cigs</code> 의 의미는 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit_all<span class="sc">$</span>coefficients[<span class="st">'cigs'</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      cigs 
+0.02099804 </code></pre>
+</div>
+</div>
+<p>설명변수 <code>cigs</code> 의 계수가 0.020998 이므로 담배의 개수가 1개 증가하면 심장병 관련 질환의발생 확률이 다음과 같이 오즈비 단위로 증가 한다.</p>
+<p>아래 식에서 유의할 점은 다른 설명변수들은 모두 같다는 가정하에서 성립한다는 것이다.</p>
+<p><span id="eq-coeff-mean"><span class="math display">\[ \frac{\text{odd(cigs = a+1)}}{\text{odd(cigs = a)}} =
+\frac{\tfrac{P(\text{chd =  y} | \text{cigs = a+1})}{1- P(\text{chd = y} | \text{cigs = a+1} )}}
+{\tfrac{P(\text{chd = y} | \text{cigs = a})}{1- P(\text{chd = y} | \text{cigs = a})}}= \exp(0.020998) = 1.02122
+\tag{7.1}\]</span></span></p>
+<p>이제 좀 더 이해하기 쉬운 상대위험으로 회귀계수의 영향에 대하여 알아보자.</p>
+<p>먼저 연속형 변수들의 평균을 구하고 데이터프레임으로 만들자. 또한 범주형 변수인 <code>behave</code> 도 하나의 레벨을 추가하자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mean_vars <span class="ot">&lt;-</span> <span class="fu">get_means</span>(wcgs_1) <span class="sc">%&gt;%</span> <span class="fu">t</span>() <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mean_vars<span class="sc">$</span>behave <span class="ot">&lt;-</span> <span class="st">'A2'</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>mean_vars</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       age   height   weight      sdp      dbp     chol     cigs behave
+1 46.27869 69.77774 169.9537 128.6328 82.01554 226.3724 11.60051     A2</code></pre>
+</div>
+</div>
+<p>이제 데이터프레임 <code>mean_vars</code> 에서 주어진 설명변수의 값에서 성공의 확률을 예측해 보자</p>
+<p><span id="eq-prob-logit"><span class="math display">\[ \hat P(y=1| \pmb x) = \frac{1}{1+\exp(-[\hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p])} \tag{7.2}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1 
+0.08085642 </code></pre>
+</div>
+</div>
+<p>참고로 함수 <code>prediction</code> 은 선형예측식의 값만을 구할 수 있다.</p>
+<p><span class="math display">\[ \hat \eta = \hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"link"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1 
+-2.430767 </code></pre>
+</div>
+</div>
+<p>위에서 <code>type = "link"</code> 는 default 선택문이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1 
+-2.430767 </code></pre>
+</div>
+</div>
+<p>확률로 바꿀려면 다음과 같이 <a href="#eq-prob-logit" class="quarto-xref">식&nbsp;<span>7.2</span></a> 을 이용하면 된다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"link"</span>)))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1 
+0.08085642 </code></pre>
+</div>
+</div>
+<p>위와 같이 계산은 <code>logit</code> 함수의 역함수인 <code>ilogit</code> 함수를 이용하여 구할 수 있다</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">ilogit</span>(<span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"link"</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1 
+0.08085642 </code></pre>
+</div>
+</div>
+<p>이제 데이터프레임 <code>mean_vars</code> 의 두 번째 행에 <code>cigs</code> 가 1 증가한 관측값을 추가하자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sel_var <span class="ot">&lt;-</span> <span class="st">'cigs'</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>mean_vars_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mean_vars,mean_vars)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>mean_vars_df[<span class="dv">2</span>,<span class="fu">c</span>(sel_var)] <span class="ot">&lt;-</span> mean_vars_df[<span class="dv">2</span>,<span class="fu">c</span>(sel_var)] <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>mean_vars_df</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       age   height   weight      sdp      dbp     chol     cigs behave
+1 46.27869 69.77774 169.9537 128.6328 82.01554 226.3724 11.60051     A2
+2 46.27869 69.77774 169.9537 128.6328 82.01554 226.3724 12.60051     A2</code></pre>
+</div>
+</div>
+<p>다시 예측값을 구해보면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pre_p <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars_df, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>pre_p</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1          2 
+0.08085642 0.08243076 </code></pre>
+</div>
+</div>
+<p>위의 결과로 오즈비를 구해보면 <a href="#eq-coeff-mean" class="quarto-xref">식&nbsp;<span>7.1</span></a> 에 나타난 값과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(pre_p[<span class="dv">2</span>]<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>pre_p[<span class="dv">2</span>]))<span class="sc">/</span>(pre_p[<span class="dv">1</span>]<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>pre_p[<span class="dv">1</span>]))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      2 
+1.02122 </code></pre>
+</div>
+</div>
+<p>이제 우리는 확률의 예측값을 계산할 수 있으므로 상대위험을 구해보면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pre_p[<span class="dv">2</span>]<span class="sc">/</span>pre_p[<span class="dv">1</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       2 
+1.019471 </code></pre>
+</div>
+</div>
+<p>이제 <code>age</code> 도 비슷한 분석을 해보자. 나이는 30세와 60세의 상대위험을 계산해 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sel_var <span class="ot">&lt;-</span> <span class="st">'age'</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>mean_vars_df <span class="ot">&lt;-</span> <span class="fu">rbind</span>(mean_vars,mean_vars)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>mean_vars_df[<span class="dv">1</span>,<span class="fu">c</span>(sel_var)] <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>mean_vars_df[<span class="dv">2</span>,<span class="fu">c</span>(sel_var)] <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>pre_p <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars_df, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>pre_p[<span class="dv">2</span>]<span class="sc">/</span>pre_p[<span class="dv">1</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       2 
+5.974438 </code></pre>
+</div>
+</div>
+<p>이제 범주형 변수에 대한 회귀계수의 의미를 살펴보자. 먼저 범주형변수 <code>behave</code> 가 가질 수 있는 범주를 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(wcgs_1<span class="sc">$</span>behave)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "A1" "A2" "B3" "B4"</code></pre>
+</div>
+</div>
+<p>또한 범주형변수 <code>behave</code> 에 관련된 회귀계수의 추정값을 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>coef1 <span class="ot">&lt;-</span> fit_all<span class="sc">$</span>coefficients </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>coef1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept)           age        height        weight           sdp 
+-1.298903e+01  6.506806e-02  1.582390e-02  7.873538e-03  1.753588e-02 
+          dbp          chol      behaveA2      behaveB3      behaveB4 
+ 1.209992e-04  1.107574e-02  8.826567e-02 -6.027047e-01 -4.992142e-01 
+         cigs 
+ 2.099804e-02 </code></pre>
+</div>
+</div>
+<p>위의 결과에서 <code>behave</code> 의 <code>A0</code> 에 대한 게수의 값은 0이다. 즉 다음과 같은 식이 성립한다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{logit} [ P(y=1 | \text{behave = A0}) ] = \cdots &amp; + 0 + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = A2}) ] = \cdots &amp; + (0.0882657) + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = B3}) ]= \cdots &amp; + (-0.6027047) + \cdots \\
+\text{logit} [ P(y=1 | \text{behave = B4}) ]= \cdots &amp; + (-0.4992142) + \cdots
+\end{aligned}
+\]</span></p>
+<p>따라서 다른 설명 변수들의 값이 고정되어 있다면, 예를 들어 <code>behave</code> 의 두 범주 <code>A0</code> 와 <code>A2</code> 에 대한 오즈비는 다음과 같다.</p>
+<p><span id="eq-coeff-mean2"><span class="math display">\[
+\frac{\text{odd(behave = A2)}}{\text{odd(behave = A0)}} =
+\frac{\tfrac{P(\text{chd =  y} | \text{ehave = A2})}{1- P(\text{chd = y} | \text{behave = A2)} )}}
+{\tfrac{P(\text{chd = y} | \text{ehave = A0})}{1- P(\text{chd = y} | \text{ehave = A0})}}= \exp(0.0882657 - 0) = 1.0922783
+\tag{7.3}\]</span></span></p>
+</section>
+<section id="모형의-비교-내포된-모형" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="모형의-비교-내포된-모형"><span class="header-section-number">7.3.2</span> 모형의 비교: 내포된 모형</h3>
+<p>이제 몇 개의 변수를 제외한 모형을 더적합해 보자. 모형에서 <code>height</code> 와 <code>dbp</code> 를 제외하고 적합해 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fit_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> age <span class="sc">+</span>  weight <span class="sc">+</span> sdp  <span class="sc">+</span>  chol <span class="sc">+</span> behave <span class="sc">+</span>  cigs , <span class="at">family =</span> binomial, wcgs_1)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = chd ~ age + weight + sdp + chol + behave + cigs, 
+    family = binomial, data = wcgs_1)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -11.989331   0.995324 -12.046  &lt; 2e-16 ***
+age           0.064732   0.012103   5.348 8.87e-08 ***
+weight        0.008874   0.003173   2.797  0.00516 ** 
+sdp           0.017326   0.004095   4.231 2.33e-05 ***
+chol          0.011005   0.001513   7.274 3.49e-13 ***
+behaveA2      0.090232   0.222140   0.406  0.68460    
+behaveB3     -0.602010   0.243734  -2.470  0.01351 *  
+behaveB4     -0.498449   0.320571  -1.555  0.11997    
+cigs          0.021198   0.004226   5.017 5.26e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1779.2  on 3141  degrees of freedom
+Residual deviance: 1580.7  on 3133  degrees of freedom
+  (12 observations deleted due to missingness)
+AIC: 1598.7
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<p>이제 두 개의 모형 <code>fit_all</code> 과 <code>fit_1</code> 을 비교해 보자. 두 모형의 편차(deviance)는 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1580.446</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1580.676</code></pre>
+</div>
+</div>
+<p>두 개의 모형 <code>fit_all</code> 과 <code>fit_1</code> 의 편차가 거의 차이가 없으므로 모형에서 <code>height</code> 와 <code>dbp</code> 를 제외하더라도 모형의 설명력이 거의 차이가 없다고 볼 수 있다.</p>
+<p>이제 3개의 설명변수 <code>height</code> , <code>dbp</code>, <code>weight</code> 를 제외한 모형을 적합해 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>fit_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> age  <span class="sc">+</span> sdp  <span class="sc">+</span>  chol <span class="sc">+</span> behave <span class="sc">+</span>  cigs , <span class="at">family =</span> binomial, wcgs_1)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit_2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = chd ~ age + sdp + chol + behave + cigs, family = binomial, 
+    data = wcgs_1)
+
+Coefficients:
+              Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -10.582582   0.843068 -12.552  &lt; 2e-16 ***
+age           0.061049   0.012003   5.086 3.66e-07 ***
+sdp           0.019909   0.003946   5.046 4.51e-07 ***
+chol          0.010950   0.001502   7.290 3.10e-13 ***
+behaveA2      0.073842   0.221516   0.333  0.73887    
+behaveB3     -0.630270   0.243056  -2.593  0.00951 ** 
+behaveB4     -0.539369   0.319753  -1.687  0.09164 .  
+cigs          0.020246   0.004222   4.796 1.62e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 1779.2  on 3141  degrees of freedom
+Residual deviance: 1588.4  on 3134  degrees of freedom
+  (12 observations deleted due to missingness)
+AIC: 1604.4
+
+Number of Fisher Scoring iterations: 6</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1580.446</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1580.676</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1588.378</code></pre>
+</div>
+</div>
+<p>이제 두 모형 <code>fit_1</code> 과 <code>fit_2</code> 의 편처의 차이를 보면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(fit_2) <span class="sc">-</span> <span class="fu">deviance</span>(fit_1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.702675</code></pre>
+</div>
+</div>
+<p>이제 질문은 모형에서 <code>weight</code> 를 제외하면 모형의 설명력에 유의한 영향이 있는지에 대한 것이다. 이는 다음과 같은 가설로 표현할 수 있다.</p>
+<p><span class="math display">\[ H_0 : \beta_{\text{weight}} = 0 \quad \text{vs.} \quad \beta_{\text{weight}} \ne 0 \]</span></p>
+<p>이제 함수 <code>anova</code> 를 통해서 가설검정을 해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_2, fit_1, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: chd ~ age + sdp + chol + behave + cigs
+Model 2: chd ~ age + weight + sdp + chol + behave + cigs
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)   
+1      3134     1588.4                        
+2      3133     1580.7  1   7.7027 0.005514 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>위의 결과에서 <code>weight</code> 를 제외하면 모형의 설명력에 유의한 영향이 있다고 할 수 있다. 즉 <code>weight</code> 는 모형에서 유의한 변수이다.</p>
+<p>참고로 두 개의 설명 변수 <code>height</code>, <code>dbp</code> 를 제외한 경우는 큰 차이가 유의한 차이가 있는지 알아보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fit_1, fit_all, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: chd ~ age + weight + sdp + chol + behave + cigs
+Model 2: chd ~ age + height + weight + sdp + dbp + chol + behave + cigs
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+1      3133     1580.7                     
+2      3131     1580.5  2  0.22978   0.8915</code></pre>
+</div>
+</div>
+<p>위의 결과를 보면 <span class="math inline">\(H_0 : \beta_{\text{height}} =\beta_{\text{dbp}} = 0\)</span>를 기각할 수 없다는 것을 알 수 있다.</p>
+<p>주어진 모형에서 1개의 변수를 제거할 수 있는지는 다음과 같은 함수 <code>drop1</code> 으로 알아볼 수 있다. 아래 결과를 보면 각 독립변수를 제거한 경우에 얻어진 편차를 보여주고 그 편차의 차이가 유의한 지를 알려준다.</p>
+<p>아래 결과를 보면 설명 변수 <code>height</code> 와 <code>dbp</code> 는 모형에서 제외해도 유의한 차이가 없음을 알려준다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">drop1</span>(fit_all, <span class="at">test =</span> <span class="st">"Chisq"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
+
+Model:
+chd ~ age + height + weight + sdp + dbp + chol + behave + cigs
+       Df Deviance    AIC    LRT  Pr(&gt;Chi)    
+&lt;none&gt;      1580.5 1602.5                     
+age     1   1609.1 1629.1 28.662 8.617e-08 ***
+height  1   1580.7 1600.7  0.228  0.632710    
+weight  1   1584.5 1604.5  4.072  0.043612 *  
+sdp     1   1587.8 1607.8  7.299  0.006898 ** 
+dbp     1   1580.5 1600.5  0.000  0.991089    
+chol    1   1635.2 1655.2 54.739 1.376e-13 ***
+behave  3   1602.0 1618.0 21.518 8.218e-05 ***
+cigs    1   1603.6 1623.6 23.159 1.492e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>적합한 모형에서 각 회귀계수의 신뢰구간은 다음과 같이 구할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    2.5 %      97.5 %
+(Intercept) -1.761371e+01 -8.45120837
+age          4.131448e-02  0.08887927
+height      -4.890449e-02  0.08105677
+weight       2.268784e-04  0.01544556
+sdp          4.869834e-03  0.02996578
+dbp         -2.114627e-02  0.02134188
+chol         8.112039e-03  0.01407651
+behaveA2    -3.351460e-01  0.53997138
+behaveB3    -1.073224e+00 -0.11295633
+behaveB4    -1.143870e+00  0.12153181
+cigs         1.255611e-02  0.02935499</code></pre>
+</div>
+</div>
+</section>
+<section id="모형의-비교-일반적인-모형" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="모형의-비교-일반적인-모형"><span class="header-section-number">7.3.3</span> 모형의 비교: 일반적인 모형</h3>
+<p>일반적으로 두 개 이상의 모형을 비교하는 경우 가장 자주 사용되는 측도는 정보기준 측도인 AIC(Akaike Information Criteris) 와 BIC(Bayesian Information Criteria) 가 이 있다. AIC와 BIC 모두 값이 작은 것이 좋으 모형이다.</p>
+<p>이제 앞에서 살펴본 3개의 모형의 AIC 와 BIC 를 구해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit_all, fit_1, fit_2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        df      AIC
+fit_all 11 1602.446
+fit_1    9 1598.676
+fit_2    8 1604.378</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fit_all, fit_1, fit_2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        df      BIC
+fit_all 11 1669.024
+fit_1    9 1653.149
+fit_2    8 1652.799</code></pre>
+</div>
+</div>
+<p>AIC 기준으로는 모형 <code>fit_1</code> 이 제일 좋으며 BIC 기준으로는 <code>fit_2</code> 가 가장 좋다. BIC 가 AIC 보다 설명변수의 수가 적은 성김 모형을 선호하는 일반적인 결과이다.</p>
+</section>
+</section>
+<section id="회귀모형의-진단" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="회귀모형의-진단"><span class="header-section-number">7.4</span> 회귀모형의 진단</h2>
+<section id="잔차" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="잔차"><span class="header-section-number">7.4.1</span> 잔차</h3>
+<p>선형회귀 모형처럼 관측값(로지스틱 회귀에서는 0 또는 1)에서 예측값을 뺀 잔차 <span class="math inline">\(r_i\)</span> (residual, raw residual)을 구할 수 있다.</p>
+<p><span id="eq-residual-raw"><span class="math display">\[ r_i = y_i - \hat P(y_i=1| \pmb x_i)  \tag{7.4}\]</span></span></p>
+<p>다음과 같이 <code>residuals</code> 함수에 <code>type="response"</code>를 이용하면 <a href="#eq-residual-raw" class="quarto-xref">식&nbsp;<span>7.4</span></a> 의 잔차 를 구할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_all, <span class="at">type=</span><span class="st">"response"</span>)) <span class="co"># 너무 많아서 일부만 출력</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1           2           3           4           5           6 
+-0.08157607 -0.06242009 -0.01031108 -0.01118637  0.84345627 -0.03832130 </code></pre>
+</div>
+</div>
+<p>이제 잔차를 표준화한 피어슨 잔차(pearson residual)은 다음과 같이 구할 수 있다.</p>
+<p><span id="eq-raw-pearson"><span class="math display">\[ r^*_i = \frac{y_i - \hat p_i}{\sqrt{\hat p_i (1-\hat p_i)}}  \tag{7.5}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_all, <span class="at">type=</span><span class="st">"pearson"</span>)) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1          2          3          4          5          6 
+-0.2980299 -0.2580228 -0.1020711 -0.1063622  2.3212047 -0.1996205 </code></pre>
+</div>
+</div>
+<p>참고로 피어슨 잔차를 제곱한 합은 적합도 분석에 사용하는 카이제곱 통계량이다.</p>
+<p><span class="math display">\[ \chi^2 = \sum_{i=1}^n \left [ r^*_i \right ]^2 \]</span></p>
+<p>그리고 잔차를 분석하는 그림도 다음과 같이 출력할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="logistic_practice_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="logistic_practice_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="logistic_practice_files/figure-html/unnamed-chunk-35-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="logistic_practice_files/figure-html/unnamed-chunk-35-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>다른 잔차로서 편차 잔차(deviance residual) 이 있으며 이는 편차의 합으로 표시될 수 있도록 잔차를 로그가능도 함수의 값으로 정의한 것이다.</p>
+<p><span id="eq-raw-deviance"><span class="math display">\[ d_i = sign(y-\hat p_i) \sqrt{-2\{  y_i \log \hat p_i + (1-y_i) \log (1- \hat p_i)\}}  \tag{7.6}\]</span></span></p>
+<p>여기서 정의된 편차 잔차는 다음의 식을 만족하도록 구한 잔차이다.</p>
+<p><span class="math display">\[ \text{deviance} = D(\hat {\pmb y} ; \hat {\pmb \mu } ) = \sum_{i=1}^n d^2_i \]</span></p>
+<p>로지스틱 회귀모형에서의 정의된 모든 잔차는 선형모형과의 잔차와는 많이 다르다. 로지스틱 회귀모형에서 반응값은 0 또는 1 의 값만 가지기 때문에 잔차의 범위가 제약되어 있고 두 개의 패턴으로 몰려서 나오기 때문에 이상점을 찾거나 등분산성을 판단하는 진단으로 이용하기는 힘들다.</p>
+</section>
+<section id="다중공선성" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="다중공선성"><span class="header-section-number">7.4.2</span> 다중공선성</h3>
+<p>로지스틱 회귀모형에서도 다중공선성(colliearity)는 쉽게 진단할 수 있다.</p>
+<p>함수<code>vif</code> 를 이용하면 분산팽창계수(variance inflation factor; vif)의 값을 구하고 상대적으로 큰 값을 보이는 설명변수들이 다중공선성의 위험이 높다.</p>
+<p>다음의 결과에서 두 개의 혈압 <code>sdp</code> 와 <code>dbp</code> 의 vif 값이 높다는 것을 알 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit_all)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           GVIF Df GVIF^(1/(2*Df))
+age    1.052733  1        1.026028
+height 1.474285  1        1.214201
+weight 1.599757  1        1.264815
+sdp    2.656508  1        1.629880
+dbp    2.792595  1        1.671106
+chol   1.019601  1        1.009753
+behave 1.029248  3        1.004816
+cigs   1.051759  1        1.025553</code></pre>
+</div>
+</div>
+<p>다음과 같이 설명변수들의 상관계수를 보면 두 개의 혈압 <code>sdp</code> 와 <code>dbp</code> 이 상관계수가 0.77로 다른 조합보다 높게 나타난다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">model.matrix</span>(fit_all)[,<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  age       height       weight         sdp          dbp
+age       1.000000000 -0.091924057 -0.033078516  0.17005253  0.143979992
+height   -0.091924057  1.000000000  0.533288106  0.01556533  0.006985365
+weight   -0.033078516  0.533288106  1.000000000  0.25127827  0.293968705
+sdp       0.170052531  0.015565329  0.251278272  1.00000000  0.770044438
+dbp       0.143979992  0.006985365  0.293968705  0.77004444  1.000000000
+chol      0.089188510 -0.088937779  0.008537442  0.12306130  0.129597108
+behaveA2  0.052019677  0.035509861  0.032336093  0.07146950  0.038463827
+behaveB3 -0.065710685 -0.018273763 -0.022060732 -0.05832314 -0.040950551
+behaveB4 -0.040543591 -0.025710608 -0.033791371 -0.03375835 -0.031730174
+cigs     -0.006111181  0.017304324 -0.082673038  0.02928485 -0.062670918
+                 chol    behaveA2    behaveB3    behaveB4         cigs
+age       0.089188510  0.05201968 -0.06571069 -0.04054359 -0.006111181
+height   -0.088937779  0.03550986 -0.01827376 -0.02571061  0.017304324
+weight    0.008537442  0.03233609 -0.02206073 -0.03379137 -0.082673038
+sdp       0.123061297  0.07146950 -0.05832314 -0.03375835  0.029284852
+dbp       0.129597108  0.03846383 -0.04095055 -0.03173017 -0.062670918
+chol      1.000000000  0.03365476 -0.03791301 -0.03204021  0.096031834
+behaveA2  0.033654760  1.00000000 -0.67403983 -0.30058884  0.069761255
+behaveB3 -0.037913013 -0.67403983  1.00000000 -0.27929653 -0.060013668
+behaveB4 -0.032040209 -0.30058884 -0.27929653  1.00000000 -0.053546698
+cigs      0.096031834  0.06976125 -0.06001367 -0.05354670  1.000000000</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="예측" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="예측"><span class="header-section-number">7.5</span> 예측</h2>
+<p>이제 적합된 성공 확률을 이용하여 반응변수의 값과 예측값을이 얼마나 일치하는지 알아보자.</p>
+<p><span class="math display">\[
+\hat y_i =
+\begin{cases}
+\text{yes} &amp; \text{ if } \hat p_i \ge \text{threshold} \\
+\text{no} &amp; \text{ if } \hat p_i &lt; \text{threshold}
+\end{cases}
+\]</span></p>
+<p>먼저 자주 사용되는 분류기준 <span class="math inline">\(\text{threshold}=0.5\)</span> 이용하여 반응값을 예측해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>TH <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>pred_y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">predict</span>(fit_2, <span class="at">type=</span><span class="st">"response"</span>) <span class="sc">&lt;</span> TH , <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">response=</span>fit_1<span class="sc">$</span>y , <span class="at">predicted=</span>pred_y)</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pred_df)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response predicted
+1        0         0
+2        0         0
+3        0         0
+4        0         0
+5        1         0
+6        0         0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>class_table <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>response<span class="sc">+</span>predicted, <span class="at">data=</span>pred_df)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>class_table</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        predicted
+response    0    1
+       0 2884    1
+       1  254    3</code></pre>
+</div>
+</div>
+<p>이제 분류기준을 정하면 위의 분류표와 민감도와 특이도를 계산하는 함수를 만들어 보자</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>classify_func <span class="ot">&lt;-</span> <span class="cf">function</span>(fit_glm, th){</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  pred_y <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">predict</span>(fit_glm, <span class="at">type=</span><span class="st">"response"</span>) <span class="sc">&lt;</span> th , <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  pred_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">response=</span>fit_glm<span class="sc">$</span>y , <span class="at">predicted=</span>pred_y)</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  class_table <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>response<span class="sc">+</span>predicted, <span class="at">data=</span>pred_df)</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>  sensitivity <span class="ot">&lt;-</span> class_table[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">/</span>(class_table[<span class="dv">2</span>,<span class="dv">1</span>] <span class="sc">+</span> class_table[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>  specificity <span class="ot">&lt;-</span> class_table[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">/</span>(class_table[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> class_table[<span class="dv">1</span>,<span class="dv">2</span>])</span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(class_table, sensitivity, specificity)</span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>분류기준을 0.5 로 하면 다음과 같은 결과가 얻어진다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">classify_func</span>(fit_1, <span class="fl">0.5</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+        predicted
+response    0    1
+       0 2882    3
+       1  255    2
+
+[[2]]
+[1] 0.007782101
+
+[[3]]
+[1] 0.9989601</code></pre>
+</div>
+</div>
+<p>분류기준을 0.3으로 낮추면 민감도가 조금 증가하는 것을 알 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">classify_func</span>(fit_1, <span class="fl">0.3</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+        predicted
+response    0    1
+       0 2824   61
+       1  234   23
+
+[[2]]
+[1] 0.08949416
+
+[[3]]
+[1] 0.9788562</code></pre>
+</div>
+</div>
+<p>양성예측도와 음성예측도를 구하는 함수를 다음과 같이 만들 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">classify_func</span>(fit_1, <span class="fl">0.3</span>)[[<span class="dv">2</span>]][<span class="dv">1</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08949416</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prev : 유병률</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>calpred <span class="ot">&lt;-</span> <span class="cf">function</span>(prev, sen, spe){</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>    pred.pos <span class="ot">&lt;-</span> sen<span class="sc">*</span>prev<span class="sc">/</span>(sen<span class="sc">*</span>prev <span class="sc">+</span> (<span class="dv">1</span><span class="sc">-</span>spe)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev))</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>  pred.neg <span class="ot">&lt;-</span> spe<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev)<span class="sc">/</span>(spe<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>prev) <span class="sc">+</span> (<span class="dv">1</span><span class="sc">-</span>sen)<span class="sc">*</span>(prev))</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sen, spe, prev, pred.pos, pred.neg)</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(res) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Sensitivity"</span>, <span class="st">"SPecificity"</span>,<span class="st">"Prevalnce"</span>, <span class="st">"Pred. Post."</span>, <span class="st">"Pred. Nega."</span>)</span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>  res</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>분류기준을 0.3, 관상동맥질환의 한국 유병율을 <span class="math inline">\(3.0\%\)</span> 로 놓고 양성예측도와 음성예측도를 구해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">calpred</span>(<span class="fl">0.03</span>, <span class="fu">classify_func</span>(fit_1, <span class="fl">0.3</span>)[[<span class="dv">2</span>]][<span class="dv">1</span>], <span class="fu">classify_func</span>(fit_1, <span class="fl">0.3</span>)[[<span class="dv">3</span>]][<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sensitivity SPecificity Prevalnce Pred. Post. Pred. Nega.
+1  0.08949416   0.9788562      0.03   0.1157534   0.9720362</code></pre>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-faraway2016ext" class="csl-entry" role="listitem">
+Faraway, Julian J. 2016. <em>Extending the linear model with R: generalized linear, mixed effects and nonparametric regression models</em>. CRC press.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/poisson.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
