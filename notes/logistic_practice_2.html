@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>데이터 분석 방법론 - 3&nbsp; 연관성의 검정</title>
+<title>데이터 분석 방법론 - 9&nbsp; 로지스틱 회귀모형 실습 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,8 +84,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../notes/diagnose.html" rel="next">
-<link href="../notes/association.html" rel="prev">
+<link href="../references.html" rel="next">
+<link href="../notes/logistic_practice.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -153,7 +153,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/association-test.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice_2.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -211,7 +211,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link active">
+  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></a>
   </div>
 </li>
@@ -280,7 +280,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
+  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
   </div>
 </li>
@@ -302,19 +302,18 @@ div.csl-indent {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#필요한-패키지" id="toc-필요한-패키지" class="nav-link active" data-scroll-target="#필요한-패키지"><span class="header-section-number">3.1</span> 필요한 패키지</a></li>
-  <li><a href="#카이제곱-검정" id="toc-카이제곱-검정" class="nav-link" data-scroll-target="#카이제곱-검정"><span class="header-section-number">3.2</span> 카이제곱 검정</a></li>
-  <li><a href="#코크란-맨텔-헨젤-검정" id="toc-코크란-맨텔-헨젤-검정" class="nav-link" data-scroll-target="#코크란-맨텔-헨젤-검정"><span class="header-section-number">3.3</span> 코크란-맨텔-헨젤 검정</a></li>
-  <li><a href="#맥나마-검정" id="toc-맥나마-검정" class="nav-link" data-scroll-target="#맥나마-검정"><span class="header-section-number">3.4</span> 맥나마 검정</a></li>
+  <li><a href="#필요한-패키지와-함수" id="toc-필요한-패키지와-함수" class="nav-link active" data-scroll-target="#필요한-패키지와-함수"><span class="header-section-number">9.1</span> 필요한 패키지와 함수</a></li>
+  <li><a href="#예제-백혈병의-재발" id="toc-예제-백혈병의-재발" class="nav-link" data-scroll-target="#예제-백혈병의-재발"><span class="header-section-number">9.2</span> 예제: 백혈병의 재발</a></li>
+  <li><a href="#예제-종양-치료" id="toc-예제-종양-치료" class="nav-link" data-scroll-target="#예제-종양-치료"><span class="header-section-number">9.3</span> 예제: 종양 치료</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/association.html">분할표의 분석</a></li><li class="breadcrumb-item"><a href="../notes/association-test.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice_2.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="binomialtest" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></h1>
+<h1 class="title"><span id="logistic_practice_2" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></h1>
 </div>
 
 
@@ -331,293 +330,321 @@ div.csl-indent {
 </header>
 
 
-<p>이 절에서는 두 변수의 연관성에 통계적 가설 검정 방법을 살펴보자.</p>
-<section id="필요한-패키지" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="필요한-패키지"><span class="header-section-number">3.1</span> 필요한 패키지</h2>
+<section id="필요한-패키지와-함수" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="필요한-패키지와-함수"><span class="header-section-number">9.1</span> 필요한 패키지와 함수</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(epiR)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(alr4)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sm)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/functions.R"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="카이제곱-검정" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="카이제곱-검정"><span class="header-section-number">3.2</span> 카이제곱 검정</h2>
-<p>일단 2개의 이항변수 <span class="math inline">\(X\)</span> 와 <span class="math inline">\(Y\)</span> 를 고려하고 가능한 결과의 조합과 그 확률은 다음과 같은 <span class="math inline">\(2 \times 2\)</span> 분할표로 나타낼 수 있다.</p>
-<div id="fig-table22p" class="quarto-figure quarto-figure-center anchored" width="60%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-table22p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.1: 2 x 2 분할표
-</figcaption>
-<div aria-describedby="fig-table22p-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/table22-01.png" class="img-fluid figure-img" style="width:60.0%">
+<section id="예제-백혈병의-재발" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="예제-백혈병의-재발"><span class="header-section-number">9.2</span> 예제: 백혈병의 재발</h2>
+<p>다음은 <span class="citation" data-cites="lee2005">Jaewon Lee (<a href="../references.html#ref-lee2005" role="doc-biblioref">2005</a>)</span> 의 4장에 나오는 예제이다.</p>
+<p>102명의 백혈병(Lukeumia) 환자들을 랜덤하게 두 개의 그룹으로 나누어서 한 그룹에는 처리 A를 하고, 다른 그룹에는 처리 B를 적용하여 재발 여부를 조사하였다. 이때 재발 여부에 영향을 미치는 또 다른 요인으로 호전기간(remission time)을 예측변수로 고려하였다.</p>
+<p>변수 <code>remission</code> 는 호전기간(단위는 월)이며 재발여부를 나타내는 <code>y</code> 는 1이면 재발을 나타내며 이 예제에서는 재발할 확률이 관심 사건이다. 이제 처리 그룹 <code>trt</code> 과 호전 기간이 재발 여부에 미치는 영향을 알아보자.</p>
+<p>참고로 백혈병(Lukeumia) 환에 대한 자료는 확률변수 <span class="math inline">\(y_i\)</span> 가 베르누이 분포 <span class="math inline">\(Berr(p_i)\)</span>를 따른다.</p>
+<p>먼저 자료를 데이터프레임으로 읽어 오자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>luk <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/leukemia.csv"</span>, <span class="at">header=</span>T, <span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(luk,<span class="dv">5</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  trt remission y
+1   A         3 0
+2   A         3 1
+3   A        15 0
+4   A         6 1
+5   A        15 0</code></pre>
 </div>
-</figure>
 </div>
-<p>일반적으로 <span class="math inline">\(2 \times 2\)</span> 분할표에서 다음과 같은 두 가지 가설이 가능하다.</p>
+<p>먼저 재발여부를 나타내는 <code>y</code> 는 1 이 성공 사건이므로 <code>level=c(0,1)</code> 로 지정한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>luk<span class="sc">$</span>y <span class="ot">&lt;-</span> <span class="fu">factor</span>(luk<span class="sc">$</span>y, <span class="at">levels=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>먼저 처리와 재발에 대한 분할표를 만들어 보자. 또한 호전 기간의 요약통계도 살펴보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(luk<span class="sc">$</span>trt, luk<span class="sc">$</span>y)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   
+     0  1
+  A 29 22
+  B 20 31</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(luk<span class="sc">$</span>remission)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  3.000   6.000   9.000   9.735  12.000  18.000 </code></pre>
+</div>
+</div>
+<p>이제 다음과 같이 함수 <code>glm</code> 을 이용하여 로지스틱 회귀모형을 적합해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>luk_res <span class="ot">&lt;-</span> <span class="fu">glm</span>(y<span class="sc">~</span> trt <span class="sc">+</span> remission, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data=</span>luk)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(luk_res)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = y ~ trt + remission, family = "binomial", data = luk)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)  1.45595    0.55839   2.607 0.009123 ** 
+trtB         1.17754    0.46669   2.523 0.011631 *  
+remission   -0.19985    0.05589  -3.576 0.000349 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 141.25  on 101  degrees of freedom
+Residual deviance: 122.68  on  99  degrees of freedom
+AIC: 128.68
+
+Number of Fisher Scoring iterations: 3</code></pre>
+</div>
+</div>
+<p>위의 결과를 해석하면 다음과 같이 설명할 수 있다. 일단 두 환자가 같은 호전 시간 <code>remission</code> 을 보여주었다면 처리 A 와 B 에 대한 재발 확률의 오즈비는 다음과 같이 표현할 수 있다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|A)}{1-P(y=1|A)}} \right ]
+-\log \left [ \tfrac{P(y=1|B)}{1-P(y=1|B)} \right ] \\
+&amp; \quad = [1.4559 + 0 + (-0.1998)(x)] - [1.4559 + 1.1775
+  + (-0.1998)(x)] \\
+&amp; \quad  = - 1.1775
+\end{aligned}
+\]</span></p>
+<p>따라서</p>
+<p><span class="math display">\[
+\log   \left [  \frac {\tfrac{P(y=1|A)}{1-P(y=1|A)}}{\tfrac{P(y=1|B)}{1-P(y=1|B)}} \right ]  = - 1.1775
+\]</span></p>
+<p>다시 쓰면</p>
+<p><span class="math display">\[
+\frac {\tfrac{P(y=1|A)}{1-P(y=1|A)}}{\tfrac{P(y=1|B)}{1-P(y=1|B)}}   = \exp(-1.1775) = 0.308
+\]</span></p>
+<p>따라서 처리 A 를 받은 환자들의 오드가 처리 B 를 받은 환자들의 오드의 약 0.3 배(30%)가 된다는 것을 의미한다. 처리 A의 한자들이 재발할 가능성이 처리 B 를 받은 환자들 보다 작다는 것을 의미하며 처리 <code>trt</code> 의 회귀계수에 대한 p-값이 <span class="math inline">\(0.0116\)</span> 이므로 처리 간의 차이가 유의한 것을 알 수 있다.</p>
+<p>호전기간 <code>remisson</code> 에 대한 효과도 알아보자. 일단 두 환자가 같은 처리를 받았다고 가정하고(예를 들어 처리 A) 호전 시간이 1개월 차이가 는 경우의 배발 확률을 비교해보자.</p>
+<p>한 명의 한자는 호전기간이 <span class="math inline">\(r+1\)</span> 개월이고 다른 환자는 <span class="math inline">\(r\)</span> 개월 이라면 재발 확률의 오즈비는 다음과 같이 표현할 수 있다.</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|x=r+1)}{1-P(y=1|x=r+1)}} \right ]
+-\log \left [ \tfrac{P(y=1|x=r)}{1-P(y=1|x=r)} \right ] \\
+&amp; \quad = [1.4559 + 0 + (-0.1998)(r+1)] - [1.4559 + 0
+  + (-0.1998)(r)] \\
+&amp; \quad  = -0.1998
+\end{aligned}
+\]</span></p>
+<p>따라서</p>
+<p><span class="math display">\[
+\frac {\tfrac{P(y=1|x=r+1)}{1-P(y=1|x=r+1)}}{\tfrac{P(y=1|x=r)}{1-P(y=1|x=r)}}   = \exp(-0.1998) = 0.819
+\]</span></p>
+<p>즉, 호전기간이 1개월 증가하면 오즈가 이전의 약 81.9% 가 된다. 따라서 호전 기간이 늘어날수록 재발할 확률이 낮아지는 것을 알 수 있다. 가설 검정에 의하여 호전 기간은 매우 유의한 예측변수이다(p-값 = 0.000349).</p>
+<p>이제 함수 <code>predict()</code> 를 이용하여 각 환자에 대한 재발 확률의 예측값을 구해보자. 선택문 <code>type = "response"</code>을 이용해야 확률의 예측값이 구해진다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>luk_pred_p <span class="ot">&lt;-</span> <span class="fu">predict</span>(luk_res, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>luk_pred_p[<span class="dv">1</span><span class="sc">:</span><span class="dv">14</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        1         2         3         4         5         6         7         8 
+0.7019096 0.7019096 0.1762813 0.5638664 0.1762813 0.2804544 0.5638664 0.5638664 
+        9        10        11        12        13        14 
+0.2804544 0.5638664 0.5638664 0.7019096 0.4151610 0.5638664 </code></pre>
+</div>
+</div>
+<p>각 처리에 따라서 호전기간이 변하면 재발확률이 어떻게 변하는지 에측확률에 대한 그림을 다음과 같이 그려보자.</p>
+<p>먼저 두 처리 그룹에 대하여 호전기간에 대한 값을 1개월부터 24개월까지 새로운 자료를 만들자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>t_num <span class="ot">=</span> <span class="dv">24</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>trt_new <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, t_num), <span class="fu">rep</span>(<span class="st">"B"</span>, t_num))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>remission_new <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>t_num, <span class="dv">2</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>luk_new <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">trt =</span> trt_new, <span class="at">remission=</span>remission_new)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(luk_new,<span class="dv">10</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   trt remission
+1    A         1
+2    A         2
+3    A         3
+4    A         4
+5    A         5
+6    A         6
+7    A         7
+8    A         8
+9    A         9
+10   A        10</code></pre>
+</div>
+</div>
+<p>새롭개 만든 데이터프레임 <code>luk_new</code> 에 예측함수 <code>predict()</code> 를 이용하여 예측한 재발확률의 벡터를 만들고 데이터프레임 <code>luk_new</code> 에 포함시킨다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pred_new <span class="ot">=</span> <span class="fu">predict</span>(luk_res, <span class="at">newdata =</span> luk_new, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>luk_new<span class="sc">$</span>hatp <span class="ot">=</span> pred_new </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(luk_new)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  trt remission      hatp
+1   A         1 0.7783541
+2   A         2 0.7419740
+3   A         3 0.7019096
+4   A         4 0.6584875
+5   A         5 0.6122346
+6   A         6 0.5638664</code></pre>
+</div>
+</div>
+<p>이제 패키지 <code>ggplot2</code> 를 이용하여 처리에 따라서 호전기간에 따른 예측된 재발확률의 변화를 그림으로 그려보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(luk_new, <span class="fu">aes</span>(<span class="at">x=</span>remission, <span class="at">y=</span>hatp, <span class="at">color=</span>trt)) <span class="sc">+</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"remission(month)"</span>, <span class="at">y=</span><span class="st">"Probability"</span>) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="logistic_practice_2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="예제-종양-치료" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="예제-종양-치료"><span class="header-section-number">9.3</span> 예제: 종양 치료</h2>
+<p>다음은 <span class="citation" data-cites="lee2005">Jaewon Lee (<a href="../references.html#ref-lee2005" role="doc-biblioref">2005</a>)</span> 의 4장에 나오는 예제이다.</p>
+<p>두 종류의 종양(<code>T</code>,<code>M</code>)이 있는 환자들을 대상으로 3가지 치료 방법(<code>A</code>, <code>B</code>, <code>C</code>)를 적용하여 종양이 치료되었는지 여부를 조사한 자료이다. 변수 <code>cured</code> 와 <code>uncured</code> 는 각각 치료된 환자와 그렇지 못한 환자의 수를 나타낸다.</p>
+<p>연구자의 관심은 치료율이 종양과 치료법에 따라서 다른지 알아보는데 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>tumor <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">text =</span> <span class="st">"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="st">type trt  cured uncured</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">T A  65   18</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">M B  100  13</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">T C  56   38</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">M A  80   15</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">T B  29   9</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">M C  78   22</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>, <span class="at">sep=</span><span class="st">""</span>, <span class="at">header=</span><span class="cn">TRUE</span> )</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>tumor</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  type trt cured uncured
+1    T   A    65      18
+2    M   B   100      13
+3    T   C    56      38
+4    M   A    80      15
+5    T   B    29       9
+6    M   C    78      22</code></pre>
+</div>
+</div>
+<p>먼저 자료에서 종양의 종류(<code>type</code>) 과 치료법(<code>trt</code>)를 범주형 변수로 정하고 수준(level)과 순서를 정하자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tumor<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="fu">factor</span>(tumor<span class="sc">$</span>type, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"T"</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>tumor<span class="sc">$</span>trt <span class="ot">&lt;-</span>  <span class="fu">factor</span>(tumor<span class="sc">$</span>trt, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tumor)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   6 obs. of  4 variables:
+ $ type   : Factor w/ 2 levels "M","T": 2 1 2 1 2 1
+ $ trt    : Factor w/ 3 levels "A","B","C": 1 2 3 1 2 3
+ $ cured  : int  65 100 56 80 29 78
+ $ uncured: int  18 13 38 15 9 22</code></pre>
+</div>
+</div>
+<p>이제 다음과 같인 종양의 종류와 치료법을 예측변수로 하는 로지스틱 회귀식을 적합해 보자.</p>
+<p>모형식에서 반응값으로 함수 <code>cbind()</code> 에 성공의 횟수(<code>cured</code>)와 실패의 횟수(<code>uncured</code>)를 지정한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tumor_res <span class="ot">&lt;-</span> <span class="fu">glm</span>( <span class="fu">cbind</span>(cured, uncured) <span class="sc">~</span> type <span class="sc">+</span> trt, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data=</span>tumor)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tumor_res)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = cbind(cured, uncured) ~ type + trt, family = "binomial", 
+    data = tumor)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)   1.8575     0.2328   7.978 1.48e-15 ***
+typeT        -0.7216     0.2202  -3.276  0.00105 ** 
+trtB          0.1288     0.3073   0.419  0.67515    
+trtC         -0.6795     0.2505  -2.712  0.00668 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 26.8238  on 5  degrees of freedom
+Residual deviance:  1.0604  on 2  degrees of freedom
+AIC: 35.669
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>앞에서 종양의 종류와 치료 방법에 대한 수준(level)을 만들 때 종양 <code>M</code> 과 치료법 <code>A</code> 를 첫 수준으로 놓있기 떄문에 효과에 대한 추정치는 0이 된다. 즉, 나머지 종양과 치료법의 효과는 종양 <code>M</code> 과 치료법 <code>A</code> 에 대한 상대적인 효과이다.</p>
+<p>추정의 결과를 해석하면 다음과 같다. 비교하고자 하는 효과를 제외한 다른 효과들은 모두 같은 효과를 가정하므로 0으로 놓고 계산해도 무방하다.</p>
 <ul>
-<li><p>동질성 검정(homogeneuty test)</p>
-<p>변수 <span class="math inline">\(X\)</span> 가 단순하게 독립 집단을 나누는 변수인 경우 (예를 들어 실험약 집단과 위약 집단) 두 그룹 간에 이항변수 <span class="math inline">\(Y\)</span>의 성공확률이 같은지 검정하는 경우이다. 실험약 집단과 위약 집단에서 심장병이 발병할 확률이 같은지 검정을 수행할 때 귀무가설은 다음과 같다.</p></li>
+<li>종양의 종류가 <code>M</code> 인 경우의 치료에 대한 오드가 <code>T</code> 인 경우의 2.06 배 이다 [<span class="math inline">\(\exp(0.7216)\)</span>]. 따라서 종양의 종류가 <code>M</code> 인 경우가 <code>T</code> 인 경우보다 치료 효과가 더 좋다.</li>
 </ul>
-<p><span class="math display">\[ H_0: p_{1j} = p_{2j} = p_j \]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|M)}{1-P(y=1|M)}} \right ]
+-\log \left [ \tfrac{P(y=1|T)}{1-P(y=1|T)} \right ] \\
+&amp; \quad = [1.8575 + 0 + 0 ] - [1.8575 -0.7216 + 0] \\
+&amp; \quad  =0.7216
+\end{aligned}
+\]</span></p>
 <ul>
-<li><p>독립성 검정(independent test)</p>
-<p>변수 <span class="math inline">\(X\)</span> 와 <span class="math inline">\(Y\)</span> 가 모두 확률변수인 경우 두 변수가 독립인지 검정하는 경우이다. 예를 들어 흡연(<span class="math inline">\(X\)</span>)과 심근경색(<span class="math inline">\(Y\)</span>)의 관계를 연구하는 경우 두 사건이 모두 확률적인 사건이라고 보고 다음과 같이 독립에 대한 가설을 고려한다.</p></li>
+<li>치료 방법이 <code>A</code> 인 경우의 치료에 대한 오드가 <code>B</code> 인 경우의 87.91 % 이다 [<span class="math inline">\(\exp(-0.1288)\)</span>]. 따라서 치료 방법이 <code>B</code> 인 경우가 <code>A</code> 인 경우보다 치료 효과가 더 좋다.</li>
 </ul>
-<p><span class="math display">\[ H_0: p_{ij} = p_{i+} p_{+j} \]</span></p>
-<p>다음과 같이 <span class="math inline">\(n\)</span> 개의 관측값으로 구성된 <span class="math inline">\(2 \times 2\)</span> 분할표에서 <strong>동질성과 독립성 가설을 검정하는 방법은 동일하며</strong> 따라서 굳이 두 가지 가설을 엄격하게 구별할 이유는 없다. 만약 귀무가설이 기각되면 두 변수의 연과성은 유의하다고 결론을 내린다.</p>
-<div id="fig-table22n" class="quarto-figure quarto-figure-center anchored" width="60%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-table22n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.2: 2 x 2 분할표: 관측 도수
-</figcaption>
-<div aria-describedby="fig-table22n-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/table22-02.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-</figure>
-</div>
-<p>동질성과 독립성에 대한 검정은 다음과 같은 <strong>카이제곱 통계량</strong>을 사용한다.</p>
-<p><span id="eq-chisquarestat"><span class="math display">\[
-\chi^2 = \sum_{i=1}^2 \sum_{j=1}^2 \frac{(O_{ij} - E_{ij})^2}{E_ij}  
-\tag{3.1}\]</span></span></p>
-<p>위의 카이제곱 통계량에서 <span class="math inline">\(O_{ij} = n_{ij}\)</span> 는 각 셀의 관측도수이며 <span class="math inline">\(E_{ij}\)</span>는 귀무가설 하에서의 셀 도수의 예측값이다.<br>
-동질성 검정을 고려할 때 만약 귀무가설이 참이라면 확률 <span class="math inline">\(p_{1j} =p_{2j}=p_j\)</span> 는 다음과 같이 추정할 수 있다.</p>
-<p><span class="math display">\[ \hat p_{j} = \frac{n_{+j}}{n} \]</span></p>
-<p>따라서 셀 <span class="math inline">\((i,j)\)</span> 에 대한 기데 돗수 <span class="math inline">\(E_{ij}\)</span> 는 다음과 같이 계산된다.</p>
-<p><span id="eq-chisquareexp"><span class="math display">\[
-E_{ij} =n_{i+} \hat p_j =\frac{n_{i+} n_{+j}}{n}
-\tag{3.2}\]</span></span></p>
-<p>귀무가설 하에서 표본의 크기가 충분히 크면 식 <a href="#eq-chisquarestat" class="quarto-xref">식&nbsp;<span>3.1</span></a> 의 카이제곱 검정통계량 <span class="math inline">\(\chi^2\)</span> 는 자유도가 1인 카이제곱 분포를 따른다. 그러므로 이 사실을 이용하여 p-값을 계산하거나 기각역을 구하여 검정한다.</p>
-<p>일반적인 <span class="math inline">\(I \times J\)</span> 분할표도 동일한 방법으로 가설검정을 할 수 있다. 카이제곱 통계량을 구하는 방법은 <span class="math inline">\(2 \times 2\)</span> 분할표와 유사하다. 다만 귀무가설이 참인 경우 검정통계량은 자유도가 <span class="math inline">\((I-1)(J-1)\)</span> 인 카이제곱 분포를 따른다.</p>
 <p><span class="math display">\[
-\chi^2 = \sum_{i=1}^I \sum_{j=1}^J \frac{(O_{ij} - E_{ij})^2}{E_ij}  
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|A)}{1-P(y=1|A)}} \right ]
+-\log \left [ \tfrac{P(y=1|B)}{1-P(y=1|B)} \right ] \\
+&amp; \quad = [1.8575 + 0 + 0 ] - [1.8575 + 0 + 0.1288 ] \\
+&amp; \quad  = - 0.1228
+\end{aligned}
 \]</span></p>
-<p>이제 실제 분할표에서 카이제곱 검정을 수행해 보자. 아스피린 임상실험 결과가 주어진 표 <a href="association.html#tbl-conttable25" class="quarto-xref">표&nbsp;<span>2.4</span></a> 에서 아스피린의 횩과사 없는 경우, 즉 귀무가설이 참인 경우 다음과 같이 심근경색의 유무에 대한 예측 확률을 구할 수 있다.</p>
-<p><span class="math display">\[ \hat p_1 = \frac{n_{+1}}{n} = \frac{139+239}{22071} = 0.0171 \]</span> <span class="math display">\[\hat p_2 = \frac{n_{+2}}{n} = \frac{10898+10795}{22071} = 0.9829 \]</span></p>
-<p>이제 각 셀의 기대도수를 식 <a href="#eq-chisquareexp" class="quarto-xref">식&nbsp;<span>3.2</span></a> 에 의하여 계산할 수 있다. 예를 들어 <span class="math inline">\(E_{11}\)</span> 은 다음과 같이 계산된다.</p>
-<p><span class="math display">\[ E_{11} = \frac{n_{1+}n_{+1}}{n} =  n_{1+} \hat p_1 = (11037)(0.0171) = 189.03 \]</span></p>
-<p>각 셀에 대한 기대도수 <span class="math inline">\(E_{ij}\)</span> 를 구하고 식 <a href="#eq-chisquarestat" class="quarto-xref">식&nbsp;<span>3.1</span></a> 의 카이제곱 통계량을 구하면 다음과 같다.</p>
-<p><span class="math display">\[\begin{align*}
-\chi^2 &amp; = \frac{(139-189.03)^2}{189.03} +  \frac{(10898-10848.00)^2}{10848.00}  \\
-&amp; \quad + \frac{(239-188.97)^2}{188.97} +  \frac{(10795-10845.03)^2}{10845.03}  \\
-&amp; = 26.94
-\end{align*}\]</span></p>
-<p>자유도가 1인 카이제곱 분포의 상위 5% 백분위수 <span class="math inline">\(3.84\)</span> 이다. 위에서 구한 카이제곱 통계량의 값이 <span class="math inline">\(26.94\)</span> 로서 <span class="math inline">\(3.84\)</span> 보다 크므로 귀무가설을 기각한다. 즉 아스프린과 위약을 복용한 두 그룹 사이에는 심근경색이 일어날 비율에 유의한 차이가 있다.</p>
-<p>R 에서도 카이제곱 검정을 쉽게 수행할 수 있다. 앞에서 표 <a href="association.html#tbl-conttable25" class="quarto-xref">표&nbsp;<span>2.4</span></a> 의 자료를 행렬의 형태로 저장하였는데 함수 <code>chisq.test()</code> 를 사용하면 결과를 쉽게 구할 수 있다.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ex1dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>( <span class="fu">c</span>(<span class="dv">139</span>, <span class="dv">10898</span>, <span class="dv">239</span>, <span class="dv">10795</span>), <span class="dv">2</span>, <span class="dv">2</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ex1dat</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1]  [,2]
-[1,]  139 10898
-[2,]  239 10795</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(ex1dat)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's Chi-squared test with Yates' continuity correction
-
-data:  ex1dat
-X-squared = 26.408, df = 1, p-value = 2.764e-07</code></pre>
-</div>
-</div>
-<p>분할표에서의 기대도수 <span class="math inline">\(E_{ij}\)</span> 는 다음과 같이 얻을 수 있다.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(ex1dat)<span class="sc">$</span>expected</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>         [,1]     [,2]
-[1,] 189.0257 10847.97
-[2,] 188.9743 10845.03</code></pre>
-</div>
-</div>
-</section>
-<section id="코크란-맨텔-헨젤-검정" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="코크란-맨텔-헨젤-검정"><span class="header-section-number">3.3</span> 코크란-맨텔-헨젤 검정</h2>
-<p>임상실험이나 의학연구는 여러 나라 또는 여러 병원들에서 진행되는 경우가 있다. 이러한 경우 국가나 병원의 고유한 특성에 따라서 실험의 결과가 다르게 나타날 수 있다. 이렇게 그룹에 의한 효과를 그룹 효과 또는 층(strata)에 의한 효과라고 한다. 예를 들어 진통제에 대한 효과는 그 나라의 문화나 관습에 따라서 효과의 차이가 나타날 수 있다. 또한 여러 개의 변원에서 연그ㅜ가 동시에 진행된다면 병원의 규모, 위치, 환자들의 특성에 따라서 치료 효과의 차이가 나타날 수 있다.</p>
-<p>이렇게 그룹에 따른 차이가 예상되는 경우 그룹의 효과를 제어하면서 처리 효과의 차이를 검정하는 방법이 필요하다. 이렇게 여러 개의 층으로 구성된 독립집단에서 얻은 자료에서 층에 의한 횩과를 통제하면서 동질성 또는 독립성 검정을 수행하는 방법을 <strong>코크란-맨텔-헨젤 검정 (Cochran-Mantel-Haenzel test)</strong>라고 한다.</p>
-<p>아래와 같이 <span class="math inline">\(K\)</span> 개의 독립집단(또는 층)에서 각각 얻은 <span class="math inline">\(K\)</span> 개의 <span class="math inline">\(2 \times2\)</span> 분할표가 있다고 하자.</p>
-<div id="fig-table22k" class="quarto-figure quarto-figure-center anchored" width="60%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-table22k-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.3: K 개의 2 x 2 분할표
-</figcaption>
-<div aria-describedby="fig-table22k-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/table22-k.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-</figure>
-</div>
-<p><span class="math inline">\(K\)</span> 개의 독립집단이 있고 성공의 확률이 <span class="math inline">\(p_1\)</span>, 실패의 학률이 <span class="math inline">\(p_2\)</span> 라고 한다면 처리의 효과를 전체적으로 비교하는 가설은 다음과 같다.</p>
-<p><span class="math display">\[ H_0: p_1 =p_2 \quad \text{sv.} \quad H_1: p_1 \ne p_2 \]</span></p>
-<p>이제 귀무가설의 가정 하에서 각 분할표에서 <span class="math inline">\(n_{k11}\)</span> 에 대한 기대도수 <span class="math inline">\(\mu_{k11}\)</span> 와 그 분산 <span class="math inline">\(v_{k11}\)</span> 을 다음과 같이 계산한다.</p>
+<ul>
+<li>치료 방법이 <code>A</code> 인 경우의 치료에 대한 오드가 <code>C</code> 인 경우의 1.97 배 이다 [<span class="math inline">\(\exp( 0.6795)\)</span>]. 따라서 치료 방법이 <code>A</code> 인 경우가 <code>C</code> 인 경우보다 치료 효과가 더 좋다.</li>
+</ul>
 <p><span class="math display">\[
-\mu_{k11} = E(n_{k11} | H_0) = \frac{ n_{k1+} n_{k+1} }{ n_k}
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|A)}{1-P(y=1|A)}} \right ]
+-\log \left [ \tfrac{P(y=1|C)}{1-P(y=1|C)} \right ] \\
+&amp; \quad = [1.8575 0 + 0 ] - [1.8575  + 0 - 0.6795] \\
+&amp; \quad  = 0.6795
+\end{aligned}
 \]</span></p>
+<ul>
+<li>치료 방법이 <code>B</code> 인 경우의 치료에 대한 오드가 <code>C</code> 인 경우의 2.23 배 이다 [<span class="math inline">\(\exp(0.8023)\)</span>]. 따라서 치료 방법이 <code>B</code> 인 경우가 <code>C</code> 인 경우보다 치료 효과가 더 좋다.</li>
+</ul>
 <p><span class="math display">\[
-v_{k11} = V ( n_{k11} | H_0)  = \frac{ n_{k1+} n_{k2+} n_{k+1} n_{k+2} }{n^2_k (n_k-1)}
+\begin{aligned}
+&amp; \log   \left [   {\tfrac{P(y=1|A)}{1-P(y=1|A)}} \right ]
+-\log \left [ \tfrac{P(y=1|C)}{1-P(y=1|C)} \right ] \\
+&amp; \quad = [1.8575 +  0 + 0.1288 ] - [1.8575  + 0 - 0.6795] \\
+&amp; \quad  = 0.1228 +  0.6795 = 0.8023
+\end{aligned}
 \]</span></p>
-<p>이제 가설검정을 위한 통계량 <span class="math inline">\(Q_{CMH}\)</span> 은 다음과 같다.</p>
-<p><span id="eq-cmhstat"><span class="math display">\[
-Q_{CMH} = \frac{ \left [  \sum_{k=1}^K  (n_{k11} - \mu_{k11}) \right ]^2 }{\sum_{k=1}^K v_{k11}}
-\tag{3.3}\]</span></span></p>
-<p>귀무가설이 참인 경우 검정통계량 <span class="math inline">\(Q_{CMH}\)</span> 은 자유도가 <span class="math inline">\(1\)</span> 인 카이제곱 분포를 따른다.</p>
-<p>이제 <span class="citation" data-cites="agresti2012">Agresti (<a href="../references.html#ref-agresti2012" role="doc-biblioref">2012</a>)</span> 의 6.3절에 있는 <strong>다기관 임상시험(multi-center clinical trial)</strong> 의 예제를 살펴보자. 아래 표는 모두 8개의 독립적인 병원에서 감염 치료제에 대한 효과에 대한 실험을 실시하여 얻은 자료이다.</p>
-<div id="fig-beitler" class="quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-beitler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.4: 8개 병원의 임상실험 결과
-</figcaption>
-<div aria-describedby="fig-beitler-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/beitler-data.png" class="img-fluid figure-img">
-</div>
-</figure>
-</div>
-<p>마지막 병원을 제외한 7개의 병원에서 치료제의 효과가 긍정적으로 나타났다. 여기서 주목할 점은 병원에 따라서 연관성의 강도가 매우 다르게 나타날 수 있다는 것이다.</p>
-<p>이제 각 병원을 층(strata)로 고려하고 병원의 효과를 제어하면서 식 <a href="#eq-cmhstat" class="quarto-xref">식&nbsp;<span>3.3</span></a> 의 검정 통계량 <span class="math inline">\(Q_{CMH}\)</span> 를 이용하여 치료제의 효과가 있는지 검정해보자. 검정은 아래와 같이 R 프로그램을 이용한다. 함수 <code>mantelhaen.test()</code> 는 코크란-맨텔-헨젤 검정을 수행하는 함수이다.</p>
+<p>이제 종양별, 치료 방법별로 치료의 확률에 대한 예측값을 구해보자.</p>
+<p>종양의 종류에 관계없이 치료법 <code>B</code> 가 가장 치료 효과가 높다는 것을 알 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>beitler <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">11</span>,<span class="dv">10</span>,<span class="dv">25</span>,<span class="dv">27</span>,<span class="dv">16</span>,<span class="dv">22</span>,<span class="dv">4</span>,<span class="dv">10</span>,<span class="dv">14</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">12</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">14</span>,<span class="dv">16</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>beitler <span class="ot">&lt;-</span> <span class="fu">array</span>(beitler, <span class="at">dim=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">8</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>beitler</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tumor_new <span class="ot">&lt;-</span> tumor[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>pred_new <span class="ot">=</span> <span class="fu">predict</span>(tumor_res, <span class="at">newdata =</span> tumor_new, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>tumor_new<span class="sc">$</span>hatp <span class="ot">=</span> pred_new </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>tumor_new <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(type, trt)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>, , 1
-
-     [,1] [,2]
-[1,]   11   25
-[2,]   10   27
-
-, , 2
-
-     [,1] [,2]
-[1,]   16    4
-[2,]   22   10
-
-, , 3
-
-     [,1] [,2]
-[1,]   14    5
-[2,]    7   12
-
-, , 4
-
-     [,1] [,2]
-[1,]    2   14
-[2,]    1   16
-
-, , 5
-
-     [,1] [,2]
-[1,]    6   11
-[2,]    0   12
-
-, , 6
-
-     [,1] [,2]
-[1,]    1   10
-[2,]    0   10
-
-, , 7
-
-     [,1] [,2]
-[1,]    1    4
-[2,]    1    8
-
-, , 8
-
-     [,1] [,2]
-[1,]    4    2
-[2,]    6    1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mantelhaen.test</span>(beitler, <span class="at">correct=</span><span class="cn">FALSE</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Mantel-Haenszel chi-squared test without continuity correction
-
-data:  beitler
-Mantel-Haenszel X-squared = 6.3841, df = 1, p-value = 0.01151
-alternative hypothesis: true common odds ratio is not equal to 1
-95 percent confidence interval:
- 1.177590 3.869174
-sample estimates:
-common odds ratio 
-         2.134549 </code></pre>
+<pre><code>  type trt      hatp
+1    M   A 0.8650044
+2    M   B 0.8793494
+3    M   C 0.7645810
+4    T   A 0.7569227
+5    T   B 0.7798294
+6    T   C 0.6121479</code></pre>
 </div>
 </div>
-<p>검정 통계량 <span class="math inline">\(Q_{CMH}\)</span>의 값이 <span class="math inline">\(6.3841\)</span> 이고 p-값은 <span class="math inline">\(0.0115\)</span> 이므로 귀무가설을 기각한다.</p>
-</section>
-<section id="맥나마-검정" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="맥나마-검정"><span class="header-section-number">3.4</span> 맥나마 검정</h2>
-<p>연속형 변수에서 짝지은 자료를 비교할 때 사용하는 방법이 대응 t-검정(paired t-test) 또는 짝표본 t-검정이다. 예를 들어 천식환자가 A약을 먹고 폐활량을 측정하고 일정 기간이 지나서 같은 환자가 B약을 먹고 폐활량을 측정하면 두 관측값은 독립이 아나다. 따라서 이러한 경우 독립 t-검정이 아닌 대응 t-검정을 시용한다.</p>
-<p>이제 이산형 변수가 짝으로 나타나는 경우를 생각해보자. 예를 들어 눈병 치료에 사용되는 A약과 B약의 효과를비교하기 위하여 각각의 약을 환자의 오른쪽 눈과 왼쪽 눈에 처치를 하고 치료의 여부를 관측하였다고 하자.</p>
-<div id="fig-macnamar" class="quarto-figure quarto-figure-center anchored" width="60%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-macnamar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.5: 짝표본 실험에 의한 2 x 2 분할표
-</figcaption>
-<div aria-describedby="fig-macnamar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/paired.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-</figure>
-</div>
-<p>위의 표에서 <span class="math inline">\(n_{11}\)</span> 은 A약과 B약의 효과가 모두 나타난 환자의 도수이다. <span class="math inline">\(n_{12}\)</span> 은 A약은 효과가 있고 B약은 효과가 없는 환자의 도수이다. 이러한 자료는 앞에서 배운 카이제곱 검정을 적용할 수 없다.</p>
-<p>이제 일반적으로 짝표본에서 나온 자료가 다음 표와 같이 얻어졌다고 가정하자.</p>
-<div id="fig-macnamar2" class="quarto-figure quarto-figure-center anchored" width="60%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-macnamar2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.6: 짝표본 실험에 의한 2 x 2 분할표
-</figcaption>
-<div aria-describedby="fig-macnamar2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/paired2.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-</figure>
-</div>
-<p>이제 조건 1 에서 성공의 확률을 <span class="math inline">\(p_1\)</span> 이라고 하고 조건 2에서 성공의 확률을 <span class="math inline">\(p_2\)</span> 라고 하면 짝표본에서 얻어진 분할표 <a href="#fig-macnamar2" class="quarto-xref">그림&nbsp;<span>3.6</span></a> 에서 관심있는 가설은 다음과 같다.</p>
-<p><span class="math display">\[ H_0: p_1 =p_2 \quad \text{sv.} \quad H_1: p_1 \ne p_2 \]</span></p>
-<p>분할표 <a href="#fig-macnamar2" class="quarto-xref">그림&nbsp;<span>3.6</span></a> 에서 <span class="math inline">\(p_1\)</span> 과 <span class="math inline">\(p_2\)</span>의 추정량은 다음과 같다.</p>
-<p><span class="math display">\[ \hat p_1 = \frac{n_{1+}}{n}, \quad \hat p_2 = \frac{n_{+1}}{n} \]</span></p>
-<p><span class="math inline">\(p_1\)</span> 과 <span class="math inline">\(p_2\)</span>의 추정량의 차이는 두 조건에 따른 결과가 일치하지 않는 도수 <span class="math inline">\(n_{12}\)</span>와 <span class="math inline">\(n_{21}\)</span>의 차이에 의존한다.</p>
-<p><span class="math display">\[ \hat p_1 -\hat p_2 = \frac{n_{1+}}{n} - \frac{n_{+1}}{n} =
-\frac{n_{11} + n_{12}}{n} - \frac{n_{11} + n_{21}}{n} = \frac{n_{12} - n_{21}}{n}
-\]</span></p>
-<p>맥나마 검정(McNemar Test)는 도수 <span class="math inline">\(n_{12}\)</span>와 <span class="math inline">\(n_{21}\)</span>에 의거하여 두 확률이 같은지 검정하는 방법을 제시하였다. 맥나마 검정을 위한 통계량은 다음과 같다.</p>
-<p><span id="eq-mcnemarstat"><span class="math display">\[
-Q_{M} = \frac{ (n_{12}-n_{21})^2}{n_{12} + n_{21}}
-\tag{3.4}\]</span></span></p>
-<p>맥나마 검정 통계량 <span class="math inline">\(Q_{M}\)</span>은 귀무가설 하에서 근사적으로 자유도가 1인 카이제곱 분포를 따른다.</p>
-<p>다음은 1600명 영국 시민들의 수상에 대한 지지 여부를 두 개의 연속된 여론 조사에서 수집한 자료이다 <span class="citation" data-cites="agresti2012">(<a href="../references.html#ref-agresti2012" role="doc-biblioref">Agresti 2012</a> 의 10장 참조)</span>. 이제 두 시점에서 수상에 대한 지지율이 같은지 아닌지 R 을 이용하여 맥나마 검정을 해보자. 맥나마 검정은 함수 <code>mcnemar.test()</code>를 사용하여 수행할 수 있다.</p>
-<div id="fig-macnamar3" class="quarto-figure quarto-figure-center anchored" width="80%">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-macnamar3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-그림&nbsp;3.7: 영국시민의 수상에 대한 지지도 조사 자료
-</figcaption>
-<div aria-describedby="fig-macnamar3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="../myimages/paired-data.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-</figure>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ex3dat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">794</span>,<span class="dv">150</span>,<span class="dv">86</span>,<span class="dv">570</span>),<span class="at">byrow=</span>T,<span class="at">ncol=</span><span class="dv">2</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ex3dat</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     [,1] [,2]
-[1,]  794  150
-[2,]   86  570</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mcnemar.test</span>(ex3dat ,<span class="at">correct=</span>F)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    McNemar's Chi-squared test
-
-data:  ex3dat
-McNemar's chi-squared = 17.356, df = 1, p-value = 3.099e-05</code></pre>
-</div>
-</div>
-<p>검정의 p-값이 매우 작으므로 귀무가설을 기각한다. 두 시점에서 수상에 대한 지지율이 하락했다고 할 수 있다. 참고로 첫 번째 조사에서의 지지율의 추정치는 <span class="math inline">\(\hat p_1=944/1600= 0.59\)</span> 이고 두 번째 조사에서의 지지율의 추정치는 <span class="math inline">\(\hat p_2=880/1600= 0.55\)</span> 이다. 또한 의견을 바꾸지 않은 사람의 비율은 <span class="math inline">\((794+570)/1600=0.8225\)</span>로 대부분의 시민들이 지지 의견을 바꾸지 않았다.</p>
+<p>여기서 주의할 점은 각 종양과 치료법의 조합에서 구할 수 있는 치료된 환자들의 표본 비율과 로지스틱 회귀에서 나타나는 추정 확률은 약간 차이가 난다. 그 이유는 로지스틱회귀에서는 최대가능도함수 추정법을 사용하여 각 조합의 효과를 추정하기 때문에 단순한 표본 비율과 차이가 날 수 있다.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-agresti2012" class="csl-entry" role="listitem">
-Agresti, Alan. 2012. <em>Categorical data analysis</em>. Vol 792. John Wiley &amp; Sons.
+<div id="ref-lee2005" class="csl-entry" role="listitem">
+Jaewon Lee, Hanna Yu, Mira Park. 2005. <em>생명과학연구를 위한 통계적 방법</em>. 1st ed. 자유아카데미.
 </div>
 </div>
 </section>
@@ -1015,13 +1042,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/association.html" class="pagination-link  aria-label=" <span="">2&nbsp; <span class="chapter-title">연관성의 측도</span>"&gt;
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span>
+      <a href="../notes/logistic_practice.html" class="pagination-link  aria-label=" <span="">8&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span>"&gt;
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/diagnose.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>진단의 평가</span>">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
