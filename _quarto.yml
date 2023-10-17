@@ -23,9 +23,13 @@ book:
       chapters:
         - notes/logistic.qmd
         - notes/poisson.qmd
+    - part: "혼합모형"
+      chapters:
+        - notes/random_effect.qmd
     - part: "실습"
       chapters:
         - notes/logistic_practice.qmd
+        - notes/logistic_practice_2.qmd
     
     - references.qmd
 

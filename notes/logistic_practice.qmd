@@ -1,4 +1,4 @@
-# 로지스틱 회귀모형 실습 {#logistic_practice}
+# 로지스틱 회귀모형 실습 1 {#logistic_practice_1}
 
 
 ## 필요한 패키지와 함수 
