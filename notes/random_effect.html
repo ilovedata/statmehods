@@ -452,16 +452,17 @@ H_0: \alpha_1 = \alpha_2 =\dots = \alpha_I
 <h3 data-number="7.4.2" class="anchored" data-anchor-id="임의효과-모형"><span class="header-section-number">7.4.2</span> 임의효과 모형</h3>
 <p>이제 다음과 같은 자료의 추출을 생각해 보자. 서울시 A구에 초등학교가 20개있다고 하자. 20개의 학교중 6개의 학교를을 임의로 추출하고 추출된 학교에 속한 모든 6학년 학생들에게 과학시험을 보게하여 점수를 얻었다. 이러한 자료에서 학생들의 성적은 모두 같지 않을 것이 당연하며 가장 점수가 낮은 학생부터 높은 학생까지 점수의 변동(variation)이 존재한다. 변동의 요인은 무었일까? 학생의 개인의 차이(예:학생의 지능, 노력 정도, 학습 환경)도 변동의 요인이지만 또한 학교의 차이도 변동의 요인이 될 수 있다.</p>
 <p>여기서 학교에 대한 요인은 앞 절에서 본 실험 자료에서 나타나는 고정 효과에 의한 요인과는 성격이 틀리다. 20개의 학교라는 모집단에서 6개의 학교가 추출되었으며 이 때 학교의 차이는 설계된 실험에서는 수준에 대한 효과와는 다르게 표본 추출 때문에 생기는 변동이라고 할 수 있다. 또한 같은 학교에 다니는 학생들은 같은 지역과 교사 등 공통적인 요인에 의하여 영향을 받는다고 가정할 수 있다. 따라서 같은 학교에 다는 학생들의 성적이 독립이 아닐 수도 있다.</p>
-<p>이러한 효과를 임의효과(random effect)라고 부르며 학생들의 과학점수에 대한 모형을</p>
-<p>다음과 같은 임의효과모형(random effects model) 또는 혼합효과모형(mixed effects model)으로 설명할 수 있다.</p>
+<p>이러한 효과를 임의효과(random effect)라고 부르며 학생들의 과학점수에 대한 모형을 다음과 같은 <strong>임의효과모형(random effects model)</strong> 또는 <strong>혼합효과모형(mixed effects model)</strong> 으로 설명할 수 있다.</p>
 <p><span id="eq-onewayrandom"><span class="math display">\[
 y_{ij} = \mu + a_i + e_{ij}, \quad i=1,2,\dots,I \text{ and } j=1,2,\dots, J  
 \tag{7.8}\]</span></span></p>
-<p>여기서 <span class="math inline">\(a_i\)</span>는 학교의 효과를 나타내는 임의효과이며 서로 독립이고 <span class="math inline">\(N(0,\sigma_a^2)\)</span>를 따른다. 또한 개인에 대한 효과 또는 오차항 <span class="math inline">\(e_{ij}\)</span>는 서로 독립이며 <span class="math inline">\(N(0,\sigma_e^2)\)</span>를 따른다. 임의효과 <span class="math inline">\(a_i\)</span>와 오차항 <span class="math inline">\(e_{ij}\)</span>는 서로 독립이다. 고정효과 <span class="math inline">\(\mu\)</span>는 전체 평균을 나타내는 모수이다. 학교를 추출할 때 그 효과를 분산이 <span class="math inline">\(\sigma^2_a\)</span>를 가지는 정규모집단에서 추출한다고 가정하는 것이다. 학교를 하나의 군집(cluster)로 생각하고 학교의 효과를 군집효과로 보고 총변동을 설명하고 나머지 변동은 오차의 변동으로 개인의 효과 등으로 설명한다.</p>
+<p>여기서 <span class="math inline">\(a_i\)</span>는 학교의 효과를 나타내는 임의효과이며 서로 독립이고 <span class="math inline">\(N(0,\sigma_a^2)\)</span>를 따른다. 또한 개인에 대한 효과 또는 오차항 <span class="math inline">\(e_{ij}\)</span>는 서로 독립이며 <span class="math inline">\(N(0,\sigma_e^2)\)</span>를 따른다. 임의효과 <span class="math inline">\(a_i\)</span>와 오차항 <span class="math inline">\(e_{ij}\)</span>는 서로 독립이다. 고정효과 <span class="math inline">\(\mu\)</span>는 전체 평균을 나타내는 모수이다.</p>
+<p>학교를 추출할 때 그 효과를 분산이 <span class="math inline">\(\sigma^2_a\)</span>를 가지는 정규모집단에서 추출한다고 가정하는 것이다. 학교를 하나의 군집(cluster)로 생각하고 학교의 효과를 군집효과로 보고 총변동의 일부로서 고려하고 나머지 변동은 오차의 변동으로 개인의 효과 등으로 설명한다.</p>
 <p><span class="math display">\[
 Var(y_{ij}) =Var(\mu + a_i + e_{ij}) = Var(a_i) + Var(e_{ij}) = \sigma^2_a + \sigma^2_e
 \]</span></p>
-<p><a href="#eq-onewayrandom" class="quarto-xref">식&nbsp;<span>7.8</span></a> 로 표현된 임의효과를 포함한 혼합모형(일원배치 임의효과 모형; one-way random effect models)의 가장 큰 특징 중에 하나는 같은 군집에 속하는 관측치들은 서로 독립이 아니며 양의 상관관계가 있다. 위의 예제에서 두 학생 <span class="math inline">\(j\)</span>와 <span class="math inline">\(k\)</span>가 같은 학교 <span class="math inline">\(i\)</span>에 속한다면</p>
+<p><a href="#eq-onewayrandom" class="quarto-xref">식&nbsp;<span>7.8</span></a> 로 표현된 임의효과를 포함한 혼합모형(일원배치 임의효과 모형; one-way random effect models)의 가장 큰 특징 중에 하나는 같은 군집에 속하는 관측치들은 서로 독립이 아니며 양의 상관관계가 있다.</p>
+<p>위의 예제에서 두 학생 <span class="math inline">\(j\)</span>와 <span class="math inline">\(k\)</span>가 같은 학교 <span class="math inline">\(i\)</span>에 속한다면</p>
 <p><span class="math display">\[
 Cov(y_{ij},y_{ik}) = Cov(  \mu + a_i + e_{ij}, \mu + a_i + e_{ik}) =Cov (a_i, a_i)=\sigma^2_a
 \]</span></p>
@@ -469,12 +470,14 @@ Cov(y_{ij},y_{ik}) = Cov(  \mu + a_i + e_{ij}, \mu + a_i + e_{ik}) =Cov (a_i, a_
 <p><span class="math display">\[
 corr(y_{ij},y_{ik})= \frac{ Cov(y_{ij},y_{ik})}{\sqrt{Var(y_{ij})Var(y_{ik})} } = \frac{\sigma^2_a }{\sigma^2_a + \sigma^2_e }
 \]</span></p>
-<p>위의 상관계수를 보면 학교간의 변동의 크기를 나타내는 <span class="math inline">\(\sigma^2_a\)</span>각 개인간의 변동을 나타내는 <span class="math inline">\(\sigma^2_e\)</span>보다 상대적으로 클수록 상관계수가 1에 가까와진다. 보통 <span class="math inline">\(\sigma^2_a\)</span>을 집단간 변동(between-group variance)라 하고 <span class="math inline">\(\sigma^2_e\)</span>를 집단내 변동(within-group variance)라고 한다. 따라서 <span class="math inline">\(\sigma^2_a\)</span>와 <span class="math inline">\(\sigma^2_e\)</span>의 상대적인 크기의 차이에 따라 군집내 관측값의 상관관계가 달라진다.</p>
+<p>위의 상관계수를 보면 학교간의 변동의 크기를 나타내는 <span class="math inline">\(\sigma^2_a\)</span> 가 각 개인간의 변동을 나타내는 <span class="math inline">\(\sigma^2_e\)</span>보다 상대적으로 클수록 상관계수가 1에 가까와진다.</p>
+<p>보통 <span class="math inline">\(\sigma^2_a\)</span>을 집단간 변동(between-group variance)라 하고 <span class="math inline">\(\sigma^2_e\)</span>를 집단내 변동(within-group variance)라고 한다. 따라서 <span class="math inline">\(\sigma^2_a\)</span>와 <span class="math inline">\(\sigma^2_e\)</span>의 상대적인 크기의 차이에 따라 군집내 관측값의 상관관계가 달라진다.</p>
 <p><a href="#eq-onewayrandom" class="quarto-xref">식&nbsp;<span>7.8</span></a> 의 임의효과 모형은 임의효과가 2개 이상인 모형으로 확장될 수 있다. 예제에서 학교를 추출하고 학교내에서 학급을 추출하여 추출된 학급내의 학생들이 시험을 보면 다음과 같은 모형을 적용할 수 있다.</p>
 <p><span class="math display">\[
 y_{ijk} = \mu + a_i + b_{ij} + e_{ijk}
 \]</span> 위의 모형에서 <span class="math inline">\(a_i\)</span>는 <span class="math inline">\(N(0,\sigma^2_a)\)</span>를 따르는 학교에 대한 임의효과, <span class="math inline">\(b_{ij}\)</span>는 <span class="math inline">\(N(0,\sigma^2_b)\)</span>를 따르는 학급에 대한 임의효과, <span class="math inline">\(e_{ijk}\)</span>는 <span class="math inline">\(N(0,\sigma^2_e)\)</span>를 따르는 학생에 대한 임의효과 또는 오차항으로 생각할 수 있다.</p>
-<p>임의효과 모형에 고정효과가 같이 포함되어 있는 모형을 혼합모형(mixed model)이라고 부르며 반응변수의 변동에 영향을 미치는 요인들 또는 예측변수 중에서 임의효과와 고정효과를 구별하여 정하고 동시에 모형에 포함시킬수 있다. 예를 들어서 학교를 선택하여 과학시험을 볼 경우에 학기가 시작할 떄 과학교수법 두가지 중 하나를 임의화해서 각 학교에 배정하여 배정된 교수법으로 학생을 가르친 후에 시험을 보았다면 교수법에 대한 효과는 고정효과로 볼 수 있다. 따라서 다음과 같은 모형을 고려할 수 있다.</p>
+<p>임의효과 모형에 고정효과가 같이 포함되어 있는 모형을 혼합모형(mixed model)이라고 부르며 반응변수의 변동에 영향을 미치는 요인들 또는 예측변수 중에서 임의효과와 고정효과를 구별하여 정하고 동시에 모형에 포함시킬수 있다.</p>
+<p>예를 들어서 학교를 선택하여 과학시험을 볼 경우에 학기가 시작할 떄 과학교수법 두가지 중 하나를 임의화해서 각 학교에 배정하여 배정된 교수법으로 학생을 가르친 후에 시험을 보았다면 교수법에 대한 효과는 고정효과로 볼 수 있다. 따라서 다음과 같은 모형을 고려할 수 있다.</p>
 <p><span id="eq-compmodel"><span class="math display">\[
 y_{ij} = \mu + \tau_{k(i)} + a_i + e_{ij}  
 \tag{7.9}\]</span></span></p>
@@ -484,9 +487,11 @@ y_{ij} = \mu + \tau_{k(i)} + a_i + e_{ij}
 <section id="반복측정자료" class="level2" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="반복측정자료"><span class="header-section-number">7.5</span> 반복측정자료</h2>
 <p>반복측정자료(longitudinal data, repeated measurements)는 관측단위안에서 여러 개의 관측값을 측정한 자료의 형식을 말한다.</p>
-<p>예를 들어 환자가 병원을 여러 번 방문하고 방문시마다 혈압을 측정하였다면 한 명의 환자에서 반복 측정한 자료는 서로 독립이 아니다. 또한 가구조사(household survey)에서 가구원의 취업 여부, 건겅 상태등을 여러 해동안 매년 측정하는 경우 이러한 자료를 패널자료(panel data) 또는 longitudinal 자료라고 한다. 이렇게 하나의 관측단위 안에서 측정한 자료들은 서로 독립이 아닌 특징이 있고 자료를 분석하는 경우 이러한 자료들의 종속구조를 고려하는 모형을 사용하는 것이 적절하다. 이렇게 반복측정자료에서 반복자료들의 공분산구조를 설정하는 통계적 방법들은 다양하지만 대표적으로 쉽게 사용할 수 있는 방법이 임의효과를 포함한 혼합모형을 사용하는 방법이다.</p>
-<p><code>lme4</code> 패키지에 자료인 <code>spleepstudy</code>는 화물트럭 운전사들에 대한 수면부족 현상에 대하여 연구한 자료이다. 18명의 운전자들이 매일 3시간의 수면(부족한 수면)을 하면서</p>
-<p>매일 일정한 동작의 반응시간을 10일동안 반복적으로 측정한 자료가 있다. 한명의 운전사에게 10일 동안의 반응에 대한 측정자료 10개가 존재하므로 이는 반복측정 자료이며 이러한 10개의 자료는 독립이 아니다. 일단 자료의 구조를 살펴보자. 반응변수 <code>Reaction</code>은 반응시간(ms)를 나타내며 설명변수로서 <code>Days</code>는 날짜(<span class="math inline">\(t=0,1,2,\dots,9\)</span>), <code>Subject</code> 는 운전자의 고유번호를 나타낸다.</p>
+<p>예를 들어 환자가 병원을 여러 번 방문하고 방문시마다 혈압을 측정하였다면 한 명의 환자에서 반복 측정한 자료는 서로 독립이 아니다. 또한 가구조사(household survey)에서 가구원의 취업 여부, 건겅 상태등을 여러 해동안 매년 측정하는 경우 이러한 자료를 패널자료(panel data) 또는 longitudinal 자료라고 한다.</p>
+<p>이렇게 하나의 관측단위 안에서 측정한 자료들은 서로 독립이 아닌 특징이 있고 자료를 분석하는 경우 이러한 자료들의 종속구조를 고려하는 모형을 사용하는 것이 적절하다. 이렇게 반복측정자료에서 반복자료들의 공분산구조를 설정하는 통계적 방법들은 다양하지만 대표적으로 쉽게 사용할 수 있는 방법이 임의효과를 포함한 혼합모형을 사용하는 방법이다.</p>
+<p><code>lme4</code> 패키지에 자료인 <code>spleepstudy</code>는 화물트럭 운전사들에 대한 수면부족 현상에 대하여 연구한 자료이다. 18명의 운전자들이 매일 3시간의 수면(부족한 수면)을 하면서 매일 일정한 동작의 반응시간을 10일동안 반복적으로 측정한 자료가 있다.</p>
+<p>한명의 운전사에게 10일 동안의 반응에 대한 측정자료 10개가 존재하므로 이는 반복측정 자료이며 이러한 10개의 자료는 독립이 아니다.</p>
+<p>일단 자료의 구조를 살펴보자. 반응변수 <code>Reaction</code>은 반응시간(ms)를 나타내며 설명변수로서 <code>Days</code>는 날짜(<span class="math inline">\(t=0,1,2,\dots,9\)</span>), <code>Subject</code> 는 운전자의 고유번호를 나타낸다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
@@ -527,18 +532,14 @@ y_{ij} = \mu + \tau_{k(i)} + a_i + e_{ij}
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sleepstudy, <span class="fu">aes</span>(<span class="at">x=</span>Days, <span class="at">y=</span>Reaction)) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span>F,<span class="at">size=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span>F,<span class="at">linewidth=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">facet_wrap</span>(<span class="st">"Subject"</span>, <span class="at">labeller =</span> label_both)<span class="sc">+</span> </span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="random_effect_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" style="width:80.0%"></p>
+<p><img src="random_effect_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 <section id="개체들의-선형-회귀모형" class="level3" data-number="7.5.1">
@@ -550,7 +551,7 @@ y_{ij} = \beta_{0i} + \beta_{1i} t_j + e_{ij},\quad i=1,2,\dots,18,\quad j=1,2,\
 <p>여기서 오차항 <span class="math inline">\(e_{ij}\)</span>은 서로 독립이며 <span class="math inline">\(N(0, \sigma^2_e)\)</span>를 따른다고 가정한다.</p>
 <p>행렬식으로는 다음과 같이 나타낼 수 있다.</p>
 <p><span class="math display">\[  
-\pmb y_i =\pmb X_i \pmb \beta_{i} +\pmb e_i
+\pmb y_i =\pmb X_i \pmb \beta_{i} +\pmb e_i ,\quad i=1,2,\dots,18
 \]</span></p>
 <p>여기서 <span class="math display">\[
 \pmb y_i=\begin{bmatrix}
@@ -576,10 +577,11 @@ e_{i2} \\
 e_{i,10}
 \end{bmatrix}
 \]</span></p>
-<p>위의 식에서 <span class="math inline">\(\beta_{0i}\)</span>와 <span class="math inline">\(\beta_{1i}\)</span>는 <span class="math inline">\(i\)</span>번째 운전사의 반응속도를 설명내는 회귀직선의 절편과 기울기이다. 절편 <span class="math inline">\(\beta_{0i}\)</span>는 실험 시작때 반응속도를 의미하고 기울기 <span class="math inline">\(\beta_{1i}\)</span>는 실험이 진행되는 동안 반응속도가 어떻게 변하는 지 변화의 방향과 크기를 보여준다. 함수 <code>lmList</code>를 아래와 같이 이용하면 식 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 을 각 운전사마다 적합시켜 각각의 절편과 기울기를 구할 수 있다.</p>
+<p>위의 식에서 <span class="math inline">\(\beta_{0i}\)</span>와 <span class="math inline">\(\beta_{1i}\)</span>는 <span class="math inline">\(i\)</span>번째 운전사의 반응속도를 설명하는 회귀직선의 절편과 기울기이다.</p>
+<p>절편 <span class="math inline">\(\beta_{0i}\)</span>는 실험 시작때 반응속도를 의미하고 기울기 <span class="math inline">\(\beta_{1i}\)</span>는 실험이 진행되는 동안 반응속도가 어떻게 변하는 지 변화의 방향과 크기를 보여준다. 함수 <code>lmList</code>를 아래와 같이 이용하면 식 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 을 각 운전사마다 적합시켜 각각의 절편과 기울기를 구할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lmf1 <span class="ot">&lt;-</span> <span class="fu">lmList</span>(Reaction <span class="sc">~</span> Days <span class="sc">|</span> Subject, sleepstudy)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>lmf1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lmf1 <span class="ot">&lt;-</span> <span class="fu">lmList</span>(Reaction <span class="sc">~</span> Days <span class="sc">|</span> Subject, sleepstudy)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lmf1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: lmList(formula = Reaction ~ Days | Subject, data = sleepstudy) 
 Coefficients:
@@ -606,13 +608,13 @@ Coefficients:
 Degrees of freedom: 180 total; 144 residual
 Residual standard error: 25.59182</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">coef</span>(lmf1))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">coef</span>(lmf1))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            (Intercept)       Days
 (Intercept)   1.0000000 -0.1375534
 Days         -0.1375534  1.0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">coef</span>(lmf1),<span class="at">main=</span><span class="st">"intercepts and slopes on drivers: sleep study "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">coef</span>(lmf1),<span class="at">main=</span><span class="st">"intercepts and slopes on drivers: sleep study "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="random_effect_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" style="width:80.0%"></p>
 </div>
@@ -620,13 +622,13 @@ Days         -0.1375534  1.0000000</code></pre>
 <p>18개의 절편과 기울기는 큰 상관관계는 없는것으로 보이지만 약한 음의 상관계수가 나타났다.<br>
 절편과 기울기에 대한 분포를 보기 위하여 상자그림을 그려보면 평균을 중심으로 대칭인 분포를 보이고 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="random_effect_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="random_effect_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -638,8 +640,8 @@ y_{ij} = \beta_0 + \beta_1 t_j + e_{ij} ,\quad i=1,2\dots,18,  j=1,2, \dots, 10
 <p>여기서 오차항은 서로 독립이며 <span class="math inline">\(N(0, \sigma^2_e)\)</span>를 따른다고 가정한다.</p>
 <p>위와 같은 전체 운전사 집단의 관측값을 운전자의 특성을 고려하지 않고 세운 모형으로서 시간에 따른 반응시간에 대한 모집단의 전체적인 평균적 함수 관계를 파악하는 모형이라고 할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lmpop <span class="ot">&lt;-</span> <span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lmpop <span class="ot">&lt;-</span> <span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -660,24 +662,24 @@ Residual standard error: 47.71 on 178 degrees of freedom
 Multiple R-squared:  0.2865,    Adjusted R-squared:  0.2825 
 F-statistic: 71.46 on 1 and 178 DF,  p-value: 9.894e-15</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(sleepstudy, <span class="fu">plot</span>(Days, Reaction,<span class="at">main=</span><span class="st">"Population and individual regression lines"</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">coef</span>(lmpop)[<span class="dv">1</span>], <span class="at">b=</span><span class="fu">coef</span>(lmpop)[<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span> ) {</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(lmf1)[i,])</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span>xx[<span class="dv">1</span>],<span class="at">b=</span>xx[<span class="dv">2</span>], <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(sleepstudy, <span class="fu">plot</span>(Days, Reaction,<span class="at">main=</span><span class="st">"Population and individual regression lines"</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">coef</span>(lmpop)[<span class="dv">1</span>], <span class="at">b=</span><span class="fu">coef</span>(lmpop)[<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span> ) {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(lmf1)[i,])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span>xx[<span class="dv">1</span>],<span class="at">b=</span>xx[<span class="dv">2</span>], <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="random_effect_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>이제 각 운전사에 대하여 개체별로 적합한 회귀식의 계수들<span class="math inline">\((\hat \beta_{0i}, \hat \beta_{1i})\)</span> 와 전체집단에 적한한 회귀식의 계수 <span class="math inline">\((\hat \beta_{0}, \hat \beta_{1})\)</span>의 관계를 보면 개체별로 회귀 계수들의 평균이 전체에 적용한 모형의 계수와 매우 가까운 사실을 알 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">coef</span>(lmf1),<span class="dv">2</span>,mean)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">coef</span>(lmf1),<span class="dv">2</span>,mean)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        Days 
   251.40510    10.46729 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        Days 
   251.40510    10.46729 </code></pre>
@@ -710,7 +712,11 @@ y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i}) t_j + e_{ij}
 b_{0i} \\
 b_{1i} \\
 \end{bmatrix}
-, \quad
+=
+\pmb \beta + {\pmb b}_i
+\]</span></p>
+<p><span class="math display">\[
+{\pmb b}_i =
 \begin{bmatrix}
 b_{0i} \\
 b_{1i} \\
@@ -727,7 +733,8 @@ N \left (
 \end{bmatrix}
 \right )
 \]</span></p>
-<p>위의 모형은 각 개인의 회귀직선에서 각 절편과 기울기가 전체평균 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>를 따르며 각 개인의 차이는 전체평균에 임의효과인 <span class="math inline">\(b_{0i}\)</span>와 <span class="math inline">\(b_{1i}\)</span>가 더해져서 나타난다는 것을 의미한다. 이변량 임의효과 <span class="math inline">\(b_{0i}\)</span>와 <span class="math inline">\(b_{1i}\)</span>는 이변량 정규분포를 따르며 각각의 분산과 상관계수가 <span class="math inline">\(\sigma^2_{b1}\)</span>, <span class="math inline">\(\sigma^2_{b2}\)</span>, <span class="math inline">\(\rho\)</span>이다.</p>
+<p>위의 모형은 각 개인의 회귀직선에서 각 절편과 기울기가 전체평균 <span class="math inline">\(\beta_0\)</span>와 <span class="math inline">\(\beta_1\)</span>를 따르며 각 개인의 차이는 전체평균에 임의효과인 <span class="math inline">\(b_{0i}\)</span>와 <span class="math inline">\(b_{1i}\)</span>가 더해져서 나타난다는 것을 의미한다.</p>
+<p>이변량 임의효과 <span class="math inline">\(b_{0i}\)</span>와 <span class="math inline">\(b_{1i}\)</span>는 이변량 정규분포를 따르며 각각의 분산과 상관계수가 <span class="math inline">\(\sigma^2_{b1}\)</span>, <span class="math inline">\(\sigma^2_{b2}\)</span>, <span class="math inline">\(\rho\)</span>이다.</p>
 <p>다른 개체에 대한 임의효과는 서로 독립이며 임의 효과와 오차항은 독립이다. 여기서 오차항은 서로 독립이며 <span class="math inline">\(N(0, \sigma^2_e)\)</span>를 따른다고 가정한다.</p>
 <p><span class="math display">\[  Cov(\pmb b_{i}, \pmb b_{j}) =\pmb 0 \text{ when } i \ne j,\quad
 Cov(\pmb b_{i}, e_{jk}) =\pmb 0 \text{ for all } i,j,k \]</span></p>
