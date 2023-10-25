@@ -462,7 +462,7 @@ $$ OR = \frac{(73)(196)}{(18)(141)} = 5.64 $$
 
 $$ v_1 =V ( \log OR)   \approx \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}} = \frac{1}{73} + \frac{1}{18} + \frac{1}{141} + \frac{1}{196} =0.08$$
 
-상대위험의 신뢰구간은 다음과 같다.
+오즈비의 신뢰구간은 다음과 같다.
 
 $$(5.64 \times \exp[-1.96\sqrt{0.08}], 5.64 \times \exp[1.96\sqrt{0.08}])
 = (3.222, 9.863)$$
@@ -481,7 +481,7 @@ ex2dat
    
    
    
-이제 함수 `epi.2by2`를 이용하여 오즈비과 싱대구간을 구해보자. 사례-대조 연구의 자료인 경우 `method = "case.control"` 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다.  관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니  `outcome = "as.columns"`이라고 지정한다. 
+이제 함수 `epi.2by2`를 이용하여 오즈비과 신뢰구간을 구해보자. 사례-대조 연구의 자료인 경우 `method = "case.control"` 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다.  관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니  `outcome = "as.columns"`이라고 지정한다. 
                
 ```{r}
 epi.2by2(dat = ex2dat, method = "case.control", conf.level = 0.95, units = 100, 
