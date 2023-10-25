@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.422">
+<meta name="generator" content="quarto-1.4.435">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="../">데이터 분석 방법론</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../데이터-분석-방법론.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/random_effect.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">임의효과</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span></a>
   </div>
 </li>
       </ul>
@@ -805,7 +805,7 @@ H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 <p>오즈비의 95% 근사 신뢰구간은 다음과 같이 계산한다.</p>
 <p>먼저 다음 <span class="math inline">\(v_1\)</span> 를 계산하면</p>
 <p><span class="math display">\[ v_1 =V ( \log OR)   \approx \frac{1}{n_{11}} + \frac{1}{n_{12}} + \frac{1}{n_{21}} + \frac{1}{n_{22}} = \frac{1}{73} + \frac{1}{18} + \frac{1}{141} + \frac{1}{196} =0.08\]</span></p>
-<p>상대위험의 신뢰구간은 다음과 같다.</p>
+<p>오즈비의 신뢰구간은 다음과 같다.</p>
 <p><span class="math display">\[(5.64 \times \exp[-1.96\sqrt{0.08}], 5.64 \times \exp[1.96\sqrt{0.08}])
 = (3.222, 9.863)\]</span></p>
 <p>위의 신뢰구간을 보면 1을 포함하지 않으므로 약물남용이 심장발작의 위험을 높인다고 말할 수 있다.</p>
@@ -820,7 +820,7 @@ H_0: \frac{P(H+|D+)/P(H-|D+)}{P(H+|D-) / P(H-|D-)} =1  ~~~\text{ vs } ~~~H_1:
 [2,]  141  196</code></pre>
 </div>
 </div>
-<p>이제 함수 <code>epi.2by2</code>를 이용하여 오즈비과 싱대구간을 구해보자. 사례-대조 연구의 자료인 경우 <code>method = "case.control"</code> 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다. 관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니 <code>outcome = "as.columns"</code>이라고 지정한다.</p>
+<p>이제 함수 <code>epi.2by2</code>를 이용하여 오즈비과 신뢰구간을 구해보자. 사례-대조 연구의 자료인 경우 <code>method = "case.control"</code> 으로 저장한다. 사례-대조 연구로 지정하면 상대위험이 출력되지 않는다. 관심이 있는 사건(심장발작, outcome)의 도수가 첫 번째 열(column)에 있으니 <code>outcome = "as.columns"</code>이라고 지정한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">epi.2by2</span>(<span class="at">dat =</span> ex2dat, <span class="at">method =</span> <span class="st">"case.control"</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">units =</span> <span class="dv">100</span>, </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">interpret =</span> <span class="cn">FALSE</span>, <span class="at">outcome =</span> <span class="st">"as.columns"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.422">
+<meta name="generator" content="quarto-1.4.435">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>데이터 분석 방법론 - 7&nbsp; 임의효과</title>
+<title>데이터 분석 방법론 - 7&nbsp; 반복측정자료</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/random_effect.html">혼합모형</a></li><li class="breadcrumb-item"><a href="../notes/random_effect.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">임의효과</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/random_effect.html">혼합모형</a></li><li class="breadcrumb-item"><a href="../notes/random_effect.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="../">데이터 분석 방법론</a> 
         <div class="sidebar-tools-main">
     <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-    <a href="../데이터-분석-방법론-.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../데이터-분석-방법론.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
 </div>
     </div>
       </div>
@@ -238,7 +238,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../notes/random_effect.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">임의효과</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,18 +292,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#반복측정자료" id="toc-반복측정자료" class="nav-link" data-scroll-target="#반복측정자료"><span class="header-section-number">7.5</span> 반복측정자료</a>
   <ul class="collapse">
-  <li><a href="#개체들의-선형-회귀모형" id="toc-개체들의-선형-회귀모형" class="nav-link" data-scroll-target="#개체들의-선형-회귀모형"><span class="header-section-number">7.5.1</span> 개체들의 선형 회귀모형</a></li>
+  <li><a href="#선형-회귀모형" id="toc-선형-회귀모형" class="nav-link" data-scroll-target="#선형-회귀모형"><span class="header-section-number">7.5.1</span> 선형 회귀모형</a></li>
   <li><a href="#임의계수-모형" id="toc-임의계수-모형" class="nav-link" data-scroll-target="#임의계수-모형"><span class="header-section-number">7.5.2</span> 임의계수 모형</a></li>
+  <li><a href="#혼합효과-모형" id="toc-혼합효과-모형" class="nav-link" data-scroll-target="#혼합효과-모형"><span class="header-section-number">7.5.3</span> 혼합효과 모형</a></li>
+  <li><a href="#선형혼합모형의-적합" id="toc-선형혼합모형의-적합" class="nav-link" data-scroll-target="#선형혼합모형의-적합"><span class="header-section-number">7.5.4</span> 선형혼합모형의 적합</a></li>
+  <li><a href="#임의효과에-대한-예측" id="toc-임의효과에-대한-예측" class="nav-link" data-scroll-target="#임의효과에-대한-예측"><span class="header-section-number">7.5.5</span> 임의효과에 대한 예측</a></li>
+  <li><a href="#수축-현상" id="toc-수축-현상" class="nav-link" data-scroll-target="#수축-현상"><span class="header-section-number">7.5.6</span> 수축 현상</a></li>
+  <li><a href="#모형의-비교" id="toc-모형의-비교" class="nav-link" data-scroll-target="#모형의-비교"><span class="header-section-number">7.5.7</span> 모형의 비교</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/random_effect.html">혼합모형</a></li><li class="breadcrumb-item"><a href="../notes/random_effect.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">임의효과</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/random_effect.html">혼합모형</a></li><li class="breadcrumb-item"><a href="../notes/random_effect.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="ranef" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">임의효과</span></span></h1>
+<h1 class="title"><span id="repeat" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span></h1>
 </div>
 
 
@@ -331,7 +336,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot2 에서 한글의 사용</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Nanum Pen Script"</span>, <span class="st">"nanum"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="repeatmeasure-paired" class="level2" data-number="7.2">
@@ -484,7 +494,7 @@ y_{ij} = \mu + \tau_{k(i)} + a_i + e_{ij}
 <p>여기서 <span class="math inline">\(\tau_{k(i)}\)</span>는 <span class="math inline">\(i\)</span>번째 학교의 교수법에 대한 고정효과이다(교수법이 배정된 결과에 의하여 <span class="math inline">\(k(i)=1\)</span> 또는 <span class="math inline">\(k(i)=2\)</span>이 된다). 이 교수법에 대한 고정효과에 대해서는 두 교수법이 차이가 있는 지에 대한 검정이 주요한 관심사일 것이다 (<span class="math inline">\(H_0: \tau_1=\tau_2\)</span>)</p>
 </section>
 </section>
-<section id="반복측정자료" class="level2" data-number="7.5">
+<section id="반복측정자료" class="level2 page-columns page-full" data-number="7.5">
 <h2 data-number="7.5" class="anchored" data-anchor-id="반복측정자료"><span class="header-section-number">7.5</span> 반복측정자료</h2>
 <p>반복측정자료(longitudinal data, repeated measurements)는 관측단위안에서 여러 개의 관측값을 측정한 자료의 형식을 말한다.</p>
 <p>예를 들어 환자가 병원을 여러 번 방문하고 방문시마다 혈압을 측정하였다면 한 명의 환자에서 반복 측정한 자료는 서로 독립이 아니다. 또한 가구조사(household survey)에서 가구원의 취업 여부, 건겅 상태등을 여러 해동안 매년 측정하는 경우 이러한 자료를 패널자료(panel data) 또는 longitudinal 자료라고 한다.</p>
@@ -529,22 +539,17 @@ y_{ij} = \mu + \tau_{k(i)} + a_i + e_{ij}
 </div>
 <p>각 운전자에 대한 10일 간의 반응속도가 시간에 따라 어떻게 변하는 가를 알아보자. 전반적으로 시간이 지나면서 운전자들의 반응시간이 증가하고 있음을 알 수 있다. 또한 개인 별로 반응 시간의 변화와 패턴이 다르다는 것을 알 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sleepstudy, <span class="fu">aes</span>(<span class="at">x=</span>Days, <span class="at">y=</span>Reaction)) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span>F,<span class="at">linewidth=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">facet_wrap</span>(<span class="st">"Subject"</span>, <span class="at">labeller =</span> label_both)<span class="sc">+</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sleepstudy, <span class="fu">aes</span>(<span class="at">x=</span>Days, <span class="at">y=</span>Reaction)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">facet_wrap</span>(<span class="st">"Subject"</span>, <span class="at">labeller =</span> label_both)<span class="sc">+</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="random_effect_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<section id="개체들의-선형-회귀모형" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="개체들의-선형-회귀모형"><span class="header-section-number">7.5.1</span> 개체들의 선형 회귀모형</h3>
-<p>각 운전자 <span class="math inline">\(i\)</span> 에 대하여 10일간 측정한 반응속도 <span class="math inline">\(y_{ij}\)</span>를 시간에 대하여 선형모형으로 적합하면 개인별 회귀직선을 다음과 같이 표시할 수 있다.</p>
+<section id="선형-회귀모형" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="선형-회귀모형"><span class="header-section-number">7.5.1</span> 선형 회귀모형</h3>
+<p>각 운전자 <span class="math inline">\(i\)</span> 에 대하여 10일간 측정한 반응속도 <span class="math inline">\(y_{ij}\)</span>를 시간에 대하여 선형모형으로 적합하면 <strong>개체별 선형회귀 모형(individual model)</strong> 을 다음과 같이 표시할 수 있다.</p>
 <p><span id="eq-lmlist1"><span class="math display">\[
 y_{ij} = \beta_{0i} + \beta_{1i} t_j + e_{ij},\quad i=1,2,\dots,18,\quad j=1,2,\dots,10
 \tag{7.10}\]</span></span></p>
@@ -580,8 +585,8 @@ e_{i,10}
 <p>위의 식에서 <span class="math inline">\(\beta_{0i}\)</span>와 <span class="math inline">\(\beta_{1i}\)</span>는 <span class="math inline">\(i\)</span>번째 운전사의 반응속도를 설명하는 회귀직선의 절편과 기울기이다.</p>
 <p>절편 <span class="math inline">\(\beta_{0i}\)</span>는 실험 시작때 반응속도를 의미하고 기울기 <span class="math inline">\(\beta_{1i}\)</span>는 실험이 진행되는 동안 반응속도가 어떻게 변하는 지 변화의 방향과 크기를 보여준다. 함수 <code>lmList</code>를 아래와 같이 이용하면 식 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 을 각 운전사마다 적합시켜 각각의 절편과 기울기를 구할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lmf1 <span class="ot">&lt;-</span> <span class="fu">lmList</span>(Reaction <span class="sc">~</span> Days <span class="sc">|</span> Subject, sleepstudy)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lmf1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lmf1 <span class="ot">&lt;-</span> <span class="fu">lmList</span>(Reaction <span class="sc">~</span> Days <span class="sc">|</span> Subject, sleepstudy)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lmf1</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: lmList(formula = Reaction ~ Days | Subject, data = sleepstudy) 
 Coefficients:
@@ -608,40 +613,86 @@ Coefficients:
 Degrees of freedom: 180 total; 144 residual
 Residual standard error: 25.59182</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">coef</span>(lmf1))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>위에서 고려한 개체별 선형회귀 직선들을 그림으로 그려보면 다음과 같이 나타난다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sleepstudy, <span class="fu">aes</span>(<span class="at">x=</span>Days, <span class="at">y=</span>Reaction)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span>F,<span class="at">linewidth=</span><span class="fl">0.5</span>)<span class="sc">+</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"Subject"</span>, <span class="at">labeller =</span> label_both)<span class="sc">+</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="random_effect_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>18개의 절편과 기울기는 큰 상관관계는 없는것으로 보이지만 약한 음의 상관계수가 나타났다. 절편과 기울기에 대한 분포를 보기 위하여 상자그림을 그려보면 평균을 중심으로 대칭인 분포를 보이고 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">coef</span>(lmf1))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            (Intercept)       Days
 (Intercept)   1.0000000 -0.1375534
 Days         -0.1375534  1.0000000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">coef</span>(lmf1),<span class="at">main=</span><span class="st">"intercepts and slopes on drivers: sleep study "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">coef</span>(lmf1),<span class="at">main=</span><span class="st">"intercepts and slopes on drivers: sleep study "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="random_effect_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" style="width:80.0%"></p>
+<p><img src="random_effect_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" style="width:80.0%"></p>
 </div>
 </div>
-<p>18개의 절편과 기울기는 큰 상관관계는 없는것으로 보이지만 약한 음의 상관계수가 나타났다.<br>
-절편과 기울기에 대한 분포를 보기 위하여 상자그림을 그려보면 평균을 중심으로 대칭인 분포를 보이고 있다.</p>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">2</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-coef-repeat" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-coef-repeat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+그림&nbsp;7.1: 개별 선형회귀모형에서 절볓과 기울기의 분포
+</figcaption>
+<div aria-describedby="fig-coef-repeat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coef-repeat" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-coef-repeat-1" class="quarto-figure quarto-figure-center anchored" width="672">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="figure quarto-subfloat-caption quarto-subfloat-fig" id="fig-coef-repeat-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 절편
+</figcaption>
+<div aria-describedby="fig-coef-repeat-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="random_effect_files/figure-html/fig-coef-repeat-1.png" class="img-fluid figure-img" data-ref-parent="fig-coef-repeat" width="672">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-coef-repeat" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-coef-repeat-2" class="quarto-figure quarto-figure-center anchored" width="672">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="figure quarto-subfloat-caption quarto-subfloat-fig" id="fig-coef-repeat-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) 기울기
+</figcaption>
+<div aria-describedby="fig-coef-repeat-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="random_effect_files/figure-html/fig-coef-repeat-2.png" class="img-fluid figure-img" data-ref-parent="fig-coef-repeat" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="random_effect_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="random_effect_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">coef</span>(lmf1)[<span class="dv">1</span>])</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="random_effect_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>이제 각 운전사에 대하여 회귀식을 따로 적합하지 않고 전체 운전사들의 자료를 모두 합쳐서 하나의 회귀식을 고려할 수 있다. 개체의 특성을 반영하는 모형이 아닌 전체 집단에 대한 평균적인 모형(population model)을 고려하는 것이다.</p>
+<p>이제 각 운전사에 대하여 회귀식을 따로 적합하지 않고 전체 운전사들의 자료를 모두 합쳐서 하나의 회귀식을 고려할 수 있다. 개체의 특성을 반영하는 모형이 아닌 전체 모집단에 대한 <strong>모집단 평균 모형(population mean model)</strong> 을 고려하는 것이다.</p>
 <p><span id="eq-popmodel"><span class="math display">\[
 y_{ij} = \beta_0 + \beta_1 t_j + e_{ij} ,\quad i=1,2\dots,18,  j=1,2, \dots, 10
 \tag{7.11}\]</span></span></p>
 <p>여기서 오차항은 서로 독립이며 <span class="math inline">\(N(0, \sigma^2_e)\)</span>를 따른다고 가정한다.</p>
 <p>위와 같은 전체 운전사 집단의 관측값을 운전자의 특성을 고려하지 않고 세운 모형으로서 시간에 따른 반응시간에 대한 모집단의 전체적인 평균적 함수 관계를 파악하는 모형이라고 할 수 있다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>lmpop <span class="ot">&lt;-</span> <span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lmpop <span class="ot">&lt;-</span> <span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -662,29 +713,33 @@ Residual standard error: 47.71 on 178 degrees of freedom
 Multiple R-squared:  0.2865,    Adjusted R-squared:  0.2825 
 F-statistic: 71.46 on 1 and 178 DF,  p-value: 9.894e-15</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(sleepstudy, <span class="fu">plot</span>(Days, Reaction,<span class="at">main=</span><span class="st">"Population and individual regression lines"</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">coef</span>(lmpop)[<span class="dv">1</span>], <span class="at">b=</span><span class="fu">coef</span>(lmpop)[<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span> ) {</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(lmf1)[i,])</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span>xx[<span class="dv">1</span>],<span class="at">b=</span>xx[<span class="dv">2</span>], <span class="at">lty=</span><span class="dv">2</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(sleepstudy, <span class="fu">plot</span>(Days, Reaction,<span class="at">main=</span><span class="st">"Population and individual regression lines"</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span><span class="fu">coef</span>(lmpop)[<span class="dv">1</span>], <span class="at">b=</span><span class="fu">coef</span>(lmpop)[<span class="dv">2</span>],<span class="at">lwd=</span><span class="dv">3</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">18</span> ) {</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  xx <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">coef</span>(lmf1)[i,])</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a=</span>xx[<span class="dv">1</span>],<span class="at">b=</span>xx[<span class="dv">2</span>], <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="random_effect_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="random_effect_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>이제 각 운전사에 대하여 개체별로 적합한 회귀식의 계수들<span class="math inline">\((\hat \beta_{0i}, \hat \beta_{1i})\)</span> 와 전체집단에 적한한 회귀식의 계수 <span class="math inline">\((\hat \beta_{0}, \hat \beta_{1})\)</span>의 관계를 보면 개체별로 회귀 계수들의 평균이 전체에 적용한 모형의 계수와 매우 가까운 사실을 알 수 있다.</p>
+<p><a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 의 개체별 선형회귀 모형에서 얻은 모든 절편들과 기울기들의 평균을 구하면 다음과 같다.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">coef</span>(lmf1),<span class="dv">2</span>,mean)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        Days 
-  251.40510    10.46729 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(<span class="fu">coef</span>(lmf1),<span class="dv">2</span>,mean)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        Days 
   251.40510    10.46729 </code></pre>
 </div>
 </div>
+<p>다음으로 <a href="#eq-popmodel" class="quarto-xref">식&nbsp;<span>7.11</span></a> 의 선형회귀 모형에서 얻은 절편과 기울기의 평균을 구하면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmpop)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        Days 
+  251.40510    10.46729 </code></pre>
+</div>
+</div>
+<p>각 운전사에 대하여 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 의 개체별로 적합한 회귀식에서 구한 계수들<span class="math inline">\((\hat \beta_{0i}, \hat \beta_{1i})\)</span> 와 <a href="#eq-popmodel" class="quarto-xref">식&nbsp;<span>7.11</span></a> 의 모집단 평균 회귀모형에서 구한서 계수 <span class="math inline">\((\hat \beta_{0}, \hat \beta_{1})\)</span>의 관계를 보면 개체별로 적합한 회귀 계수들의 평균이 모집단 평균 회귀모형의 계수와 매우 가까운 사실을 알 수 있다.</p>
 </section>
 <section id="임의계수-모형" class="level3" data-number="7.5.2">
 <h3 data-number="7.5.2" class="anchored" data-anchor-id="임의계수-모형"><span class="header-section-number">7.5.2</span> 임의계수 모형</h3>
@@ -738,6 +793,437 @@ N \left (
 <p>다른 개체에 대한 임의효과는 서로 독립이며 임의 효과와 오차항은 독립이다. 여기서 오차항은 서로 독립이며 <span class="math inline">\(N(0, \sigma^2_e)\)</span>를 따른다고 가정한다.</p>
 <p><span class="math display">\[  Cov(\pmb b_{i}, \pmb b_{j}) =\pmb 0 \text{ when } i \ne j,\quad
 Cov(\pmb b_{i}, e_{jk}) =\pmb 0 \text{ for all } i,j,k \]</span></p>
+</section>
+<section id="혼합효과-모형" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="혼합효과-모형"><span class="header-section-number">7.5.3</span> 혼합효과 모형</h3>
+<p>임의계수모형을 각 개인 <span class="math inline">\(i\)</span>에 대하여 행렬식으로 표시하면 다음과 같은 혼합효과모형(mixed effects model)으로 나타낼 수 있다. 혼합효과모형은 반응변수에 영향을 미치는 효과를 고정효과와 임의효과로 나누어 설명하는 모형이다.</p>
+<p><span class="math display">\[  
+\pmb y_i = \pmb X_i \pmb \beta + \pmb Z_i \pmb b_i + \pmb e_i
+\]</span></p>
+<p>여기서</p>
+<p><span class="math display">\[  
+\pmb y_i=\begin{bmatrix}
+y_{i1} \\
+y_{i2} \\
+\vdots \\
+y_{i,10}
+\end{bmatrix},~\pmb X_i =
+\begin{bmatrix}
+1 &amp; 0 \\
+1 &amp; 1 \\
+\vdots &amp; \vdots  \\
+1 &amp; 9
+\end{bmatrix}, \pmb  \beta=
+\begin{bmatrix}
+\beta_{0} \\
+\beta_{1} \\
+\end{bmatrix}, ~\pmb Z_i =
+\begin{bmatrix}
+1 &amp; 0 \\
+1 &amp; 1 \\
+\vdots &amp; \vdots  \\
+1 &amp; 9
+\end{bmatrix},~ \pmb b_i =
+\begin{bmatrix}
+b_{0i} \\
+b_{1i} \\
+\end{bmatrix},~
+\pmb  e_i=
+\begin{bmatrix}
+e_{i1} \\
+e_{i2} \\
+\vdots \\
+e_{i,10}
+\end{bmatrix}
+\]</span></p>
+<p>위의 각 개인에 대한 모형을 모두 합쳐서 하나의 혼합효과모형으로 나타내면 다음과 같이 표현할 수 있다.</p>
+<p><span id="eq-lme1"><span class="math display">\[
+\pmb  y = \pmb  X \pmb \beta + \pmb Z \pmb b + \pmb e
+\tag{7.13}\]</span></span> \end{equation}</p>
+<p>여기서 반응변수 벡터 <span class="math inline">\(\pmb y\)</span>와 고정효과 <span class="math inline">\(\pmb \beta\)</span>에 대한 계획행렬 <span class="math inline">\(X\)</span>는 각 개인의 반응변수 벡터 <span class="math inline">\(\pmb y_i\)</span>와 <span class="math inline">\(\pmb X_i\)</span>를 행으로 쌓아놓은 것으로 표현된다. 오차항에 대한 벡터 <span class="math inline">\(\pmb e\)</span>도 동일한 형식의 벡터이다.</p>
+<p><span class="math display">\[  
+\pmb y_i=\begin{bmatrix}
+\pmb y_{1} \\
+\pmb y_{2} \\
+\vdots \\
+\pmb y_{18}
+\end{bmatrix},~\pmb X =
+\begin{bmatrix}
+\pmb X_1 \\
+\pmb X_2 \\
+\vdots \\
+\pmb  X_{18}
+\end{bmatrix}
+~ \pmb e =
+\begin{bmatrix}
+\pmb e_1 \\
+\pmb e_2 \\
+\vdots  \\
+\pmb e_{18}
+\end{bmatrix}
+\]</span></p>
+<p>임의효과 벡터 <span class="math inline">\({\pmb b}\)</span> 는 각 개인에 대한 임의효과벡터 <span class="math inline">\(\pmb b_i\)</span>를 행으로 쌓아놓은것과 같고 임의효과에 대한 계획행렬 <span class="math inline">\(\pmb Z\)</span>는 각 개인의 계획행렬 <span class="math inline">\(\pmb Z_i\)</span>를 대각원소로 같은 행렬이다.</p>
+<p><span class="math display">\[
+\pmb b=\begin{bmatrix}
+\pmb b_{1} \\
+\pmb b_{2} \\
+\vdots \\
+\pmb b_{18}
+\end{bmatrix},~\pmb Z =
+\begin{bmatrix}
+\pmb Z_1 &amp; 0 &amp; \dots &amp; 0 \\
+0   &amp; \pmb Z_2 &amp; \dots &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots  \\
+0 &amp; 0 &amp; \dots &amp; \pmb Z_{18}
+\end{bmatrix}
+\]</span></p>
+<p>임의효과는 개인의 특성을 설명하는 효과로서 모집단을 구성하는 개인이 표본에 추출되었다고 생각하며 확률분포를 따른다고 가정한다. 반복측정자료에서 임의효과를 공통으로 가지고 있는 관측치는 독립이 아니게 돼며 따라서 같은 개체에서 나온 관측값은 독립이 아니다.</p>
+</section>
+<section id="선형혼합모형의-적합" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="선형혼합모형의-적합"><span class="header-section-number">7.5.4</span> 선형혼합모형의 적합</h3>
+<p>혼합모형 <a href="#eq-lme1" class="quarto-xref">식&nbsp;<span>7.13</span></a> 은 <code>lmer()</code> 함수를 이용하여 적합시켜보자. 모형식에서 <code>(1 + Days|Subject)</code> 는 각 개체 <code>Subject</code> 에 대하여 절편 <code>1</code> 과 기울기 <code>Days</code>에 임의효과를 포함한다고 지정한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">+</span> Days<span class="sc">|</span>Subject), sleepstudy)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: Reaction ~ 1 + Days + (1 + Days | Subject)
+   Data: sleepstudy
+
+REML criterion at convergence: 1743.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9536 -0.4634  0.0231  0.4634  5.1793 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ Subject  (Intercept) 612.10   24.741       
+          Days         35.07    5.922   0.07
+ Residual             654.94   25.592       
+Number of obs: 180, groups:  Subject, 18
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  251.405      6.825  17.000  36.838  &lt; 2e-16 ***
+Days          10.467      1.546  17.000   6.771 3.26e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+     (Intr)
+Days -0.138</code></pre>
+</div>
+</div>
+<p>위의 혼합모형 적합결과를 살펴보자. 첫째로 고정효과에 대한 추정식은 다음과 같다</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(fm1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        Days 
+  251.40510    10.46729 </code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+\begin{bmatrix}
+\hat {\beta}_{0} \\
+\hat {\beta}_{1} \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+251.4051048 \\
+10.467286
+\end{bmatrix}
+\]</span></p>
+<p>또한 오차항에 대한 분산 및 임의효과의 분산성분과 상관계수는 다음과 같이 나타난다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VarCorr</span>(fm1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Groups   Name        Std.Dev. Corr 
+ Subject  (Intercept) 24.7407       
+          Days         5.9221  0.066
+ Residual             25.5918       </code></pre>
+</div>
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+\hat \sigma_{b1} &amp; =  24.740658 \\
+\hat \sigma_{b2} &amp; =  5.9221377 \\
+\hat \rho &amp; = 0.0655512 \\
+\hat \sigma_e &amp; = 25.5917957
+\end{aligned}
+\]</span></p>
+</section>
+<section id="임의효과에-대한-예측" class="level3" data-number="7.5.5">
+<h3 data-number="7.5.5" class="anchored" data-anchor-id="임의효과에-대한-예측"><span class="header-section-number">7.5.5</span> 임의효과에 대한 예측</h3>
+<p>이제 임의효과 <span class="math inline">\(\pmb b_i =(b_{0i}, b_{1i})^t\)</span>에 대한 예측(prediction)을 생각해보자. 우리는 오직 관측벡터 <span class="math inline">\(\pmb y_i\)</span>만을 관측하고 임의효과 <span class="math inline">\(\pmb b_i\)</span>는 관측을 할 수 없는 확률변수이다. 하지만 주어진 관측벡터와 추정된 분산으로 임의효과의 값을 예측할 수있으며 그 결과는 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>re <span class="ot">&lt;-</span> <span class="fu">ranef</span>(fm1)<span class="sc">$</span>Subject</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>re</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept)        Days
+308   2.2585509   9.1989758
+309 -40.3987381  -8.6196806
+310 -38.9604090  -5.4488565
+330  23.6906196  -4.8143503
+331  22.2603126  -3.0699116
+332   9.0395679  -0.2721770
+333  16.8405086  -0.2236361
+334  -7.2326151   1.0745816
+335  -0.3336684 -10.7521652
+337  34.8904868   8.6282652
+349 -25.2102286   1.1734322
+350 -13.0700342   6.6142178
+351   4.5778642  -3.0152621
+352  20.8636782   3.5360011
+369   3.2754656   0.8722149
+370 -25.6129993   4.8224850
+371   0.8070461  -0.9881562
+372  12.3145921   1.2840221</code></pre>
+</div>
+</div>
+<p>예를 들어 첫 번째 운전자에 대한 절편과 기울기의 임의효과에 대한 예측값은 다음과 같다.</p>
+<p><span class="math display">\[ {\hat b}_{0i} = 2.2585509, \quad  {\hat b}_{1i} =   9.1989758 \]</span> 위에서 구한 절편과 기울기에 대한 임의효과들의 산포도를 보면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(re, <span class="at">main =</span><span class="st">"prediction of random effects "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="random_effect_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>예측된 각 개인의 절편과 기울기에 대한 임의효과의 예측값 <span class="math inline">\({\hat b}_{0i}\)</span>과 <span class="math inline">\({\hat b}_{1i}\)</span>에 고정효과의 추정량 <span class="math inline">\(\hat \beta_0\)</span>와 <span class="math inline">\(\hat \beta_1\)</span>에 각각 더해주면 각 개인의 절편과 기울기에 대한 예측값을 구할 수 있다.</p>
+<p><span class="math display">\[
+{\hat \beta}_{0i} = \hat \beta_0 + {\hat b}_{0i} , \quad
+{\hat \beta}_{1i} = \hat \beta_1 + {\hat b}_{1i}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">as.numeric</span>(<span class="fu">fixef</span>(fm1)),<span class="dv">18</span>,<span class="dv">2</span>,<span class="at">byrow=</span>T)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>beta <span class="sc">+</span> re </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept)       Days
+308    253.6637 19.6662617
+309    211.0064  1.8476053
+310    212.4447  5.0184295
+330    275.0957  5.6529356
+331    273.6654  7.3973743
+332    260.4447 10.1951090
+333    268.2456 10.2436499
+334    244.1725 11.5418676
+335    251.0714 -0.2848792
+337    286.2956 19.0955511
+349    226.1949 11.6407181
+350    238.3351 17.0815038
+351    255.9830  7.4520239
+352    272.2688 14.0032871
+369    254.6806 11.3395008
+370    225.7921 15.2897709
+371    252.2122  9.4791297
+372    263.7197 11.7513080</code></pre>
+</div>
+</div>
+<p>예를 들어 선형혼합모형에서 첫 번째 운전자에 대한 절편과 기울기에 대한 추정값은 다음과 같다.</p>
+<p><span class="math display">\[
+{\hat \beta}_{0i} =  253.6637,  \quad {\hat \beta}_{1i} = 19.6662617
+\]</span></p>
+</section>
+<section id="수축-현상" class="level3 page-columns page-full" data-number="7.5.6">
+<h3 data-number="7.5.6" class="anchored" data-anchor-id="수축-현상"><span class="header-section-number">7.5.6</span> 수축 현상</h3>
+<p>각 운전자에 대해 개체별 회귀직선 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 과 임의계수 모형 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 적합시켜서 얻은 18개의 절편과 기울기를 비교해보자.</p>
+<p>먼저 개체별 회귀직선에서 적합한 절편과 기울기는 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ab_lines_ind <span class="ot">&lt;-</span> <span class="fu">coef</span>(lmf1) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"Subject"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">Model =</span> <span class="st">"개체별 모형"</span>)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>ab_lines_ind</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Subject intercept      Days       Model
+1      308  244.1927 21.764702 개체별 모형
+2      309  205.0549  2.261785 개체별 모형
+3      310  203.4842  6.114899 개체별 모형
+4      330  289.6851  3.008073 개체별 모형
+5      331  285.7390  5.266019 개체별 모형
+6      332  264.2516  9.566768 개체별 모형
+7      333  275.0191  9.142045 개체별 모형
+8      334  240.1629 12.253141 개체별 모형
+9      335  263.0347 -2.881034 개체별 모형
+10     337  290.1041 19.025974 개체별 모형
+11     349  215.1118 13.493933 개체별 모형
+12     350  225.8346 19.504017 개체별 모형
+13     351  261.1470  6.433498 개체별 모형
+14     352  276.3721 13.566549 개체별 모형
+15     369  254.9681 11.348109 개체별 모형
+16     370  210.4491 18.056151 개체별 모형
+17     371  253.6360  9.188445 개체별 모형
+18     372  267.0448 11.298073 개체별 모형</code></pre>
+</div>
+</div>
+<p>이제 <a href="#eq-repeat" class="quarto-xref">식&nbsp;<span>7.12</span></a> 의 임의계수 모형에서 적합한 기울기와 절편은 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>ab_lines_random <span class="ot">&lt;-</span> <span class="fu">coef</span>(fm1)[[<span class="st">"Subject"</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"Subject"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">intercept =</span> <span class="st">`</span><span class="at">(Intercept)</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="at">Model =</span> <span class="st">"임의계수 모형"</span>)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>ab_lines_random </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Subject intercept       Days         Model
+1      308  253.6637 19.6662617 임의계수 모형
+2      309  211.0064  1.8476053 임의계수 모형
+3      310  212.4447  5.0184295 임의계수 모형
+4      330  275.0957  5.6529356 임의계수 모형
+5      331  273.6654  7.3973743 임의계수 모형
+6      332  260.4447 10.1951090 임의계수 모형
+7      333  268.2456 10.2436499 임의계수 모형
+8      334  244.1725 11.5418676 임의계수 모형
+9      335  251.0714 -0.2848792 임의계수 모형
+10     337  286.2956 19.0955511 임의계수 모형
+11     349  226.1949 11.6407181 임의계수 모형
+12     350  238.3351 17.0815038 임의계수 모형
+13     351  255.9830  7.4520239 임의계수 모형
+14     352  272.2688 14.0032871 임의계수 모형
+15     369  254.6806 11.3395008 임의계수 모형
+16     370  225.7921 15.2897709 임의계수 모형
+17     371  252.2122  9.4791297 임의계수 모형
+18     372  263.7197 11.7513080 임의계수 모형</code></pre>
+</div>
+</div>
+<p>이제 개체별 회귀직선 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 과 임의계수 모형 <a href="#eq-lmlist1" class="quarto-xref">식&nbsp;<span>7.10</span></a> 적합시켜서 얻은 18명의 개체에 대한 선형회귀 모형을 그림으로 그려보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ab_lines_pop <span class="ot">&lt;-</span> <span class="fu">data_frame</span>(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Subject =</span> <span class="fu">unique</span>(sleepstudy<span class="sc">$</span>Subject),</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">intercept =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy))[<span class="dv">1</span>],</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Days =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(Reaction <span class="sc">~</span> Days, sleepstudy))[<span class="dv">2</span>],</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Model =</span> <span class="st">"모집단 평균모형"</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `data_frame()` was deprecated in tibble 1.1.0.
+ℹ Please use `tibble()` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>all_lines <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(ab_lines_pop, ab_lines_ind, ab_lines_random)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_lines,<span class="dv">5</span>) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  Subject intercept  Days Model          
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;          
+1 308          251.  10.5 모집단 평균모형
+2 309          251.  10.5 모집단 평균모형
+3 310          251.  10.5 모집단 평균모형
+4 330          251.  10.5 모집단 평균모형
+5 331          251.  10.5 모집단 평균모형</code></pre>
+</div>
+</div>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sleepstudy, <span class="fu">aes</span>(<span class="at">x=</span>Days, <span class="at">y=</span>Reaction)) <span class="sc">+</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">0.7</span>) <span class="sc">+</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="fu">aes</span>(<span class="at">intercept =</span> intercept, <span class="at">slope =</span> Days, <span class="at">color=</span>Model), <span class="at">data =</span> all_lines) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"Subject"</span>) <span class="sc">+</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display column-screen-inset-right">
+<p><img src="random_effect_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<p>이렇게 혼합모형을 통해서 얻은 각 개인의 절편과 기울기에 대한 예측값과 각각의 개체별 선형회귀 직선을 따로 적합하여 얻은 절편과 기울기의 관계를 그림으로 그려보면 다음과 같다.</p>
+<p>혼합모형을 통해서 얻은 각 개인의 절편과 기울기는 절편과 기울기의 전체평균값 방향으로 수축되는 경향(shrinkage)을 볼수있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">bind_rows</span>(ab_lines_ind, ab_lines_random)) <span class="sc">+</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> intercept, <span class="at">y =</span> Days, <span class="at">color =</span> Model) <span class="sc">+</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> ab_lines_pop) <span class="sc">+</span> </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">group =</span> Subject), </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(.<span class="dv">02</span>, <span class="st">"npc"</span>))) <span class="sc">+</span> </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span> </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"회귀계수의 수축"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="random_effect_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="모형의-비교" class="level3" data-number="7.5.7">
+<h3 data-number="7.5.7" class="anchored" data-anchor-id="모형의-비교"><span class="header-section-number">7.5.7</span> 모형의 비교</h3>
+<p>위에서 고려한 임의계수모형 <a href="#eq-repeat" class="quarto-xref">식&nbsp;<span>7.12</span></a> 에서는 절편과 기울기에 대한 2개의 임의효과 <span class="math inline">\(b_{0i}\)</span> 와 <span class="math inline">\(b_{1i}\)</span> 를 고려하고 더 나아가 두 개의 임의효과가 독립이 아니며 상관계수가 <span class="math inline">\(\rho\)</span>라고 가정하였다.</p>
+<p>앞에서 추정결과에 의하면 두 개의 임의효과의 상관계수의 추정값은 <span class="math inline">\(\hat \rho = 0.066\)</span> 으로 거의 0에 가깝다. 이러한 결과에 근거하여 두 임의효과가 독립인 축소모형을 고려해 보자. 즉 임의계수모형 <a href="#eq-repeat" class="quarto-xref">식&nbsp;<span>7.12</span></a> 에서 임의효과의 상관계수가 <span class="math inline">\(\rho=0\)</span>인 임의효과의 분포를 다음과 같이 가정한다.</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+b_{0i} \\
+b_{1i} \\
+\end{bmatrix} \sim
+N \left (
+\begin{bmatrix}
+0 \\
+0 \\
+\end{bmatrix}
+,
+\begin{bmatrix}
+\sigma^2_{b1} &amp; 0\\
+0 &amp; \sigma^2_{b2} \\
+\end{bmatrix}
+\right )
+\]</span></p>
+<p>이러한 모형을 아래와 같이 적합시키면 추정결과는 다음과 같다. 아래 모형식에서 <code>(1 + Days||Subject)</code> 는 각 개체 <code>Subject</code> 에 대하여 절편 <code>1</code> 과 기울기 <code>Days</code>에 임의효과를 포함한다고 지정하며 한개의 바 <code>|</code> 대신 두 개의 바 <code>||</code> 를 사용하면 임의효과가 독립이라는 것을 지정한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>fm2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Reaction <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Days <span class="sc">+</span> (<span class="dv">1</span><span class="sc">+</span>Days <span class="sc">||</span> Subject) , sleepstudy)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: Reaction ~ 1 + Days + (1 + Days || Subject)
+   Data: sleepstudy
+
+REML criterion at convergence: 1743.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9626 -0.4625  0.0204  0.4653  5.1860 
+
+Random effects:
+ Groups    Name        Variance Std.Dev.
+ Subject   (Intercept) 627.57   25.051  
+ Subject.1 Days         35.86    5.988  
+ Residual              653.58   25.565  
+Number of obs: 180, groups:  Subject, 18
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(&gt;|t|)    
+(Intercept)  251.405      6.885  18.156  36.513  &lt; 2e-16 ***
+Days          10.467      1.560  18.156   6.712 2.59e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+     (Intr)
+Days -0.184</code></pre>
+</div>
+</div>
+<p>상관계수가 0인 모형에 대한 추정 결과는 상관계수가 있는 모형과 크게 다르지 않다.</p>
+<p>두 모형, 즉 절편과 기울기에 대한 두 임의효과가 종속인지 또는 독립인지에 대한 두 모형을 AIC(Akaike Information Criteris)와 BIC(Bayesian Information Criteria)로 비교한 결과이다. 두 모형 간의 차이는 거의 없는 것으로 판단된다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">AIC</span>(fm1) , <span class="fu">BIC</span>(fm1))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1755.628 1774.786</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">AIC</span>(fm2), <span class="fu">BIC</span>(fm2))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1753.669 1769.634</code></pre>
+</div>
+</div>
+<p>더나아가 <code>anova</code> 함수를 이용하여 두 모형의 차이를 검정한 결과는 두 모형 간의 차이가 없다는 것이다. 참고할 점은 혼합모형에서의 모형을 비교하는 분산분석에 의한 검정은 효율이 떨어질 수 있기 때문에 주의해야 한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm1,fm2)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>refitting model(s) with ML (instead of REML)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: sleepstudy
+Models:
+fm2: Reaction ~ 1 + Days + (1 + Days || Subject)
+fm1: Reaction ~ 1 + Days + (1 + Days | Subject)
+    npar    AIC    BIC  logLik deviance  Chisq Df Pr(&gt;Chisq)
+fm2    5 1762.0 1778.0 -876.00   1752.0                     
+fm1    6 1763.9 1783.1 -875.97   1751.9 0.0639  1     0.8004</code></pre>
+</div>
+</div>
 
 
 </section>
