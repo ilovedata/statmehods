@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.468">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>데이터 분석 방법론 - 11&nbsp; 반복측정자료 실습 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../notes/lme_practice.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/lme_practice_2.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">데이터 분석 방법론</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="검색"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">분할표의 분석</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">일반화 선형모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">혼합모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/random_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">실습</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#필요한-패키지와-함수" id="toc-필요한-패키지와-함수" class="nav-link active" data-scroll-target="#필요한-패키지와-함수"><span class="header-section-number">11.1</span> 필요한 패키지와 함수</a></li>
+  <li><a href="#계층모형" id="toc-계층모형" class="nav-link" data-scroll-target="#계층모형"><span class="header-section-number">11.2</span> 계층모형</a></li>
+  <li><a href="#학생-성취도-자료" id="toc-학생-성취도-자료" class="nav-link" data-scroll-target="#학생-성취도-자료"><span class="header-section-number">11.3</span> 학생 성취도 자료</a></li>
+  <li><a href="#단순-계층모형" id="toc-단순-계층모형" class="nav-link" data-scroll-target="#단순-계층모형"><span class="header-section-number">11.4</span> 단순 계층모형</a></li>
+  <li><a href="#계층-1-설명변수가-있는-모형" id="toc-계층-1-설명변수가-있는-모형" class="nav-link" data-scroll-target="#계층-1-설명변수가-있는-모형"><span class="header-section-number">11.5</span> 계층 1 설명변수가 있는 모형</a></li>
+  <li><a href="#주변-결정계수와-조건부-결정계수" id="toc-주변-결정계수와-조건부-결정계수" class="nav-link" data-scroll-target="#주변-결정계수와-조건부-결정계수"><span class="header-section-number">11.6</span> 주변 결정계수와 조건부 결정계수</a></li>
+  <li><a href="#층별-결정계수" id="toc-층별-결정계수" class="nav-link" data-scroll-target="#층별-결정계수"><span class="header-section-number">11.7</span> 층별 결정계수</a></li>
+  <li><a href="#계층-2-설명변수가-있는-모형" id="toc-계층-2-설명변수가-있는-모형" class="nav-link" data-scroll-target="#계층-2-설명변수가-있는-모형"><span class="header-section-number">11.8</span> 계층 2 설명변수가 있는 모형</a></li>
+  <li><a href="#계층-간의-상호작용" id="toc-계층-간의-상호작용" class="nav-link" data-scroll-target="#계층-간의-상호작용"><span class="header-section-number">11.9</span> 계층 간의 상호작용</a>
+  <ul class="collapse">
+  <li><a href="#계층-내-상호작용" id="toc-계층-내-상호작용" class="nav-link" data-scroll-target="#계층-내-상호작용"><span class="header-section-number">11.9.1</span> 계층 내 상호작용</a></li>
+  <li><a href="#계층-간-상호작용" id="toc-계층-간-상호작용" class="nav-link" data-scroll-target="#계층-간-상호작용"><span class="header-section-number">11.9.2</span> 계층 간 상호작용</a></li>
+  </ul></li>
+  <li><a href="#임의계수-모형" id="toc-임의계수-모형" class="nav-link" data-scroll-target="#임의계수-모형"><span class="header-section-number">11.10</span> 임의계수 모형</a></li>
+  <li><a href="#가장-복잡한-모형" id="toc-가장-복잡한-모형" class="nav-link" data-scroll-target="#가장-복잡한-모형"><span class="header-section-number">11.11</span> 가장 복잡한 모형</a></li>
+  <li><a href="#설명변수의-중심화" id="toc-설명변수의-중심화" class="nav-link" data-scroll-target="#설명변수의-중심화"><span class="header-section-number">11.12</span> 설명변수의 중심화</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/lme_practice_2.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="lme_practice_2" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="필요한-패키지와-함수" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="필요한-패키지와-함수"><span class="header-section-number">11.1</span> 필요한 패키지와 함수</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lme4)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmerTest)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xfun)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 아래 3 문장은 한글을 포함한 ggplot 그림이 포함된 HTML, PDF로 만드는 경우 사용</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Nanum Pen Script"</span>, <span class="st">"gl"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="계층모형" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="계층모형"><span class="header-section-number">11.2</span> 계층모형</h2>
+<p>이제 계층모형에 대한 전형적인 예제와 분석을 살펴보고자 한다. 아래에서 사용할 자료와 분석 내용은 <span class="citation" data-cites="finch2019multilevel">Finch, Bolin, 와/과 Kelley (<a href="../references.html#ref-finch2019multilevel" role="doc-biblioref">2019</a>)</span> 3장을 따른 것이다.</p>
+<p>성취도 시험 데이터(<code>Achieve</code>)는 160개 학교(<code>school</code>) 내에 위치한 10,903명의 3학년 학생으로부터 수집되었다. 학교 규모는 11개 학급(<code>class</code>)에서 143 개 학급까지 다양하며, 평균 규모는 68.14 학급이다..</p>
+<p>어휘력 점수가 일반적인 읽기 성취도를 예측하는 데 어느 정도까지 사용될 수 있는지 알아보고자 했습니다. 학생들은 학교 내에 중첩되어 있어 표준 선형 회귀 모델이 적합하지 않았습니다. 이 경우 학교는 무작위 효과이고 어휘 점수는 고정되어 있습니다. 먼저 독립 변수가 없고 절편만 있는 공분산 모델을 피팅합니다. 이 모델은 방정식 (2.11)에서와 같이 학교별 군집화만 고려할 때 잔차 및 절편 분산의 추정치를 구하는 데 유용합니다. 널 모델을 추정하는 데 필요한 lmer 구문은 다음과 같습니다.</p>
+</section>
+<section id="학생-성취도-자료" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="학생-성취도-자료"><span class="header-section-number">11.3</span> 학생 성취도 자료</h2>
+<p>학생 성취도 자료는 <span class="citation" data-cites="finch2019multilevel">Finch, Bolin, 와/과 Kelley (<a href="../references.html#ref-finch2019multilevel" role="doc-biblioref">2019</a>)</span> 의 <a href="http://www.mlminr.com/">홈페이지</a>에서 다운로드 받을 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Achieve <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/Achieve.csv"</span>, <span class="at">header=</span>T)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Achieve,<span class="at">n=</span><span class="dv">3</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  row id region corp school class gender age race geread gevocab gereadcm
+1   1  1      2  940    767     1      2 104    5    3.5     3.1      3.2
+2   2  2      2  940    767     1      2 106    5    1.2     2.8      2.0
+3   3  3      2  940    767     1      2 112    5    2.1     1.7      1.9
+  gelang gelangmc gelangcm gemath gemathcp gemathcm getotal npanverb npamem
+1    2.3      4.3      3.0    3.1      2.7      2.9     3.0       16     56
+2    1.8      1.7      1.6    3.2      4.3      3.8     2.7       39     79
+3    2.5      2.2      2.4    3.6      3.2      3.4     2.7       37     41
+  npaverb npatotal csi multi clenroll classize ptratio ptia locale chapter1
+1      46       26  90     2       16        1      16    2      7        1
+2      37       47  99     2       16        1      16    2      7        1
+3      34       35  94     2       16        1      16    2      7        1
+   ses context calender senroll sattend white1 black1 hispanc1 asian1 aindian1
+1 80.4     929        1     463    95.6   99.8      0        0      0        0
+2 80.4     929        1     463    95.6   99.8      0        0      0        0
+3 80.4     929        1     463    95.6   99.8      0        0      0        0
+  multi1 total1 noteach avgage1 avgexp1 avgsal1 spert thrdclss thrdstud passla1
+1    0.2    0.2    28.5    46.2    20.6   43517  16.3        4       60      63
+2    0.2    0.2    28.5    46.2    20.6   43517  16.3        4       60      63
+3    0.2    0.2    28.5    46.2    20.6   43517  16.3        4       60      63
+  passmth1 passbth1 tmnnce1 rmdnce1 lamdnce1 mmdnce1 tmdnce1 avgcsi1 geog
+1       74       52    60.5    57.6       55      61    59.7      99    2
+2       74       52    60.5    57.6       55      61    59.7      99    2
+3       74       52    60.5    57.6       55      61    59.7      99    2
+  totepp cenroll cattend freelnch lep speced minority white2 black2 hispanc2
+1   5956    3115    95.9       16 0.2   14.4      1.2   3077      1       12
+2   5956    3115    95.9       16 0.2   14.4      1.2   3077      1       12
+3   5956    3115    95.9       16 0.2   14.4      1.2   3077      1       12
+  asian2 aindian2 multi2 total2 thrdadm thrdtech avgage2 avgexp2 avgsal2
+1      3        1     21     38     208       11    45.2    18.4   41096
+2      3        1     21     38     208       11    45.2    18.4   41096
+3      3        1     21     38     208       11    45.2    18.4   41096
+  thrdaide passla2 passmth2 passbth2 tmnnce2 rmdnce2 lamdnce2 mmdnce2 tmdnce2
+1        3      67       70       52    59.4    57.8     59.8    60.6    60.8
+2        3      67       70       52    59.4    57.8     59.8    60.6    60.8
+3        3      67       70       52    59.4    57.8     59.8    60.6    60.8
+  rmediate
+1       18
+2       18
+3       18</code></pre>
+</div>
+</div>
+<p>성취도 자료 <code>Achieve</code>는 160개 학교를 추출하고 각 학교마다 작게는 11명, 크게는 162명의 학생들을 추출하여 학교의 여러 가지 정보와 학생들의 다양한 성적을 수집한 자료이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>school_info <span class="ot">&lt;-</span> Achieve <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(school) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>()) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(school_info<span class="sc">$</span>n)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  11.00   45.00   63.00   64.50   81.25  162.00 </code></pre>
+</div>
+</div>
+<p>성취도 자료 <code>Achieve</code>는 계층적 자료이며 다음과 같은 계층구조를 가지고 있다.</p>
+<ul>
+<li>계층 1 : 학생</li>
+<li>계층 2 : 학교</li>
+</ul>
+<p>분석의 목적은 <strong>학교의 특성</strong>과 <strong>학생들의 다양한 성적들</strong> (예를 들어 어휘 능력, vocabulary scores, <code>gevocab</code>)이 <strong>학생들의 읽기 성취도</strong> (general reading achievement, <code>geread</code>)에 어떤 영향을 미치는지 분석하는 것이다.</p>
+<p>이제 <span class="math inline">\(i\)</span> 번째 학교에 속한 <span class="math inline">\(j\)</span> 번쨰 학생의 읽기 성취도 점수를 <span class="math inline">\(y_{ij}\)</span> 라고 하자.</p>
+</section>
+<section id="단순-계층모형" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="단순-계층모형"><span class="header-section-number">11.4</span> 단순 계층모형</h2>
+<p>가장 단순한 계층 모형으로서 읽기 성취도 점수에 대하여 학교 <code>school</code> 이 임의효과인 모형을 고려해 보자.</p>
+<p><span id="eq-multimodel1"><span class="math display">\[
+y_{ij} = \beta_0 + b_{0i} + e_{ij}
+\tag{11.1}\]</span></span></p>
+<p>위의 식에서 <span class="math inline">\(\beta_0\)</span> 는 전체 평균 점수를 나타내는 모수이며 학교에 대한 임의효과 <span class="math inline">\(b_{0i}\)</span> 와 오차항 <span class="math inline">\(e_{ij}\)</span> 는 서로 독립이며 다음과 같은 분포를 따른다.</p>
+<p><span class="math display">\[ b_{0i} \sim N(0, \sigma_{b0}^2 ) , \quad e_{ij} \sim N(0, \sigma_e^2) \]</span></p>
+<p>이제 <code>lmer</code> 함수로 모형 <a href="#eq-multimodel1" class="quarto-xref">식&nbsp;<span>11.1</span></a> 을 적합시켜 보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span><span class="dv">1</span> <span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ 1 + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 46268.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.3229 -0.6378 -0.2138  0.2850  3.8812 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.3915   0.6257  
+ Residual             5.0450   2.2461  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)   4.30675    0.05498 158.53888   78.34   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(model1)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.31</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.20&nbsp;–&nbsp;4.41</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td colspan="4" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">5.05</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub> <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.39</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.07</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160</td>
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.000 / 0.072</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>추정결과를 보면 학생들의 읽기 성취도의 전체 평균의 추정량은 <span class="math inline">\(\hat \beta_0= 4.3067534\)</span>이다. 임의효과의 분산성분 <span class="math inline">\(\sigma_{b0}\)</span> 과 오차항의 븐산 <span class="math inline">\(\sigma_e\)</span>의 추정량은 다음과 같다.</p>
+<p><span class="math display">\[ \hat {\sigma}^2_{b0} = 0.3915154 , \quad
+\hat {\sigma}^2_{e} = 5.0450083 \]</span></p>
+<p>지난 강의에서 언급한 그룹내 상관계수(ICC)의 값을 구해보면 0.072 로서 같은 학교에 속한 학생들의 성적들의 상관계수를 의미한다.</p>
+<p><span class="math display">\[ \text{ICC } = \frac{\hat {\sigma}^2_{b0} }{\hat {\sigma}^2_{b0} + \hat {\sigma}^2_{e}  }
+= 0.072 \]</span></p>
+<p>160개의 학교에 대한 임의효과에 대한 예측값 <span class="math inline">\(\hat b_{0i}\)</span>을 예측구간과 같이 나타내면 다음 그림과 같이 나타난다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_model</span>  (model1, <span class="at">type =</span> <span class="st">"re"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkMatrixPackageVersion(): Package version inconsistency detected.
+TMB was built with Matrix version 1.6.0
+Current Matrix version is 1.5.4.1
+Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="lme_practice_2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+<section id="계층-1-설명변수가-있는-모형" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="계층-1-설명변수가-있는-모형"><span class="header-section-number">11.5</span> 계층 1 설명변수가 있는 모형</h2>
+<p>이제 학생들의 어휘능력 성적 <code>gevocab</code>를 설명 변수(<span class="math inline">\(x_{ij1}\)</span>)로 포함하는 모형을 고려해 보자. 첫 번째 계층의 구성원인 학생들에 대한 성적이므로 <strong>계층 1 설명변수(level 1 covariate)</strong>라고 부른다. 일단 어휘능력 성적은 고정 효과로서 모집단 전체에 대한 회귀 계수를 나타낸다.</p>
+<p><span id="eq-multimodel11"><span class="math display">\[
+y_{ij} = (\beta_0 + b_{0i}) + \beta_1 x_{ij1} + e_{ij}
+\tag{11.2}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model11 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model11)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43137.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.0823 -0.5735 -0.2103  0.3207  4.4334 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.09978  0.3159  
+ Residual             3.76647  1.9407  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept) 2.023e+00  4.931e-02 7.582e+02   41.03   &lt;2e-16 ***
+gevocab     5.129e-01  8.373e-03 9.801e+03   61.26   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+        (Intr)
+gevocab -0.758</code></pre>
+</div>
+</div>
+<p>앞에서 적합한 평균모형의 추정값과 다음과 같이 비교하여 나타낼 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(model1, model11)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.31</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.20&nbsp;–&nbsp;4.41</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.93&nbsp;–&nbsp;2.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">gevocab</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.51</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50&nbsp;–&nbsp;0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td colspan="7" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">5.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">3.77</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.39 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.10 <sub>school</sub></td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.03</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160 <sub>school</sub></td>
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.000 / 0.072</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.276 / 0.295</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+<p>학생들의 어휘능력 성적은 읽기 성취도를 예측하는데 유의한 변수임이 t-검정로 나타난다(t-통계량 = 61.26). 또한 다음의 추정식과 같이 어휘능력 성적이 1점 증가하면 평균적으로 읽기 성취도은 0.5점 증가한다.</p>
+<p><span class="math display">\[ \hat {\sigma}^2_{b0} = 0.0997786 , \quad
+\hat {\sigma}^2_{e} = 3.7664703 \]</span></p>
+<p>따라서 위의 모형에 따른 그룹내 상관계수(ICC)의 값을 구해보면 다음과 같다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>s0 <span class="ot">&lt;-</span> (<span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model11))[<span class="st">"vcov"</span>][<span class="dv">1</span>,<span class="dv">1</span>])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> (<span class="fu">as.data.frame</span>(<span class="fu">VarCorr</span>(model11))[<span class="st">"vcov"</span>][<span class="dv">2</span>,<span class="dv">1</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>icc <span class="ot">&lt;-</span> s0<span class="sc">/</span>(s0<span class="sc">+</span>se)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>icc</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.02580759</code></pre>
+</div>
+</div>
+<p><span class="math display">\[ \text{ICC } = \frac{\hat {\sigma}^2_{b0} }{\hat {\sigma}^2_{b0} + \hat {\sigma}^2_{e}  }
+= 0.0258076 \]</span></p>
+</section>
+<section id="주변-결정계수와-조건부-결정계수" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="주변-결정계수와-조건부-결정계수"><span class="header-section-number">11.6</span> 주변 결정계수와 조건부 결정계수</h2>
+<p>위의 모형 <a href="#eq-multimodel11" class="quarto-xref">식&nbsp;<span>11.2</span></a> 을 적합한 결과에서 <code>Marginal R2 / Conditional R2</code> 는 혼합모형에서 두 가지 종류의 결정계수 <span class="math inline">\(R^2\)</span>, 즉 주변 결정계수(marginal <span class="math inline">\(R^2\)</span>)와 조건부 결정계수(conditional <span class="math inline">\(R^2\)</span>) 을 제시하고 있다.</p>
+<p>혼합모형에서 사용할 수 있는 두 개의 서로 다른 결정 계수에 대하여 알아보자.<br>
+자세한 내용은 <span class="citation" data-cites="Nakagawa2013">Nakagawa 와/과 Schielzeth (<a href="../references.html#ref-Nakagawa2013" role="doc-biblioref">2013</a>)</span> 와 <span class="citation" data-cites="Nakagawa2017">Nakagawa, Johnson, 와/과 Schielzeth (<a href="../references.html#ref-Nakagawa2017" role="doc-biblioref">2017</a>)</span> 에 자세하게 설명되어 있다.</p>
+<p>먼저 다음과 같은 선형혼합모형이 있다고 가정하자.</p>
+<p><span id="eq-lme-general"><span class="math display">\[
+y_{ij} = \beta_0 + \sum_{k=1}^p \beta_k x_{kij} + b_i + e_{ij}, \quad b_i \sim N(0, \sigma_b^2), ~e_{ij} \sim N(0, \sigma^2_e)
+\tag{11.3}\]</span></span></p>
+<p>일반적인 선형혼합모형 <a href="#eq-lme-general" class="quarto-xref">식&nbsp;<span>11.3</span></a> 에서 주변 결정계수(marginal <span class="math inline">\(R^2\)</span>; <span class="math inline">\(R^2_M\)</span>) 는 임의효과를 제외한 고정효과가 설명하는 변동이 전체 변동에서 차지하는 비율을 말한다. 주변 결정계수는 이반적인 선형모형에서 사용하는 결정계수의 의미를 혼합모형에 그대로 확장한 측도이다.</p>
+<p><span id="eq-r2-marginal"><span class="math display">\[
+R^2_M = \frac{\sigma^2_f}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+\tag{11.4}\]</span></span></p>
+<p>위에서 고정효과의 변동 <span class="math inline">\(\sigma^2_f\)</span>는 다음과 같이 정의된다. 아래 식에서 <span class="math inline">\(Var\)</span>은 표본 분산을 의미한다.</p>
+<p><span class="math display">\[ \sigma^2_f = Var(\sum_{k=1}^p \hat \beta_k x_{kij}) \]</span></p>
+<p>반면 조건부 결정계수(conditional <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2_C\)</span>)는 전체 변동을 설명하는 요인으로 고정효과가 설명하는 변동뿐만 아니라 임의효과가 설명하는 변동도 포함한다. 즉 조건부 결정계수는 다음과 같이 정의된다.</p>
+<p><span id="eq-r2-conditional"><span class="math display">\[
+R^2_C = \frac{\sigma^2_f + \sigma^2_b}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+\tag{11.5}\]</span></span></p>
+<p>이제 선형혼합모형 <a href="#eq-multimodel11" class="quarto-xref">식&nbsp;<span>11.2</span></a> 에서 고정효과의 변동 <span class="math inline">\(\sigma^2_f\)</span>을 어떻게 계산하는지 알아보자. 고정효과가 <code>gevocab</code> 이고 이 설명변수에 대한 계수에 대한 추정값은 다음과 같다.</p>
+<p><span class="math display">\[ \hat \beta_1 = 0.5128977 \]</span></p>
+<p>따라서 <span class="math inline">\(\sigma^2_f\)</span> 은 다음과 같이 계산할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">&lt;-</span> <span class="fu">fixef</span>(model11)[<span class="dv">2</span>] <span class="sc">*</span> <span class="fu">model.matrix</span>(model11)[,<span class="dv">2</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>sf <span class="ot">&lt;-</span> <span class="fu">var</span>(xx)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>sf</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.474928</code></pre>
+</div>
+</div>
+<p>이제 위에서 구한 변동으로 선형혼합모형 <a href="#eq-multimodel11" class="quarto-xref">식&nbsp;<span>11.2</span></a> 에 대한 주변 결정계수와 조건부 결정계수를 계산할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>R2M <span class="ot">&lt;-</span> (sf)<span class="sc">/</span>(sf<span class="sc">+</span>s0<span class="sc">+</span>se)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>R2M</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2761428</code></pre>
+</div>
+</div>
+<p><span class="math display">\[ R^2_M = \frac{\sigma^2_f}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+= \frac{1.4749277}{1.4749277 + 0.0997786 + 3.7664703} = 0.2761428 \]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>R2C <span class="ot">&lt;-</span> (sf <span class="sc">+</span> s0)<span class="sc">/</span>(sf<span class="sc">+</span>s0<span class="sc">+</span>se)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>R2C</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2948239</code></pre>
+</div>
+</div>
+<p><span class="math display">\[ R^2_C = \frac{\sigma^2_f + \sigma^2_b}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+= \frac{1.4749277 + 0.0997786}{1.4749277 + 0.0997786 + 3.7664703} = 0.2948239 \]</span></p>
+<p>주변 결정계수와 조건부 결정계수는 <code>performance</code> 라이브러리의 함수 <code>model_performance</code>를 이용하여 구할 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(model11)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC       |      AICc |       BIC | R2 (cond.) | R2 (marg.) |   ICC |  RMSE | Sigma
+-----------------------------------------------------------------------------------
+43145.200 | 43145.204 | 43174.168 |      0.295 |      0.276 | 0.026 | 1.932 | 1.941</code></pre>
+</div>
+</div>
+</section>
+<section id="층별-결정계수" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="층별-결정계수"><span class="header-section-number">11.7</span> 층별 결정계수</h2>
+<p>계층모형의 특성을 고려하면 각 층에 대한 결정계수를 각각 다르게 정의할 수 있다. 교과서 <span class="citation" data-cites="finch2019multilevel">Finch, Bolin, 와/과 Kelley (<a href="../references.html#ref-finch2019multilevel" role="doc-biblioref">2019</a>)</span> 의 46 페이지에 설명과 계산이 나타나 있다.</p>
+<p>각 층에 대한 결정계수는 주어진 층에서 가장 단순한 평균모형을 적합하는 경우 나타나는 총 변동에서 설명변수를 포함한 모형을 적합한 후에 줄어든 변동의 비율을 나타낸다.</p>
+<p>먼저 <em>계층 1</em>에 대한 결정계수 <span class="math inline">\(R^2_1\)</span> 은 다음과 같이 정의할 수 있다.</p>
+<p><span id="eq-r2one"><span class="math display">\[
+\begin{aligned}
+R^2_1 &amp; = 1 - \frac{Var(y_{ij} - \hat y_{ij})}{Var(y_{ij})} \\
+&amp; = 1 -\frac{\sigma^2_b + \sigma^2_e }{\sigma^2_{b0} + \sigma^2_{e0}}
+\end{aligned}
+\tag{11.6}\]</span></span></p>
+<p>위의 식 <a href="#eq-r2one" class="quarto-xref">식&nbsp;<span>11.6</span></a> 에서 <span class="math inline">\(\sigma^2_{b0}\)</span> 과 <span class="math inline">\(\sigma^2_{e0}\)</span> 은 고정효과가 없는 평균모형 <a href="#eq-multimodel1" class="quarto-xref">식&nbsp;<span>11.1</span></a> 를 적합한 후에 구한 분산 성분의 추정량이다.</p>
+<p><a href="#eq-r2one" class="quarto-xref">식&nbsp;<span>11.6</span></a> 에서 <span class="math inline">\(\sigma^2_{b}\)</span> 과 <span class="math inline">\(\sigma^2_{e}\)</span> 는 고정효과가 주어진 모형식 <a href="#eq-lme-general" class="quarto-xref">식&nbsp;<span>11.3</span></a> 를 적합하고 얻은 분산 성분의 추정량이다.</p>
+<p>또한 식 <a href="#eq-r2one" class="quarto-xref">식&nbsp;<span>11.6</span></a> 에서 <span class="math inline">\(\hat y_{ij}\)</span>는 추정된 고정효과를 의미한다.</p>
+<p><span class="math display">\[ \hat y_{ij} = \hat \beta_0 +\sum_{k=1}^p  \hat \beta_k x_{kij} \]</span></p>
+<p>이제 <em>계층 2</em>에 대한 결정계수 <span class="math inline">\(R^2_2\)</span> 은 다음과 같이 정의할 수 있다.</p>
+<p><span id="eq-r2two"><span class="math display">\[
+\begin{aligned}
+R^2_2 &amp; = 1 - \frac{Var( \bar y_{i} - \hat {\bar y_{i}})}{Var(\bar y_{i})}  \\
+&amp; = 1 -\frac{\sigma^2_b/ B + \sigma^2_e }{\sigma^2_{b0} / B + \sigma^2_{e0}}
+\end{aligned}
+\tag{11.7}\]</span></span></p>
+<p>위의 식 <a href="#eq-r2one" class="quarto-xref">식&nbsp;<span>11.6</span></a> 에서 <span class="math inline">\(B\)</span> 는 계층 2의 평균 크기를 나타낸다. 학교 자료의 예제에서는 학교의 평균 학생 수를 의미하므로 다음과 같이 구할 수 있다.</p>
+<p><span class="math display">\[  B = 10320/160 = 64.5\]</span></p>
+</section>
+<section id="계층-2-설명변수가-있는-모형" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="계층-2-설명변수가-있는-모형"><span class="header-section-number">11.8</span> 계층 2 설명변수가 있는 모형</h2>
+<p>이제 학교의 규모를 나타내는 등록 학생의 수 <code>senroll</code>를 설명 변수(<span class="math inline">\(x_{i2}\)</span>)로 포함하는 모형을 고려해 보자. 두 번째 계층의 구성원인 학교들에 대한 정보이므로 <strong>계층 2 설명변수(level 2 covariate)</strong>라고 부른다. 일단 등록 학생의 수은 고정 효과로서 모집단 전체에 대한 회귀 계수를 나타낸다.</p>
+<p><span id="eq-multimodel12"><span class="math display">\[
+y_{ij} = (\beta_0 + b_{0i}) + \beta_1 x_{ij1} + \beta_2 x_{i2} + e_{ij}
+\tag{11.8}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span>senroll <span class="sc">+</span>(<span class="dv">1</span><span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model12)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + senroll + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43152.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.0834 -0.5729 -0.2103  0.3212  4.4336 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.1003   0.3168  
+ Residual             3.7665   1.9408  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)  2.075e+00  1.140e-01  2.373e+02   18.20   &lt;2e-16 ***
+gevocab      5.129e-01  8.373e-03  9.798e+03   61.25   &lt;2e-16 ***
+senroll     -1.026e-04  2.051e-04  1.652e+02   -0.50    0.618    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+        (Intr) gevocb
+gevocab -0.327       
+senroll -0.901 -0.002</code></pre>
+</div>
+</div>
+<p>학교의 규모는 읽기 성취도를 예측하는데 유의하지 않다(t-통계량의 p-값 =0.618). 다른 변수에 대한 추정값은 거의 변하지 않았다.</p>
+<p>앞에서 적합한 평균모형의 추정값과 다음과 같이 비교하여 나타낼 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tab_model</span>(model1, model11, model12)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table style="border-collapse:collapse; border:none;">
+<tbody><tr>
+<th style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm;  text-align:left; ">&nbsp;</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+<th colspan="3" style="border-top: double; text-align:center; font-style:normal; font-weight:bold; padding:0.2cm; ">geread</th>
+</tr>
+<tr>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  text-align:left; ">Predictors</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  ">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col7">p</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col8">Estimates</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  col9">CI</td>
+<td style=" text-align:center; border-bottom:1px solid; font-style:italic; font-weight:normal;  0">p</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.31</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">4.20&nbsp;–&nbsp;4.41</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">2.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">1.93&nbsp;–&nbsp;2.12</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">2.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">1.85&nbsp;–&nbsp;2.30</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">gevocab</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.51</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.50&nbsp;–&nbsp;0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">0.51</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">0.50&nbsp;–&nbsp;0.53</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0"><strong>&lt;0.001</strong></td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">senroll</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col7"></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col8">-0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  col9">-0.00&nbsp;–&nbsp;0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  0">0.617</td>
+</tr>
+<tr>
+<td colspan="10" style="font-weight:bold; text-align:left; padding-top:.8em;">Random Effects</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">σ<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">5.05</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">3.77</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">3.77</td>
+</tr>
+
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">τ<sub>00</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.39 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.10 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.10 <sub>school</sub></td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">ICC</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.07</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.03</td>
+
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">N</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160 <sub>school</sub></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">160 <sub>school</sub></td>
+</tr><tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm; border-top:1px solid;">Observations</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;" colspan="3">10320</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">Marginal R<sup>2</sup> / Conditional R<sup>2</sup></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.000 / 0.072</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.276 / 0.295</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left;" colspan="3">0.276 / 0.295</td>
+</tr>
+
+</tbody></table>
+
+</div>
+</div>
+</section>
+<section id="계층-간의-상호작용" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="계층-간의-상호작용"><span class="header-section-number">11.9</span> 계층 간의 상호작용</h2>
+<p>계층 모형에서는 서로 다른 계층의 설명 변수이 상호 작용을 가지는 경우가 매우 중요한 이슈이다. 또한 같은 계층 안에 속하는 변수들의 상호 작용도 중요하다.</p>
+<p>이제 다음과 같은 두 모형을 고려한다.</p>
+<ul>
+<li>계층 내 상호작용이 있는 모형: 학생의 어휘성적과 연령</li>
+<li>계층 간 상호작용이 있는 모형: 학생의 어휘성적과 학교의 규모</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Achieve<span class="sc">$</span>age)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   82.0   104.0   107.0   107.5   111.0   135.0 </code></pre>
+</div>
+</div>
+<section id="계층-내-상호작용" class="level3" data-number="11.9.1">
+<h3 data-number="11.9.1" class="anchored" data-anchor-id="계층-내-상호작용"><span class="header-section-number">11.9.1</span> 계층 내 상호작용</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>model21 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span> age <span class="sc">+</span> gevocab<span class="sc">*</span>age <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model21)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + age + gevocab * age + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43143.5
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.0635 -0.5706 -0.2108  0.3191  4.4467 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.09875  0.3143  
+ Residual             3.76247  1.9397  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+              Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)  5.187e+00  8.668e-01  1.031e+04   5.984 2.24e-09 ***
+gevocab     -2.808e-02  1.881e-01  1.030e+04  -0.149 0.881373    
+age         -2.937e-02  8.035e-03  1.031e+04  -3.655 0.000258 ***
+gevocab:age  5.027e-03  1.750e-03  1.030e+04   2.873 0.004072 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) gevocb age   
+gevocab     -0.879              
+age         -0.998  0.879       
+gevocab:age  0.877 -0.999 -0.879</code></pre>
+</div>
+</div>
+<p>학생의 연령과 어휘 능력과의 상호작용은 읽기 성취도를 예측하는데 유의하다. 다른 변수에 대한 추정값은 거의 변하지 않았다. 반면 어휘 능력의 유의성은 사라졌다. 이러한 결과는 연령에 따라서 어휘 능력의 기여도가 달라진다는 것을 의미하며 연령이 증가하면 어휘능력의 효과가 커진다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(model21)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC       |      AICc |       BIC | R2 (cond.) | R2 (marg.) |   ICC |  RMSE | Sigma
+-----------------------------------------------------------------------------------
+43155.494 | 43155.503 | 43198.946 |      0.296 |      0.277 | 0.026 | 1.930 | 1.940</code></pre>
+</div>
+</div>
+<p>학생의 연령과 어휘 능력과의 상호작용은 다은과 같이 그림으로 나타낼 수 있다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_model</span>  (model21, <span class="at">type=</span><span class="st">'int'</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="lme_practice_2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+<section id="계층-간-상호작용" class="level3" data-number="11.9.2">
+<h3 data-number="11.9.2" class="anchored" data-anchor-id="계층-간-상호작용"><span class="header-section-number">11.9.2</span> 계층 간 상호작용</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>model22 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span> senroll <span class="sc">+</span> gevocab<span class="sc">*</span>senroll <span class="sc">+</span> (<span class="dv">1</span><span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some predictor variables are on very different scales: consider
+rescaling
+
+Warning: Some predictor variables are on very different scales: consider
+rescaling</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model22)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + senroll + gevocab * senroll + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43163.6
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.1228 -0.5697 -0.2090  0.3188  4.4359 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.1002   0.3165  
+ Residual             3.7646   1.9403  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+                  Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)      1.748e+00  1.727e-01  1.058e+03  10.118   &lt;2e-16 ***
+gevocab          5.851e-01  2.986e-02  9.766e+03  19.592   &lt;2e-16 ***
+senroll          5.121e-04  3.186e-04  8.402e+02   1.607   0.1084    
+gevocab:senroll -1.356e-04  5.379e-05  9.849e+03  -2.520   0.0118 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) gevocb senrll
+gevocab     -0.782              
+senroll     -0.958  0.735       
+gevcb:snrll  0.752 -0.960 -0.766
+fit warnings:
+Some predictor variables are on very different scales: consider rescaling</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_performance</span>(model22)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Indices of model performance
+
+AIC       |      AICc |       BIC | R2 (cond.) | R2 (marg.) |   ICC |  RMSE | Sigma
+-----------------------------------------------------------------------------------
+43175.571 | 43175.579 | 43219.022 |      0.295 |      0.276 | 0.026 | 1.931 | 1.940</code></pre>
+</div>
+</div>
+<p>학교의 규모와 어휘 능력과의 상호작용은 읽기 성취도를 예측하는데 유의하다. 또한 어휘 능력도 유의하다. 이러한 결과는 학교의 규모에 따라서 어휘 능력의 기여도가 달라진다는 것을 의미하며 학교의 규모가 커지면 어휘능력의 효과가 감소한다(buffering or inhibitory effect).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sjPlot<span class="sc">::</span><span class="fu">plot_model</span>  (model22, <span class="at">type =</span> <span class="st">"int"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="lme_practice_2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" style="width:80.0%"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="임의계수-모형" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="임의계수-모형"><span class="header-section-number">11.10</span> 임의계수 모형</h2>
+<p>이제 어휘능력에도 학교에 대한 임의효과가 들어가는 임의계수 모형을 고려해 보자.</p>
+<p><span id="eq-multimodel3"><span class="math display">\[
+y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i})  x_{ij1} + e_{ij}
+\tag{11.9}\]</span></span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span>  (<span class="dv">1</span><span class="sc">+</span>gevocab <span class="sc">|</span>school), <span class="at">data=</span>Achieve)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge with max|grad| = 0.0191462 (tol = 0.002, component 1)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + (1 + gevocab | school)
+   Data: Achieve
+
+REML criterion at convergence: 42992.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.7096 -0.5674 -0.2079  0.3177  4.6765 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ school   (Intercept) 0.28050  0.5296        
+          gevocab     0.01922  0.1386   -0.86
+ Residual             3.66613  1.9147        
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)   2.00575    0.06097 154.62243   32.90   &lt;2e-16 ***
+gevocab       0.52032    0.01440 145.40535   36.15   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+        (Intr)
+gevocab -0.866
+optimizer (nloptwrap) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.0191462 (tol = 0.002, component 1)</code></pre>
+</div>
+</div>
+<p>위의 적합된 결과를 보면 어휘능력은 유의한 설명변수이다. 이제 학생들의 읽기 성취도에 대한 총변동의 분해를 보면 다음과 같다.</p>
+<p><span class="math display">\[ Var(y_{ij}) = \hat{\sigma}_{b0}^2 + \hat{\sigma}_{b1}^2 + \hat{\sigma}_e^2 = 0.28 + 0.02 + 3.67 \]</span></p>
+<p>학교의 변동을 설명하는임의효과에 대한 분산성분 <span class="math inline">\(\sigma_{b0}^2\)</span> 과 <span class="math inline">\(\sigma_{b1}^2\)</span>의 추정치는 각각 0.28과 0.02 로서 학생 개인들의 변동에 대한 분산 <span class="math inline">\(\sigma_e^2\)</span>의 추정치 3.67에 비하여 매우 작다. 따라서 학생들의 읽기 성취도는 학교 요인보다 학생들의 개인 요인이 더 크게 기여한다.</p>
+<p>참고로 모형 <a href="#eq-multimodel3" class="quarto-xref">식&nbsp;<span>11.9</span></a> 를 <code>lmer</code> 로 적합할 때 계산에 대한 경고가 나타났다. 이와 같은 계산에 대한 경고는 계층모형에서 매우 흔하게 나타난다. 모형이 너무 복잡하여 계산에 문제가 있거나 계산에서 사용되는 여러 가지 조건이 충분하지 않아서 발생한다. 이러한 경고가 나오면 추정 결과를 면밀하게 검토하고 다른 모형들에 대한 고려도 해야 한다.</p>
+<p>이제 두 임의효과, 즉 절변에 대한 <span class="math inline">\(b_{0i}\)</span> 와 기울기에 대한 <span class="math inline">\(b_{1i}\)</span> 가 독립인 혼합모형을 적합헤 보자. 이렇게 임의효과들이 독립인 경우 아래와 같이 임의효과 모델에 두 개의 바(<code>||</code>) 를 사용한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>model31 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span>  (<span class="dv">1</span><span class="sc">+</span>gevocab <span class="sc">||</span> school), <span class="at">data=</span>Achieve)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model31)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + (1 + gevocab || school)
+   Data: Achieve
+
+REML criterion at convergence: 43045.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3662 -0.5719 -0.2095  0.3280  4.4650 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.03646  0.19096 
+ school.1 gevocab     0.00571  0.07556 
+ Residual             3.70688  1.92533 
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+             Estimate Std. Error        df t value Pr(&gt;|t|)    
+(Intercept)   2.03042    0.04543 490.48961   44.70   &lt;2e-16 ***
+gevocab       0.50979    0.01069 441.29210   47.69   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+        (Intr)
+gevocab -0.688</code></pre>
+</div>
+</div>
+<p>두 임의효과가 독립이 아닌 경우 나타난 경고는 나오지 않는다. 또한 고정효과에 대한 결과는 변하지 않았으나 분산성분의 추정은 다소 변화가 있다.</p>
+</section>
+<section id="가장-복잡한-모형" class="level2" data-number="11.11">
+<h2 data-number="11.11" class="anchored" data-anchor-id="가장-복잡한-모형"><span class="header-section-number">11.11</span> 가장 복잡한 모형</h2>
+<p>이제 위의 결과를 이용하여 연령과 학교규모를 고정효과로 보고 상호작용도 추가함 모형을 살펴보자. 임의효과는 학교에 대한 항만 고려한다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>gevocab <span class="sc">+</span> age <span class="sc">+</span> senroll <span class="sc">+</span> gevocab<span class="sc">*</span>senroll  <span class="sc">+</span> gevocab<span class="sc">*</span>age <span class="sc">+</span>  (<span class="dv">1</span><span class="sc">|</span> school), <span class="at">data=</span>Achieve)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some predictor variables are on very different scales: consider
+rescaling
+
+Warning: Some predictor variables are on very different scales: consider
+rescaling</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ gevocab + age + senroll + gevocab * senroll + gevocab *  
+    age + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43169.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.1294 -0.5687 -0.2121  0.3174  4.4477 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.0991   0.3148  
+ Residual             3.7606   1.9392  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+                  Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)      4.918e+00  8.816e-01  1.024e+04   5.578 2.49e-08 ***
+gevocab          4.164e-02  1.901e-01  1.031e+04   0.219 0.826611    
+age             -2.944e-02  8.033e-03  1.031e+04  -3.665 0.000249 ***
+senroll          5.150e-04  3.181e-04  8.412e+02   1.619 0.105762    
+gevocab:senroll -1.361e-04  5.376e-05  9.840e+03  -2.532 0.011362 *  
+gevocab:age      5.053e-03  1.749e-03  1.029e+04   2.889 0.003876 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) gevocb age    senrll gvcb:s
+gevocab     -0.875                            
+age         -0.981  0.869                     
+senroll     -0.184  0.110 -0.004              
+gevcb:snrll  0.143 -0.145  0.004 -0.766       
+gevocab:age  0.861 -0.988 -0.879  0.005 -0.006
+fit warnings:
+Some predictor variables are on very different scales: consider rescaling</code></pre>
+</div>
+</div>
+</section>
+<section id="설명변수의-중심화" class="level2" data-number="11.12">
+<h2 data-number="11.12" class="anchored" data-anchor-id="설명변수의-중심화"><span class="header-section-number">11.12</span> 설명변수의 중심화</h2>
+<p>계층모형에서는 설명 변수를 중심화하는 것(centering, 변수의 평균이 0)이 모형의 결과를 해석하는데 편리하다. 이유는 변수들의 효과가 전체 평균을 기준으로 높거나 낮은 경향으로 나타나므로 해석이 용이하다.</p>
+<p>이제 계층 1 의 설명변수들인 연령과 어휘능력을 중심화하여 다시 가장 복잡한 모형을 적합해보자.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>Achieve<span class="sc">$</span>Cgevocab <span class="ot">&lt;-</span> Achieve<span class="sc">$</span>gevocab <span class="sc">-</span> <span class="fu">mean</span>(Achieve<span class="sc">$</span>gevocab)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>Achieve<span class="sc">$</span>Cage <span class="ot">&lt;-</span> Achieve<span class="sc">$</span>age <span class="sc">-</span> <span class="fu">mean</span>(Achieve<span class="sc">$</span>age)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(geread<span class="sc">~</span>Cgevocab <span class="sc">+</span> Cage <span class="sc">+</span> senroll <span class="sc">+</span> Cgevocab<span class="sc">*</span>senroll  <span class="sc">+</span> Cgevocab<span class="sc">*</span>Cage <span class="sc">+</span>  (<span class="dv">1</span><span class="sc">|</span> school), <span class="at">data=</span>Achieve)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Some predictor variables are on very different scales: consider
+rescaling
+
+Warning: Some predictor variables are on very different scales: consider
+rescaling</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: geread ~ Cgevocab + Cage + senroll + Cgevocab * senroll + Cgevocab *  
+    Cage + (1 | school)
+   Data: Achieve
+
+REML criterion at convergence: 43169.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.1294 -0.5687 -0.2121  0.3174  4.4477 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ school   (Intercept) 0.0991   0.3148  
+ Residual             3.7606   1.9392  
+Number of obs: 10320, groups:  school, 160
+
+Fixed effects:
+                   Estimate Std. Error         df t value Pr(&gt;|t|)    
+(Intercept)       4.381e+00  1.074e-01  1.927e+02  40.807  &lt; 2e-16 ***
+Cgevocab          5.850e-01  2.985e-02  9.762e+03  19.597  &lt; 2e-16 ***
+Cage             -6.733e-03  3.916e-03  1.031e+04  -1.719  0.08561 .  
+senroll          -9.663e-05  2.043e-04  1.653e+02  -0.473  0.63682    
+Cgevocab:senroll -1.361e-04  5.376e-05  9.840e+03  -2.532  0.01136 *  
+Cgevocab:Cage     5.053e-03  1.749e-03  1.029e+04   2.889  0.00388 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) Cgevcb Cage   senrll Cgvcb:
+Cgevocab    -0.008                            
+Cage         0.002  0.019                     
+senroll     -0.954  0.010  0.000              
+Cgvcb:snrll  0.009 -0.960 -0.004 -0.011       
+Cgevocab:Cg  0.012  0.012  0.205  0.001 -0.006
+fit warnings:
+Some predictor variables are on very different scales: consider rescaling</code></pre>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-finch2019multilevel" class="csl-entry" role="listitem">
+Finch, W Holmes, Jocelyn E Bolin, 와/과 Ken Kelley. 2019. <em>Multilevel modeling using R</em>. Crc Press.
+</div>
+<div id="ref-Nakagawa2017" class="csl-entry" role="listitem">
+Nakagawa, Shinichi, Paul C. D. Johnson, 와/과 Holger Schielzeth. 2017. <span>“<span>The coefficient of determination R2 and intra-class correlation coefficient from generalized linear mixed-effects models revisited and expanded</span>”</span>. <em>Journal of The Royal Society Interface</em> 14 (134): 20170213. <a href="https://doi.org/10.1098/rsif.2017.0213">https://doi.org/10.1098/rsif.2017.0213</a>.
+</div>
+<div id="ref-Nakagawa2013" class="csl-entry" role="listitem">
+Nakagawa, Shinichi, 와/과 Holger Schielzeth. 2013. <span>“<span>A general and simple method for obtaining R2 from generalized linear mixed‐effects models</span>”</span>. <em>Methods in Ecology and Evolution</em> 4 (2): 133–42. <a href="https://doi.org/10.1111/j.2041-210x.2012.00261.x">https://doi.org/10.1111/j.2041-210x.2012.00261.x</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/lme_practice.html" class="pagination-link  aria-label=" &lt;span="" 실습="" 1&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.435">
+<meta name="generator" content="quarto-1.4.468">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./notes/logistic_practice_2.html" rel="prev">
+<link href="./notes/lme_practice_2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -112,11 +112,11 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -127,7 +127,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">데이터 분석 방법론</a> 
@@ -246,6 +246,18 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/lme_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -257,7 +269,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
@@ -305,9 +317,25 @@ Faraway, Julian J. 2016. <em>Extending the Linear Model with r:
 Generalized Linear, Mixed Effects and Nonparametric Regression
 Models</em>. CRC press.
 </div>
+<div id="ref-finch2019multilevel" class="csl-entry" role="listitem">
+Finch, W Holmes, Jocelyn E Bolin, and Ken Kelley. 2019. <em>Multilevel
+Modeling Using r</em>. Crc Press.
+</div>
 <div id="ref-lee2005" class="csl-entry" role="listitem">
 Jaewon Lee, Hanna Yu, Mira Park. 2005. <em>생명과학연구를 위한 통계적
 방법</em>. 1st ed. 자유아카데미.
+</div>
+<div id="ref-Nakagawa2017" class="csl-entry" role="listitem">
+Nakagawa, Shinichi, Paul C. D. Johnson, and Holger Schielzeth. 2017.
+<span>“<span class="nocase">The coefficient of determination R2 and
+intra-class correlation coefficient from generalized linear
+mixed-effects models revisited and expanded</span>.”</span> <em>Journal
+of The Royal Society Interface</em> 14 (134): 20170213. <a href="https://doi.org/10.1098/rsif.2017.0213">https://doi.org/10.1098/rsif.2017.0213</a>.
+</div>
+<div id="ref-Nakagawa2013" class="csl-entry" role="listitem">
+Nakagawa, Shinichi, and Holger Schielzeth. 2013. <span>“<span class="nocase">A general and simple method for obtaining R2 from
+generalized linear mixed‐effects models</span>.”</span> <em>Methods in
+Ecology and Evolution</em> 4 (2): 133–42. <a href="https://doi.org/10.1111/j.2041-210x.2012.00261.x">https://doi.org/10.1111/j.2041-210x.2012.00261.x</a>.
 </div>
 <div id="ref-weisberg4" class="csl-entry" role="listitem">
 Weisberg, Sanford. 2014. <em>Applied Linear Regression</em>. Fourth.
@@ -710,8 +738,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./notes/logistic_practice_2.html" class="pagination-link  aria-label=" <span="">9&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span>"&gt;
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span>
+      <a href="./notes/lme_practice_2.html" class="pagination-link  aria-label=" &lt;span="" 실습="" 2&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
