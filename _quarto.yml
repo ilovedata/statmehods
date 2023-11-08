@@ -30,6 +30,8 @@ book:
       chapters:
         - notes/logistic_practice.qmd
         - notes/logistic_practice_2.qmd
+        - notes/lme_practice.qmd
+        - notes/lme_practice_2.qmd
     
     - references.qmd
 

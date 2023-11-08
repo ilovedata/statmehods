@@ -1,0 +1,437 @@
+---
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# 반복측정자료 실습 2 {#lme_practice_2}
+
+## 필요한 패키지와 함수 
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(lme4)
+library(lmerTest)
+library(brms)
+library(stringr)
+library(xfun)
+library(lattice)
+library(cowplot)
+library(sjPlot)
+library(MuMIn)
+library(performance)
+
+# 아래 3 문장은 한글을 포함한 ggplot 그림이 포함된 HTML, PDF로 만드는 경우 사용
+library(showtext)
+font_add_google("Nanum Pen Script", "gl")
+showtext_auto()
+```
+
+## 계층모형 
+
+이제 계층모형에 대한 전형적인 예제와 분석을 살펴보고자 한다.  아래에서 사용할  자료와 분석 내용은 @finch2019multilevel 3장을 따른 것이다.
+
+성취도 시험 데이터(`Achieve`)는 160개 학교(`school`) 내에 위치한 10,903명의 3학년 학생으로부터 수집되었다. 학교 규모는 11개 학급(`class`)에서 143 개 학급까지 다양하며, 평균 규모는 68.14 학급이다..
+
+어휘력 점수가 일반적인 읽기 성취도를 예측하는 데 어느 정도까지 사용될 수 있는지 알아보고자 했습니다. 학생들은 학교 내에 중첩되어 있어 표준 선형 회귀 모델이 적합하지 않았습니다. 이 경우 학교는 무작위 효과이고 어휘 점수는 고정되어 있습니다. 먼저 독립 변수가 없고 절편만 있는 공분산 모델을 피팅합니다. 이 모델은 방정식 (2.11)에서와 같이 학교별 군집화만 고려할 때 잔차 및 절편 분산의 추정치를 구하는 데 유용합니다. 널 모델을 추정하는 데 필요한 lmer 구문은 다음과 같습니다.
+
+
+## 학생 성취도 자료
+
+학생 성취도 자료는 @finch2019multilevel 의 [홈페이지](http://www.mlminr.com/)에서 다운로드 받을 수 있다. 
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+Achieve <- read.csv("../data/Achieve.csv", header=T)
+head(Achieve,n=3)
+```
+  
+성취도 자료 `Achieve`는 160개 학교를 추출하고 각 학교마다 작게는 11명, 크게는 162명의 학생들을 추출하여 학교의 여러 가지 정보와  학생들의 다양한 성적을 수집한 자료이다.
+  
+```{r}
+school_info <- Achieve %>% group_by(school) %>% summarise(n = n()) 
+summary(school_info$n)
+```
+  
+  
+성취도 자료 `Achieve`는 계층적 자료이며 다음과 같은 계층구조를 가지고 있다.
+  
+- 계층 1 : 학생 
+- 계층 2 : 학교 
+  
+분석의 목적은 **학교의 특성**과 **학생들의 다양한 성적들** (예를 들어 어휘 능력, vocabulary scores, `gevocab`)이 **학생들의 읽기 성취도** (general reading achievement, `geread`)에 어떤 영향을 미치는지 분석하는 것이다.  
+  
+  
+이제  $i$ 번째 학교에 속한 $j$ 번쨰 학생의 읽기 성취도 점수를 $y_{ij}$ 라고 하자.
+  
+  
+## 단순 계층모형
+
+가장 단순한 계층 모형으로서 읽기 성취도 점수에 대하여 학교 `school` 이 임의효과인 모형을 고려해 보자.
+
+$$
+y_{ij} = \beta_0 + b_{0i} + e_{ij}
+$$ {#eq-multimodel1}
+
+위의 식에서 $\beta_0$ 는 전체 평균 점수를 나타내는 모수이며 학교에 대한 임의효과 $b_{0i}$ 와 오차항 $e_{ij}$ 는 서로 독립이며 다음과 같은 분포를 따른다. 
+
+
+$$ b_{0i} \sim N(0, \sigma_{b0}^2 ) , \quad e_{ij} \sim N(0, \sigma_e^2) $$
+
+이제 `lmer` 함수로 모형 @eq-multimodel1 을 적합시켜 보자.
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model1 <- lmer(geread~1 +(1|school), data=Achieve)
+summary(model1)
+tab_model(model1)
+```
+
+
+추정결과를 보면 학생들의 읽기 성취도의 전체 평균의 추정량은 $\hat \beta_0= `r fixef(model1)`$이다.
+임의효과의 분산성분 $\sigma_{b0}$ 과 오차항의 븐산 $\sigma_e$의 추정량은 다음과 같다.
+
+$$ \hat {\sigma}^2_{b0} = `r (as.data.frame(VarCorr(model1))["sdcor"][1,1])^2` , \quad
+\hat {\sigma}^2_{e} = `r (as.data.frame(VarCorr(model1))["sdcor"][2,1])^2` $$
+
+지난 강의에서 언급한 그룹내 상관계수(ICC)의 값을 구해보면 0.072 로서 같은 학교에 속한 학생들의 성적들의 상관계수를 의미한다.
+
+$$ \text{ICC } = \frac{\hat {\sigma}^2_{b0} }{\hat {\sigma}^2_{b0} + \hat {\sigma}^2_{e}  }
+ = 0.072 $$
+ 
+
+160개의 학교에 대한 임의효과에 대한 예측값 $\hat b_{0i}$을 예측구간과 같이 나타내면 다음 그림과 같이 나타난다. 
+ 
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+sjPlot::plot_model	(model1, type = "re")
+```
+
+
+ 
+## 계층 1 설명변수가 있는 모형 
+ 
+ 
+이제 학생들의 어휘능력 성적 `gevocab`를 설명 변수($x_{ij1}$)로  포함하는  모형을 고려해 보자.
+첫 번째  계층의 구성원인 학생들에 대한 성적이므로 **계층 1 설명변수(level 1 covariate)**라고 부른다. 
+일단 어휘능력 성적은 고정 효과로서 모집단 전체에 대한 회귀 계수를 나타낸다. 
+
+
+
+$$
+y_{ij} = (\beta_0 + b_{0i}) + \beta_1 x_{ij1} + e_{ij}
+$$ {#eq-multimodel11}
+
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model11 <- lmer(geread~gevocab +(1|school), data=Achieve)
+summary(model11)
+```
+
+
+앞에서 적합한 평균모형의 추정값과 다음과 같이 비교하여 나타낼 수 있다. 
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+tab_model(model1, model11)
+```
+
+
+학생들의 어휘능력 성적은 읽기 성취도를 예측하는데 유의한 변수임이 t-검정로 나타난다(t-통계량 = 61.26).  또한  다음의 추정식과 같이 어휘능력 성적이 1점 증가하면  평균적으로 읽기 성취도은 0.5점 증가한다.
+
+
+
+$$ \hat {\sigma}^2_{b0} = `r (as.data.frame(VarCorr(model11))["vcov"][1,1])` , \quad
+\hat {\sigma}^2_{e} = `r (as.data.frame(VarCorr(model11))["vcov"][2,1])` $$
+
+
+따라서 위의 모형에 따른 그룹내 상관계수(ICC)의 값을 구해보면 다음과 같다. 
+
+```{r}
+s0 <- (as.data.frame(VarCorr(model11))["vcov"][1,1])
+se <- (as.data.frame(VarCorr(model11))["vcov"][2,1])
+icc <- s0/(s0+se)
+icc
+```
+
+$$ \text{ICC } = \frac{\hat {\sigma}^2_{b0} }{\hat {\sigma}^2_{b0} + \hat {\sigma}^2_{e}  }
+ = `r icc` $$
+ 
+
+## 주변 결정계수와 조건부 결정계수
+
+
+위의 모형 @eq-multimodel11 을 적합한 결과에서 `Marginal R2 / Conditional R2` 는 혼합모형에서 
+두 가지 종류의 결정계수 $R^2$, 즉  주변 결정계수(marginal $R^2$)와 조건부 결정계수(conditional $R^2$) 을 제시하고 있다.
+
+혼합모형에서 사용할 수 있는 두 개의 서로 다른 결정 계수에 대하여 알아보자.   
+자세한 내용은 @Nakagawa2013 와 @Nakagawa2017 에 자세하게 설명되어 있다. 
+
+
+먼저 다음과 같은 선형혼합모형이 있다고 가정하자.
+
+$$
+y_{ij} = \beta_0 + \sum_{k=1}^p \beta_k x_{kij} + b_i + e_{ij}, \quad b_i \sim N(0, \sigma_b^2), ~e_{ij} \sim N(0, \sigma^2_e)
+$$ {#eq-lme-general}
+
+
+일반적인 선형혼합모형 @eq-lme-general 에서 주변 결정계수(marginal $R^2$; $R^2_M$) 는 임의효과를 제외한 고정효과가 설명하는 변동이 전체 변동에서 차지하는 비율을 말한다. 주변 결정계수는 이반적인 선형모형에서 사용하는 결정계수의 의미를 혼합모형에 그대로 확장한 측도이다. 
+
+
+$$
+R^2_M = \frac{\sigma^2_f}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+$$ {#eq-r2-marginal}
+
+
+위에서 고정효과의 변동 $\sigma^2_f$는  다음과 같이 정의된다. 아래 식에서 $Var$은 표본 분산을 의미한다.  
+
+
+$$ \sigma^2_f = Var(\sum_{k=1}^p \hat \beta_k x_{kij}) $$
+
+
+반면 조건부 결정계수(conditional $R^2$, $R^2_C$)는 전체 변동을 설명하는 요인으로 고정효과가 설명하는 변동뿐만 아니라 임의효과가 설명하는 변동도 포함한다. 즉 조건부 결정계수는 다음과 같이 정의된다. 
+
+$$
+R^2_C = \frac{\sigma^2_f + \sigma^2_b}{\sigma^2_f + \sigma^2_b + \sigma^2_e}
+$$ {#eq-r2-conditional}
+
+
+이제 선형혼합모형 @eq-multimodel11 에서 고정효과의 변동 $\sigma^2_f$을 어떻게 계산하는지 알아보자. 고정효과가 `gevocab` 이고 이 설명변수에 대한 계수에 대한 추정값은 
+다음과 같다. 
+
+$$ \hat \beta_1 = `r fixef(model11)[2]` $$
+
+따라서 $\sigma^2_f$ 은 다음과 같이 계산할 수 있다.
+
+```{r}
+xx <- fixef(model11)[2] * model.matrix(model11)[,2]
+sf <- var(xx)
+sf
+```
+
+이제 위에서 구한 변동으로 선형혼합모형 @eq-multimodel11 에 대한 주변 결정계수와 
+조건부 결정계수를 계산할 수 있다.
+
+```{r}
+R2M <- (sf)/(sf+s0+se)
+R2M
+```
+
+$$ R^2_M = \frac{\sigma^2_f}{\sigma^2_f + \sigma^2_b + \sigma^2_e} 
+= \frac{`r sf`}{`r sf` + `r s0` + `r se`} = `r R2M` $$
+
+
+```{r}
+R2C <- (sf + s0)/(sf+s0+se)
+R2C
+```
+
+$$ R^2_C = \frac{\sigma^2_f + \sigma^2_b}{\sigma^2_f + \sigma^2_b + \sigma^2_e} 
+= \frac{`r sf` + `r s0`}{`r sf` + `r s0` + `r se`} = `r R2C` $$
+
+
+주변 결정계수와 조건부 결정계수는 `performance` 라이브러리의 함수 `model_performance`를 이용하여 구할 수 있다.
+
+```{r}
+model_performance(model11)
+```
+
+## 층별 결정계수
+
+
+계층모형의 특성을 고려하면 각 층에 대한 결정계수를 각각 다르게 정의할 수 있다. 교과서 @finch2019multilevel 의 46 페이지에 설명과 계산이 나타나 있다.
+
+각 층에 대한 결정계수는 주어진 층에서 가장 단순한 평균모형을 적합하는 경우 나타나는 총 변동에서 설명변수를 포함한 모형을 적합한 후에 줄어든 변동의 비율을 나타낸다.
+
+먼저 *계층 1*에 대한 결정계수 $R^2_1$ 은 다음과 같이 정의할 수 있다.
+
+$$
+\begin{aligned}
+R^2_1 & = 1 - \frac{Var(y_{ij} - \hat y_{ij})}{Var(y_{ij})} \\
+ & = 1 -\frac{\sigma^2_b + \sigma^2_e }{\sigma^2_{b0} + \sigma^2_{e0}}
+\end{aligned}
+$$ {#eq-r2one}
+
+위의 식 @eq-r2one 에서  $\sigma^2_{b0}$ 과  $\sigma^2_{e0}$ 은 고정효과가 없는 평균모형 
+@eq-multimodel1 를 적합한 후에 구한 분산 성분의 추정량이다.
+
+@eq-r2one  에서  $\sigma^2_{b}$ 과  $\sigma^2_{e}$ 는 고정효과가 주어진 모형식 
+@eq-lme-general 를 적합하고 얻은 분산 성분의 추정량이다.
+
+또한 식 @eq-r2one  에서 $\hat y_{ij}$는 추정된 고정효과를 의미한다.
+
+$$ \hat y_{ij} = \hat \beta_0 +\sum_{k=1}^p  \hat \beta_k x_{kij} $$
+
+이제 *계층 2*에 대한 결정계수 $R^2_2$ 은 다음과 같이 정의할 수 있다.
+
+$$
+\begin{aligned}
+R^2_2 & = 1 - \frac{Var( \bar y_{i} - \hat {\bar y_{i}})}{Var(\bar y_{i})}  \\
+ & = 1 -\frac{\sigma^2_b/ B + \sigma^2_e }{\sigma^2_{b0} / B + \sigma^2_{e0}}
+\end{aligned}
+$$ {#eq-r2two}
+
+위의 식 @eq-r2one 에서 $B$ 는 계층 2의 평균 크기를 나타낸다. 학교 자료의 예제에서는 
+학교의 평균 학생 수를 의미하므로 다음과 같이 구할 수 있다.
+
+$$  B = 10320/160 = 64.5$$
+
+## 계층 2 설명변수가 있는 모형 
+ 
+ 
+이제 학교의 규모를 나타내는 등록 학생의 수 `senroll`를 설명 변수($x_{i2}$)로  포함하는  모형을 고려해 보자. 두 번째  계층의 구성원인 학교들에 대한 정보이므로 **계층 2 설명변수(level 2 covariate)**라고 부른다. 일단 등록 학생의 수은 고정 효과로서 모집단 전체에 대한 회귀 계수를 나타낸다. 
+
+
+$$
+y_{ij} = (\beta_0 + b_{0i}) + \beta_1 x_{ij1} + \beta_2 x_{i2} + e_{ij}
+$$ {#eq-multimodel12}
+
+
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model12 <- lmer(geread~gevocab +senroll +(1|school), data=Achieve)
+summary(model12)
+```
+
+학교의 규모는 읽기 성취도를 예측하는데 유의하지 않다(t-통계량의 p-값 =0.618). 다른 변수에 대한 추정값은 거의 변하지 않았다.
+
+
+앞에서 적합한 평균모형의 추정값과 다음과 같이 비교하여 나타낼 수 있다. 
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+tab_model(model1, model11, model12)
+```
+
+
+## 계층 간의 상호작용 
+
+
+계층 모형에서는 서로 다른 계층의 설명 변수이 상호 작용을 가지는 경우가  매우 중요한 이슈이다. 
+또한 같은 계층 안에 속하는 변수들의 상호 작용도 중요하다. 
+
+이제  다음과 같은 두 모형을 고려한다.
+
+- 계층 내 상호작용이 있는 모형: 학생의 어휘성적과 연령
+- 계층 간 상호작용이 있는 모형: 학생의 어휘성적과  학교의 규모 
+
+
+```{r}
+summary(Achieve$age)
+```
+
+### 계층 내 상호작용
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model21 <- lmer(geread~gevocab + age + gevocab*age + (1|school), data=Achieve)
+summary(model21)
+```
+
+
+
+학생의 연령과 어휘 능력과의 상호작용은 읽기 성취도를 예측하는데 유의하다. 다른 변수에 대한 추정값은 거의 변하지 않았다. 반면 어휘 능력의 유의성은 사라졌다. 이러한 결과는 연령에 따라서 어휘 능력의 
+기여도가 달라진다는 것을 의미하며 연령이 증가하면 어휘능력의 효과가 커진다.
+
+
+```{r}
+model_performance(model21)
+```
+
+학생의 연령과 어휘 능력과의 상호작용은 다은과 같이 그림으로 나타낼 수 있다. 
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+sjPlot::plot_model	(model21, type='int')
+```
+
+
+
+### 계층 간 상호작용
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model22 <- lmer(geread~gevocab + senroll + gevocab*senroll + (1|school), data=Achieve)
+summary(model22)
+```
+
+
+```{r}
+model_performance(model22)
+```
+
+
+
+학교의 규모와 어휘 능력과의 상호작용은 읽기 성취도를 예측하는데 유의하다. 또한 어휘 능력도 유의하다. 이러한 결과는 학교의 규모에 따라서 어휘 능력의 기여도가 달라진다는 것을 의미하며 학교의 규모가 커지면 어휘능력의 효과가 감소한다(buffering or inhibitory effect).
+
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+sjPlot::plot_model	(model22, type = "int")
+```
+
+## 임의계수 모형 
+
+
+이제 어휘능력에도 학교에 대한  임의효과가 들어가는 임의계수 모형을 고려해 보자. 
+
+
+$$
+y_{ij} = (\beta_0 + b_{0i}) + (\beta_1 + b_{1i})  x_{ij1} + e_{ij}
+$$ {#eq-multimodel3}
+
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model3 <- lmer(geread~gevocab +  (1+gevocab |school), data=Achieve)
+summary(model3)
+```
+
+위의 적합된 결과를 보면 어휘능력은 유의한 설명변수이다. 이제 학생들의 읽기 성취도에 대한 총변동의 분해를 보면 다음과 같다.
+
+$$ Var(y_{ij}) = \hat{\sigma}_{b0}^2 + \hat{\sigma}_{b1}^2 + \hat{\sigma}_e^2 = 0.28 + 0.02 + 3.67 $$
+
+학교의 변동을 설명하는임의효과에 대한 분산성분 $\sigma_{b0}^2$ 과 $\sigma_{b1}^2$의 추정치는 각각 0.28과 0.02 로서 학생 개인들의 변동에 대한 분산  $\sigma_e^2$의 추정치 3.67에 비하여 매우 작다.
+따라서 학생들의 읽기 성취도는 학교 요인보다 학생들의 개인 요인이 더 크게 기여한다. 
+
+참고로 모형 @eq-multimodel3 를 `lmer` 로 적합할 때 계산에 대한 경고가 나타났다. 이와 같은 계산에 대한 경고는 계층모형에서 매우 흔하게 나타난다. 모형이 너무 복잡하여 계산에 문제가 있거나 계산에서 사용되는 여러 가지 조건이 충분하지 않아서 발생한다. 이러한 경고가 나오면 추정 결과를 면밀하게 검토하고 다른 모형들에 대한 고려도 해야 한다.
+
+이제 두 임의효과, 즉 절변에 대한 $b_{0i}$ 와 기울기에 대한 $b_{1i}$ 가 독립인 혼합모형을 적합헤 보자.  이렇게 임의효과들이 독립인 경우 아래와 같이 임의효과 모델에 
+두 개의 바(`||`) 를 사용한다.
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model31 <- lmer(geread~gevocab +  (1+gevocab || school), data=Achieve)
+summary(model31)
+```
+
+
+
+두 임의효과가 독립이 아닌 경우 나타난 경고는 나오지 않는다. 또한 고정효과에 대한 결과는 
+변하지 않았으나 분산성분의   추정은 다소 변화가 있다.
+
+
+## 가장 복잡한 모형 
+
+
+이제 위의 결과를 이용하여 연령과 학교규모를 고정효과로 보고 상호작용도 추가함 모형을 살펴보자.
+임의효과는 학교에 대한 항만 고려한다. 
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+model4 <- lmer(geread~gevocab + age + senroll + gevocab*senroll  + gevocab*age +  (1| school), data=Achieve)
+summary(model4)
+```
+
+
+## 설명변수의 중심화 
+
+
+계층모형에서는 설명 변수를 중심화하는 것(centering, 변수의 평균이 0)이 모형의 결과를 해석하는데 편리하다.  이유는 변수들의 효과가 전체 평균을 기준으로 높거나 낮은 경향으로 나타나므로 해석이 용이하다.
+
+이제 계층 1 의 설명변수들인 연령과 어휘능력을 중심화하여 다시 가장 복잡한 모형을 적합해보자.
+
+
+```{r , echo=T ,fig.width=7, fig.height=7, out.width='.8\\linewidth'}
+Achieve$Cgevocab <- Achieve$gevocab - mean(Achieve$gevocab)
+Achieve$Cage <- Achieve$age - mean(Achieve$age)
+model5 <- lmer(geread~Cgevocab + Cage + senroll + Cgevocab*senroll  + Cgevocab*Cage +  (1| school), data=Achieve)
+summary(model5)
+```
+
+
+
