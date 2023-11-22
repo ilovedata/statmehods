@@ -32,7 +32,10 @@ book:
         - notes/logistic_practice_2.qmd
         - notes/lme_practice.qmd
         - notes/lme_practice_2.qmd
-    
+    - part: "비모수 회귀모형"
+      chapters:
+        - notes/spline-01.qmd    
+        - notes/spline-02.qmd    
     - references.qmd
 
 bibliography: references.bib
