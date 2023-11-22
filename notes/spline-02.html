@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.468">
+<meta name="generator" content="quarto-1.4.510">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -376,12 +376,6 @@ m(x)  = a + b_1 x + b_2 x^2 + \dots + b_p x^p
 <li>퓨리에 함수(Fourier series)</li>
 <li>웨이블릿 함수(Wavelet series )</li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<figcaption>연결점에서의 연속과 절단다항함수</figcaption>
-<p><img src="../myimages/fig1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
 </section>
 <section id="직선-스플라인linear-spline" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="직선-스플라인linear-spline"><span class="header-section-number">13.2</span> 직선 스플라인(Linear Spline)</h2>
@@ -395,6 +389,12 @@ m(x)  = a + b_1 x + b_2 x^2 + \dots + b_p x^p
 \hat E(Y|x) =
 \frac{1}{n_k} \sum_{i=1}^n y_i I_{B_k}(x_i) \quad \text{ if } x \in B_k
 \tag{13.3}\]</span></span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>연결점에서의 연속과 절단다항함수</figcaption>
+<p><img src="../myimages/fig1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 <p>이제 Regeressogram의 개념을 확장시켜서 각 구간의 회귀모형을 직선식으로 확장하여 보자. 즉</p>
 <p><span id="eq-lm1"><span class="math display">\[
 E(Y|x) = a_k + b_k x \quad \text{ if } x \in B_k
@@ -451,15 +451,15 @@ x &amp; \text{ if } x \ge 0 \\
 0 &amp; \text{ if } x &lt; 0
 \end{cases}
 \]</span></p>
+<p>이제 연결점(knots)에서 연속인 조건을 만족하는 직선들을 추정하는 문제는 <a href="#eq-lm2" class="quarto-xref">식&nbsp;<span>13.8</span></a> 에 주어진 회귀식을 추정하는 문제와 같음을 보였다. 즉, 주어진 구간에서 서로 연결되는 최적의 직선식을 구하는 문제는 함수를 다음과 같은 기저로 조합된 것으로 보고 최적의 계수를 구하는 것과 동일한 문제이다.</p>
+<p><span class="math display">\[ N_0(x) = 1, \quad N_1(x) =x, \quad N_2(x) = (x-\xi_1)_{+}, \quad N_3(x) =(x-\xi_2)_{+}  \]</span></p>
+<p>위의 기저의 특징은 일부 기저함수의 값이 주어진 구간의 전 <span class="math inline">\(\xi_1\)</span>과 <span class="math inline">\(\xi_2\)</span>에 의존한다는 것이다. 아래 그림은 연결점이 2개인 경우 4개의 기저를 나타내는 그림이다.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <figcaption>직선스플라인 회귀에서 4개의 기저</figcaption>
 <p><img src="../myimages/bases.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
-<p>이제 연결점(knots)에서 연속인 조건을 만족하는 직선들을 추정하는 문제는 <a href="#eq-lm2" class="quarto-xref">식&nbsp;<span>13.8</span></a> 에 주어진 회귀식을 추정하는 문제와 같음을 보였다. 즉, 주어진 구간에서 서로 연결되는 최적의 직선식을 구하는 문제는 함수를 다음과 같은 기저로 조합된 것으로 보고 최적의 계수를 구하는 것과 동일한 문제이다.</p>
-<p><span class="math display">\[ N_0(x) = 1, \quad N_1(x) =x, \quad N_2(x) = (x-\xi_1)_{+}, \quad N_3(x) =(x-\xi_2)_{+}  \]</span></p>
-<p>위의 기저의 특징은 일부 기저함수의 값이 주어진 구간의 전 <span class="math inline">\(\xi_1\)</span>과 <span class="math inline">\(\xi_2\)</span>에 의존한다는 것이다. 아래 그림은 연결점이 2개인 경우 4개의 기저를 나타내는 그림이다.</p>
 <p>이제 위의 문제에서 만약 $ K+1$개의 구간이 있다면 원래 회귀계수의 개수 <span class="math inline">\(2(K+1)\)</span>에서 제약식의 수 <span class="math inline">\(K\)</span>를 제외한 총 <span class="math inline">\(K+2\)</span> 개의 기저가 필요하며 다음과 같다.</p>
 <p><span class="math display">\[ N_0(x) = 1, \quad N_1(x) =x, \quad N_k(x) = (x-\xi_k)_{+}, k=1,2,\dots,K  \]</span></p>
 <div class="quarto-figure quarto-figure-center">
@@ -502,7 +502,11 @@ m''(0)=m'''(0) =0, \quad m''(1) = m'''(1) =0
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">c</span>(<span class="fl">0.2</span>,<span class="fl">0.6</span>), <span class="at">col =</span> <span class="st">'blue'</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="576"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>다음 프로그램에서는 연결점을 자동으로 선택하고 차수를 3차(자유도=3)로 사용하는 방법이다.</p>
@@ -517,27 +521,31 @@ Call:
 lm(formula = y ~ ns(x, df = 3))
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--2.99282 -0.89068  0.05363  0.79646  2.09850 
+    Min      1Q  Median      3Q     Max 
+-2.0739 -0.8089  0.1390  0.8305  1.8905 
 
 Coefficients:
                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)      3.0027     0.3933   7.635 1.67e-11 ***
-ns(x, df = 3)1  -5.5292     0.4462 -12.391  &lt; 2e-16 ***
-ns(x, df = 3)2  -3.5667     1.0377  -3.437 0.000871 ***
-ns(x, df = 3)3   3.9815     0.3687  10.799  &lt; 2e-16 ***
+(Intercept)      1.9015     0.3292   5.775 9.45e-08 ***
+ns(x, df = 3)1  -5.6683     0.4504 -12.585  &lt; 2e-16 ***
+ns(x, df = 3)2  -0.2458     0.8480  -0.290    0.773    
+ns(x, df = 3)3   3.2603     0.3292   9.905 2.38e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.102 on 96 degrees of freedom
-Multiple R-squared:  0.7728,    Adjusted R-squared:  0.7657 
-F-statistic: 108.8 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.037 on 96 degrees of freedom
+Multiple R-squared:  0.7211,    Adjusted R-squared:  0.7124 
+F-statistic: 82.73 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="576"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>다음 프로그램에서는 25개의 연결점을 선택하고 차수를 3차(자유도=3)로 사용하는 방법이다. 과적합(overfitting)이 발생하였다.</p>
@@ -550,15 +558,19 @@ F-statistic: 108.8 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="평활-스플라인" class="level2" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="평활-스플라인"><span class="header-section-number">13.4</span> 평활 스플라인</h2>
-<p>스플라인 회귀에서 추정된 평균 함수 <span class="math inline">\(\hat m(x)\)</span>의 부드러움(smoothness)는 연결점의 수 <span class="math inline">\(K\)</span>와 기저함수의 차수 <span class="math inline">\(p\)</span>로 결정된다. 일반적으로 기저함수의 차수는 3차를 사용하는 자연 3차 스플라인 회귀식을 사용하녀 고차식을 사용해도 큰 차이가 나지 않는다. 따라서 추정된 평균함수의 부드러움을 결정하는 주용한 요수는 연결점의 수이다.</p>
+<p>스플라인 회귀에서 추정된 평균 함수 <span class="math inline">\(\hat m(x)\)</span>의 부드러움(smoothness)는 연결점의 수 <span class="math inline">\(K\)</span>와 기저함수의 차수 <span class="math inline">\(p\)</span>로 결정된다. 일반적으로 기저함수의 차수는 3차를 사용하는 자연 3차 스플라인 회귀식을 사용하며 고차식을 사용해도 큰 차이가 나지 않는다. 따라서 추정된 평균함수의 부드러움을 결정하는 중요한 요소는 연결점의 수이다.</p>
 <p>연결점의 수가 너무 적으면 너무 부드러워서 전체경향을 파악하기 힘들고(large bias, small variance) 반면에 너무 많으면 과적합(over fitting, small bias, large variance)이 된다.</p>
-<p>평활 스플라인(smoothing sapline)은 자료의 모든 점을 연결점으로 하면서 동시에 부드러움을 조절하는 방법이다. 이제 <span class="math inline">\(E(y|x)\)</span>를 추정하는 함수 <span class="math inline">\(f(x)\)</span>에 대한 벌칙항을 포함한 오차제곱합(reisgual sum of squares with penalty term)을 고려하자.</p>
+<p>평활 스플라인(smoothing sapline)은 자료의 모든 점을 연결점으로 하면서 동시에 부드러움을 조절하는 방법이다. 이제 <span class="math inline">\(E(y|x)\)</span>를 추정하는 함수 <span class="math inline">\(f(x)\)</span>에 대한 벌칙항을 포함한 오차제곱합(residual sum of squares with penalty term)을 고려하자.</p>
 <p><span id="eq-pensse"><span class="math display">\[
 SSE(f, \lambda) = \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int [f''(x)]^2 dx
 \tag{13.11}\]</span></span></p>
@@ -639,15 +651,19 @@ trace[ (\pmb X^t \pmb X)^{-1} \pmb X^t \pmb X] = trace(\pmb I_{p+1})=p+1 \]</spa
 <pre><code>Call:
 smooth.spline(x = y ~ x, df = 5, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 1.091532  lambda= 0.005790657 (13 iterations)
-Equivalent Degrees of Freedom (Df): 4.999328
-Penalized Criterion (RSS): 21.97263
-PRESS(l.o.o. CV): 0.2676181</code></pre>
+Smoothing Parameter  spar= 1.092279  lambda= 0.006046551 (14 iterations)
+Equivalent Degrees of Freedom (Df): 4.999396
+Penalized Criterion (RSS): 25.42996
+PRESS(l.o.o. CV): 0.288698</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm5,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="576"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>유효 자유도를 증가시키면 추정된 평활곡선은 다음과 같이 나타난다.</p>
@@ -672,7 +688,11 @@ PRESS(l.o.o. CV): 0.2676181</code></pre>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"effective degress of freedom = 70"</span>)</span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm70,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>만약 유효 자유도를 지정해주지 않으며 CV를 최소화해주는 자유도를 구하여 자동으로 스플라인함수를 추정해준다. 아래에서 구해진 평활모수는 <span class="math inline">\(\lambda = 0.000122\)</span> 이고 자유도는 <span class="math inline">\(df = 11.34031\)</span>이다.</p>
@@ -687,15 +707,19 @@ PRESS(l.o.o. CV): 0.2676181</code></pre>
 <pre><code>Call:
 smooth.spline(x = y ~ x, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 0.8713205  lambda= 0.0001610047 (17 iterations)
-Equivalent Degrees of Freedom (Df): 10.79427
-Penalized Criterion (RSS): 6.44642
-PRESS(l.o.o. CV): 0.08056366</code></pre>
+Smoothing Parameter  spar= 0.9121102  lambda= 0.0002080522 (16 iterations)
+Equivalent Degrees of Freedom (Df): 10.15446
+Penalized Criterion (RSS): 6.867803
+PRESS(l.o.o. CV): 0.08506423</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsmauto,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="spline-02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="576"></p>
+<div>
+<figure class="figure">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -856,8 +880,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
         typesetMath(container);
         return container.innerHTML

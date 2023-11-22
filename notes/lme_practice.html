@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.468">
+<meta name="generator" content="quarto-1.4.510">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -422,7 +422,11 @@ div.csl-indent {
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(psid20, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>income))<span class="sc">+</span><span class="fu">geom_line</span>()<span class="sc">+</span><span class="fu">facet_wrap</span>(<span class="sc">~</span> person)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>다음은 성별에 따라 소득이 어떻게 다른지 보여줄 수도 있다. 소득은 로그 척도(log scale)로 표현하는 것이 비교를 위하여 적절하다. 이 경우 <code>y=income+100</code> 은 반응변수가 0일 때를 대비하여 100을 더한 것이다.</p>
@@ -433,7 +437,11 @@ div.csl-indent {
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> sex) <span class="sc">+</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>일반적으로 남성의 소득이 더 높고 변동성이 적은 반면, 여성의 소득은 변동성이 더 크지만 더 빠르게 증가하고 있음을 알 수 있다. 첫 번째 주제부터 각 주제에 한 줄을 그을 수 있습니다</p>
@@ -450,7 +458,11 @@ div.csl-indent {
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>이 경우 개인별로 회귀직선의 기울기와 절편이 다르므로 개체별 모형이라고 한다. 함수 <code>lmlist</code> 를 이용하여 소득의 로그값을 반응변수로, 연도를 설명변수로 하여 개체별 모형을 적합해 보자. 연도는 실제 연도값(68,…,90) 에서 중간값 78을 뺀 값을 사용한다. 이렇게 하면 회귀직선의 절편은 78년의 소득을 나타내고 회귀직선의 기울기는 1년 당 소득의 증가를 나타낸다.</p>
@@ -470,7 +482,11 @@ I(year - 78) -0.04850099   1.00000000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">coef</span>(ml),<span class="at">main=</span><span class="st">"intercepts and slopes on drivers: sleep study "</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" style="width:80.0%"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(intercepts)</span>
@@ -515,14 +531,22 @@ I(year - 78) -0.04850099   1.00000000</code></pre>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>psex <span class="ot">&lt;-</span> psid<span class="sc">$</span>sex[<span class="fu">match</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">85</span>,psid<span class="sc">$</span>person)]</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">split</span>(intercepts,psex))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>다음 그림은 남여별로 소득 증가율(slope)을 비교한 그림이다. 남성에 비해 여성의 소득 증가율이 더 높고 가변적이라는 것을 알 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">split</span>(slopes,psex))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="lme_practice_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="lme_practice_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>남여 두 그룹간에 절편과 기울기의 차이가 있는지 다음과 같이 t-검정을 수행할 수 있다.</p>
@@ -840,8 +864,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
         typesetMath(container);
         return container.innerHTML

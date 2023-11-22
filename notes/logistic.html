@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.468">
+<meta name="generator" content="quarto-1.4.510">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -524,7 +524,11 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(damage<span class="sc">/</span><span class="dv">6</span> <span class="sc">~</span> temp, orings, <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">85</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"Temperature"</span>, <span class="at">ylab=</span><span class="st">"Prob of damage"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -663,14 +667,22 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sm.density.compare</span>(BlowBS_raw<span class="sc">$</span>d, BlowBS_raw<span class="sc">$</span>y,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">xlab=</span><span class="st">"D"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">30</span>,.<span class="dv">1</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sm.density.compare</span>(<span class="fu">log</span>(BlowBS_raw<span class="sc">$</span>d), BlowBS_raw<span class="sc">$</span>y,<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="fl">3.2</span>,.<span class="dv">9</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Y=0"</span>,<span class="st">"Y=1"</span>),<span class="at">lty=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>또한 R package <code>alr4</code> 에 수록된 데이터셋 <code>BlowBS</code> 는 위에서 본 O-rings 예제와 동일하게 <code>black spruce</code>인 자료만 모아서 전체 횟수와 성공의 횟수로 요약된 자료이다.</p>
@@ -732,14 +744,22 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> d, BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"D"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>나무의 지름 <span class="math inline">\(d\)</span>을 <span class="math inline">\(\log(d)\)</span>로 변환하여 예측변수(predictor) <span class="math inline">\(x\)</span>로 하려고 한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>( died<span class="sc">/</span>m<span class="sc">~</span> <span class="fu">I</span>(<span class="fu">log</span>(d)), BlowBS, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">xlab=</span><span class="st">"log(D)"</span>, <span class="at">ylab=</span><span class="st">"Prob of Blow Down"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>나무의 상태 <span class="math inline">\(y\)</span>는 두 가지의 반응 결과를 가지는 이항변수이고 그 평균 <span class="math inline">\(E(y)\)</span>는 0과 1사이의 값을 가지는 확률이지만 나무의 지름 <span class="math inline">\(x=\log(D)\)</span>는 연속형 변수이다.</p>
@@ -856,7 +876,11 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">25</span>,<span class="dv">85</span>,<span class="dv">1</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit1)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit1)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>또한 온도가 31F인 경우 고장확률의 추정값은 <span class="math inline">\(\hat p =\)</span> 0.9930342이며 R 에서 다음과 같이 계산한다.</p>
@@ -900,7 +924,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fl">3.5</span>,<span class="fl">0.1</span>)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x,<span class="fu">ilogit</span>(<span class="fu">coef</span>(logit2)[<span class="dv">1</span>]<span class="sc">+</span><span class="fu">coef</span>(logit2)[<span class="dv">2</span>]<span class="sc">*</span>x))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="logistic_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="logistic_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -2133,8 +2161,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
         }
         typesetMath(container);
         return container.innerHTML
