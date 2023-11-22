@@ -521,21 +521,21 @@ Call:
 lm(formula = y ~ ns(x, df = 3))
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--2.0739 -0.8089  0.1390  0.8305  1.8905 
+     Min       1Q   Median       3Q      Max 
+-2.10599 -0.53031  0.04755  0.56736  1.28964 
 
 Coefficients:
                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)      1.9015     0.3292   5.775 9.45e-08 ***
-ns(x, df = 3)1  -5.6683     0.4504 -12.585  &lt; 2e-16 ***
-ns(x, df = 3)2  -0.2458     0.8480  -0.290    0.773    
-ns(x, df = 3)3   3.2603     0.3292   9.905 2.38e-16 ***
+(Intercept)      1.7800     0.2242   7.939 3.82e-12 ***
+ns(x, df = 3)1  -8.3667     0.2939 -28.463  &lt; 2e-16 ***
+ns(x, df = 3)2   0.2451     0.5538   0.443    0.659    
+ns(x, df = 3)3   2.8841     0.2517  11.460  &lt; 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.037 on 96 degrees of freedom
-Multiple R-squared:  0.7211,    Adjusted R-squared:  0.7124 
-F-statistic: 82.73 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 0.6862 on 96 degrees of freedom
+Multiple R-squared:  0.9047,    Adjusted R-squared:  0.9018 
+F-statistic: 303.9 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
@@ -651,10 +651,10 @@ trace[ (\pmb X^t \pmb X)^{-1} \pmb X^t \pmb X] = trace(\pmb I_{p+1})=p+1 \]</spa
 <pre><code>Call:
 smooth.spline(x = y ~ x, df = 5, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 1.092279  lambda= 0.006046551 (14 iterations)
-Equivalent Degrees of Freedom (Df): 4.999396
-Penalized Criterion (RSS): 25.42996
-PRESS(l.o.o. CV): 0.288698</code></pre>
+Smoothing Parameter  spar= 1.140064  lambda= 0.006247477 (15 iterations)
+Equivalent Degrees of Freedom (Df): 4.999354
+Penalized Criterion (RSS): 26.51528
+PRESS(l.o.o. CV): 0.3001744</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm5,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -695,7 +695,7 @@ PRESS(l.o.o. CV): 0.288698</code></pre>
 </div>
 </div>
 </div>
-<p>만약 유효 자유도를 지정해주지 않으며 CV를 최소화해주는 자유도를 구하여 자동으로 스플라인함수를 추정해준다. 아래에서 구해진 평활모수는 <span class="math inline">\(\lambda = 0.000122\)</span> 이고 자유도는 <span class="math inline">\(df = 11.34031\)</span>이다.</p>
+<p>만약 유효 자유도를 지정해주지 않으며 CV를 최소화해주는 자유도를 구하여 자동으로 스플라인함수를 추정해준다. 아래에서 구해진 평활모수는 <span class="math inline">\(\lambda = 0.000208\)</span> 이고 자유도는 <span class="math inline">\(df = 10.15446\)</span>이다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
@@ -707,10 +707,10 @@ PRESS(l.o.o. CV): 0.288698</code></pre>
 <pre><code>Call:
 smooth.spline(x = y ~ x, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 0.9121102  lambda= 0.0002080522 (16 iterations)
-Equivalent Degrees of Freedom (Df): 10.15446
-Penalized Criterion (RSS): 6.867803
-PRESS(l.o.o. CV): 0.08506423</code></pre>
+Smoothing Parameter  spar= 0.8294737  lambda= 9.603252e-05 (11 iterations)
+Equivalent Degrees of Freedom (Df): 12.16349
+Penalized Criterion (RSS): 5.804371
+PRESS(l.o.o. CV): 0.07292211</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsmauto,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
