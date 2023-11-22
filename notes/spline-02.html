@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.468">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>데이터 분석 방법론 - 13&nbsp; 스플라인 회귀모형</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../notes/spline-01.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "일치 없음",
+    "search-matching-documents-text": "일치된 문서",
+    "search-copy-link-title": "검색 링크 복사",
+    "search-hide-matches-text": "추가 검색 결과 숨기기",
+    "search-more-match-text": "추가 검색결과",
+    "search-more-matches-text": "추가 검색결과",
+    "search-clear-button-title": "제거",
+    "search-detached-cancel-button-title": "취소",
+    "search-submit-button-title": "검색",
+    "search-label": "검색"
+  }
+}</script>
+<script type="text/javascript">
+ window.MathJax = {
+  tex: {
+    macros: {
+    RR: '{\\mathbb R}',                    // a simple string replacement
+    hatmat:'{\\pmb X ({\\pmb X}^t {\\pmb X} )^{-1} {\\pmb X}^t}',
+    bold: ['\\boldsymbol{#1}',1] ,     // this macro has one parameter
+    pardiff: ['\\frac{\\partial#2}{\\partial#1}', 2, 'x'], // this macro has an optional parameter that defaults to 'x'
+    pardifftwo: ['\\frac{\\partial#1}{\\partial#2}', 2]
+  },
+  environments: {
+  braced: ["\\left\\{", "\\right\\}"]
+  }
+ }
+};
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-02.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">데이터 분석 방법론</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ilovedata/statmehods" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../데이터-분석-방법론.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="검색"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">서론</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">분할표의 분석</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">연관성의 측도</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/association-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">연관성의 검정</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/diagnose.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">진단의 평가</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">일반화 선형모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">포아송 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">혼합모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/random_effect.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">실습</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">비모수 회귀모형</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="토글 섹션">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/spline-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/spline-02.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">목차</h2>
+   
+  <ul>
+  <li><a href="#함수의-기저" id="toc-함수의-기저" class="nav-link active" data-scroll-target="#함수의-기저"><span class="header-section-number">13.1</span> 함수의 기저</a></li>
+  <li><a href="#직선-스플라인linear-spline" id="toc-직선-스플라인linear-spline" class="nav-link" data-scroll-target="#직선-스플라인linear-spline"><span class="header-section-number">13.2</span> 직선 스플라인(Linear Spline)</a></li>
+  <li><a href="#스플라인-회귀" id="toc-스플라인-회귀" class="nav-link" data-scroll-target="#스플라인-회귀"><span class="header-section-number">13.3</span> 스플라인 회귀</a></li>
+  <li><a href="#평활-스플라인" id="toc-평활-스플라인" class="nav-link" data-scroll-target="#평활-스플라인"><span class="header-section-number">13.4</span> 평활 스플라인</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-02.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="함수의-기저" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="함수의-기저"><span class="header-section-number">13.1</span> 함수의 기저</h2>
+<p>반응변수 <span class="math inline">\(Y\)</span>와 설명변수 <span class="math inline">\(X\)</span>가 다음과 같은 관계를 가진다고 하자.</p>
+<p><span class="math display">\[ E(Y|X=x) = m(x)  \]</span></p>
+<p>이러한 관계를 회귀모형(regression model)이라고 하며 <span class="math inline">\(Y\)</span>의 평균이 <span class="math inline">\(X\)</span>에 따라서 변하는 괸계를 설정하는 모형이다. 만약 <span class="math inline">\(m(x)\)</span>의 형태를 회귀계수의 선형식으로 나타낼 수 있다면 우리는 이를 선형회귀모형(linear regression model)이라고 한다.</p>
+<p><span class="math display">\[ m(x) = a+b_1 x_1 + b_2 x_2 + \dots + b_p x_p \]</span></p>
+<p>설명변수는 고정된 값이거나 또는 확률변수일 수도 있다.</p>
+<p>비모수 회귀모형(nonparametric regression model)에서는 <span class="math inline">\(m(x)\)</span>의 형태에 특별한 제한을 두지 않는다. 따라서 함수 <span class="math inline">\(m(x)\)</span>는 무수히 많고 다양한 형태를 가질 수 있다.</p>
+<p>이제 설명변수의 수가 1개라고 가정하면 함수 <span class="math inline">\(m(x)\)</span>를 가장 단순하게 표현할 수 있는 모형이 1차 회귀모형이다.</p>
+<p><span class="math display">\[ y = a + b x + e \]</span></p>
+<p>만약 반응변수와 설명변수의 관계가 선형이 아니라 비선형이라면 <span class="math inline">\(m(x)\)</span>를 <span class="math inline">\(p\)</span>-차 다항식으로 사용할 수 있다.</p>
+<p><span id="eq-poly"><span class="math display">\[
+m(x)  = a + b_1 x + b_2 x^2 + \dots + b_p x^p
+\tag{13.1}\]</span></span></p>
+<p>이렇게 <span class="math inline">\(m(x)\)</span>를 다항식으로 표현하는 것은 우리가 알 수 없는 함수를 <span class="math inline">\(p+1\)</span>개의 기저들(basis), 즉 <span class="math inline">\(1\)</span>, <span class="math inline">\(x\)</span>, <span class="math inline">\(x^2\)</span>, ..,<span class="math inline">\(x^p\)</span>의 선형조합으로 근사하는 것이며 다항식의 경우는 각 기저 <span class="math inline">\(N_k(x)\)</span> 는 설명변수의 <span class="math inline">\(k\)</span>-차 항 <span class="math inline">\(x^k\)</span>이다.</p>
+<p><span id="eq-basis"><span class="math display">\[
+\beta_0 N_0(x) + \beta_1 N_1(x) + \beta_2 N_2(x) + \dots + \beta_p N_p(x)
+\tag{13.2}\]</span></span></p>
+<p>일반적으로 임의의 함수는 다양한 형태의 기저들로 표현할 수 있으며 기저들의 형태에 따라 다음과 같은 것들이 있다.</p>
+<ul>
+<li>다항식(polynimials)</li>
+<li>퓨리에 함수(Fourier series)</li>
+<li>웨이블릿 함수(Wavelet series )</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>연결점에서의 연속과 절단다항함수</figcaption>
+<p><img src="../myimages/fig1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="직선-스플라인linear-spline" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="직선-스플라인linear-spline"><span class="header-section-number">13.2</span> 직선 스플라인(Linear Spline)</h2>
+<p>이제 <span class="math inline">\(n\)</span>개의 자료 <span class="math inline">\((y_1,x_1),(y_2,x_2),\dots,(y_n,x_n)\)</span>이 주어졌다고 하자. 편의상 설명변수 <span class="math inline">\(x\)</span>가 구간 <span class="math inline">\((0,1)\)</span>의 값이라고 가정한다. 설명변수들이 포함되는 구간 <span class="math inline">\((0, 1)\)</span>를 <span class="math inline">\(K+1\)</span>개의 구간 <span class="math inline">\(\{B_j =(\xi_{k-1}, \xi_k) | k=1,2,..,K+1 \}\)</span> 으로 나누어 보자. 즉</p>
+<p><span class="math display">\[ \xi_0 = 0 &lt; \xi_1 &lt; \xi_2 &lt; \dots &lt;  \xi_{K-1} &lt; \xi_K &lt; 1 = \xi_{K+1} \]</span></p>
+<p>위의 구간에서 <span class="math inline">\(K\)</span>개의 내부점들 <span class="math inline">\(\xi_1 &lt; \xi_2 &lt; \dots &lt; \xi_{K-1} &lt; \xi_K\)</span>은 일반적으로 knots(연결점)이라고 부른다,</p>
+<p>이제 반응변수들의 평균 <span class="math inline">\(E(Y|x)\)</span> 을 단순하게 각 구간에서 상수라고 가정하면</p>
+<p><span class="math display">\[ E(Y|x) = a_k \quad \text{ if } x \in B_k \]</span></p>
+<p>각 구간에 속하는 반응변수들의 평균으로 추정할 수 있다. 이러한 추정법을 우리는 전 강의에서 Regressogram이라고 하였다.</p>
+<p><span id="eq-regresso"><span class="math display">\[
+\hat E(Y|x) =
+\frac{1}{n_k} \sum_{i=1}^n y_i I_{B_k}(x_i) \quad \text{ if } x \in B_k
+\tag{13.3}\]</span></span></p>
+<p>이제 Regeressogram의 개념을 확장시켜서 각 구간의 회귀모형을 직선식으로 확장하여 보자. 즉</p>
+<p><span id="eq-lm1"><span class="math display">\[
+E(Y|x) = a_k + b_k x \quad \text{ if } x \in B_k
+\tag{13.4}\]</span></span></p>
+<p>모형 <a href="#eq-lm1" class="quarto-xref">식&nbsp;<span>13.4</span></a> 는 각 구간마다 회귀직선을 적합하는 것과 같은 모형이다. 이러한 모형에서 추정된 각 회귀식들은 각 구간의 연결점 <span class="math inline">\(\xi_1, \xi_2, \dots, \xi_{K}\)</span> 에서 불연속이다. 각 연결점 <span class="math inline">\(\xi_k\)</span>에서 연속인 회귀식들을 구할 수 있을까?</p>
+<p>이제 구간 <span class="math inline">\((0,1)\)</span>을 다음과 같이 <span class="math inline">\(K+1=3\)</span>개의 구간으로 나누어 보자. 이 경우 연결점은 <span class="math inline">\(\xi_1\)</span>과 <span class="math inline">\(\xi_2\)</span>, 두 개가 있다.</p>
+<p><span class="math display">\[  B_1 =(0, \xi_1) \quad B_2 = (\xi_1, \xi_2) \quad B_3 = (\xi_2,1) \]</span></p>
+<p>모형 <a href="#eq-lm1" class="quarto-xref">식&nbsp;<span>13.4</span></a> 에서 주어진 회귀계수는 모두 <span class="math inline">\(2(K+1)=6\)</span> 개이며 추정값을 구하는 방법은 다음과 같은 오차제곱합을 구하는 최소제곱법을 사용할 수 있다.</p>
+<p><span id="eq-sse1"><span class="math display">\[
+SSE = \sum_{x_i \in B_1} (y_i - a_1 -b_1 x_i)^2 + \sum_{x_i \in B_2} (y_i - a_2 -b_2 x_i)^2 + \sum_{x_i \in B_3} (y_i - a_3 -b_3 x_i)^2
+\tag{13.5}\]</span></span></p>
+<p>이제 모형 <a href="#eq-lm1" class="quarto-xref">식&nbsp;<span>13.4</span></a> 에서 구한 직선회귀식이 연결점 <span class="math inline">\(\xi_1\)</span>과 <span class="math inline">\(\xi_2\)</span>에서 연속이 되려면 다음과 같은 두 조건을 만족해야 한다. <span id="eq-res1"><span class="math display">\[
+a_1 + b_1 \xi_1 = a_2 + b_2 \xi_1, \quad a_2 + b_2 \xi_2 = a_3 + b_3 \xi_2
+\tag{13.6}\]</span></span></p>
+<p>각 연결점의 연속을 만족하려면 위의 두 식을 만족해야 하므로 이제 추정해야 하는 모수의 개수는 4개이다. 왜냐하면 원래의 회귀계수의 개수 6 에서 제약식 2개의 개수를 제외해야 하기 떄문이다.</p>
+<p>제약 <a href="#eq-res1" class="quarto-xref">식&nbsp;<span>13.6</span></a> 을 다시 쓰면 다음과 같이 쓸수 있으며 <span class="math display">\[
+\begin{aligned}
+a_2 &amp; = a_1  + (b_1 - b_2) \xi_1 \\
+a_3 &amp; = a_2 + (b_2 - b_3 ) \xi_2 \\
+  &amp; = a_1  + (b_1 - b_2) \xi_1  + (b_2 - b_3 ) \xi_2
+\end{aligned}
+\]</span></p>
+<p>이 제약식을 이용하여 오차제곱합 <a href="#eq-sse1" class="quarto-xref">식&nbsp;<span>13.5</span></a> 에서 두 번째 항과 세 번째 항을 다음과 같이 전개할 수 있다</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{x_i \in B_2} (y_i - a_2 -b_2 x_i)^2  &amp; = \sum_{x_i \in B_2} (y_i - a_1  - (b_1 - b_2) \xi_1 -b_2 x_i)^2 \\
+&amp; =  \sum_{x_i \in B_2} [y_i - a_1  - b_1 \xi_1 -b_2 (x_i - \xi_1)]^2 \\
+&amp; =\sum_{x_i \in B_2} [y_i - a_1  - b_1 x_i  -(b_2-b_1) (x_i - \xi_1)]^2 \\
+\sum_{x_i \in B_3} (y_i - a_3 -b_3 x_i)^2
+&amp; = \sum_{x_i \in B_3} (y_i - a_1  - (b_1 - b_2) \xi_1 - (b_2 - b_3 ) \xi_2  -b_3 x_i)^2 \\
+&amp; =\sum_{x_i \in B_3} [y_i - a_1  - b_1 \xi_1  +b_2 \xi_1  -  b_2  \xi_2  -b_3( x_i - \xi_2) ]^2 \\
+&amp; =\sum_{x_i \in B_3} [y_i - a_1  - b_1 x_i + b_1 x_i   - b_1 \xi_1  +b_2 \xi_1  -  b_2  \xi_2 -b_3( x_i - \xi_2) ]^2  \\
+&amp; =\sum_{x_i \in B_3} [y_i - a_1  - b_1 x_i + b_1 (x_i - \xi_1)  +b_2 (\xi_1 -x_i + x_i)  -  b_2  \xi_2 -b_3( x_i - \xi_2) ]^2  \\
+&amp;= \sum_{x_i \in B_3} [y_i - a_1  - b_1 x_i - (b_2 -b_1) (x_i - \xi_1)  -(b_3-b_2)( x_i - \xi_2) ]^2
+\end{aligned}
+\]</span></p>
+<p>위의 전개식에서 모수를 다음과 같이 다시 정의하면</p>
+<p><span class="math display">\[  \beta_0 = a_1, \quad \beta_1 = b_1, \quad \beta_2 =b_2-b_2 , \quad \beta_3 = b_3 - b_2 \]</span></p>
+<p>오차제곱합 SSE는 다음과 같이 전개할 수 있다.</p>
+<p><span id="eq-sse2"><span class="math display">\[
+\begin{aligned}
+SSE &amp;  = \sum_{x_i \in B_1} (y_i -\beta_0 -\beta_1 x_i)^2 + \sum_{x_i \in B_2} [y_i - \beta_0  - \beta_1 x_i  -\beta_3 (x_i - \xi_1)]^2  \\ \notag
+&amp; \quad + \sum_{x_i \in B_3} [y_i - \beta_0  - \beta_1 x_i - \beta_2 (x_i - \xi_1)  -\beta_3 ( x_i - \xi_2) ]^2  
+\end{aligned}
+\tag{13.7}\]</span></span></p>
+<p><a href="#eq-sse2" class="quarto-xref">식&nbsp;<span>13.7</span></a> 에서 얻은 오차제곱합은 다음과 같은 회귀모형을 적합한 경우에 얻을 수 있는 오차제곱합이다.</p>
+<p><span id="eq-lm2"><span class="math display">\[
+E(y|x)  = \beta_0 + \beta_1 x + \beta_2 (x-\xi_1)_{+} + \beta_3 (x-\xi_2)_{+}
+\tag{13.8}\]</span></span></p>
+<p>위의 식에서 함수 <span class="math inline">\((x)_{+}\)</span> 는 다음과 같이 정의된 함수이다. <span class="math display">\[
+(x)_{+} =
+\begin{cases}
+x &amp; \text{ if } x \ge 0 \\
+0 &amp; \text{ if } x &lt; 0
+\end{cases}
+\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>직선스플라인 회귀에서 4개의 기저</figcaption>
+<p><img src="../myimages/bases.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>이제 연결점(knots)에서 연속인 조건을 만족하는 직선들을 추정하는 문제는 <a href="#eq-lm2" class="quarto-xref">식&nbsp;<span>13.8</span></a> 에 주어진 회귀식을 추정하는 문제와 같음을 보였다. 즉, 주어진 구간에서 서로 연결되는 최적의 직선식을 구하는 문제는 함수를 다음과 같은 기저로 조합된 것으로 보고 최적의 계수를 구하는 것과 동일한 문제이다.</p>
+<p><span class="math display">\[ N_0(x) = 1, \quad N_1(x) =x, \quad N_2(x) = (x-\xi_1)_{+}, \quad N_3(x) =(x-\xi_2)_{+}  \]</span></p>
+<p>위의 기저의 특징은 일부 기저함수의 값이 주어진 구간의 전 <span class="math inline">\(\xi_1\)</span>과 <span class="math inline">\(\xi_2\)</span>에 의존한다는 것이다. 아래 그림은 연결점이 2개인 경우 4개의 기저를 나타내는 그림이다.</p>
+<p>이제 위의 문제에서 만약 $ K+1$개의 구간이 있다면 원래 회귀계수의 개수 <span class="math inline">\(2(K+1)\)</span>에서 제약식의 수 <span class="math inline">\(K\)</span>를 제외한 총 <span class="math inline">\(K+2\)</span> 개의 기저가 필요하며 다음과 같다.</p>
+<p><span class="math display">\[ N_0(x) = 1, \quad N_1(x) =x, \quad N_k(x) = (x-\xi_k)_{+}, k=1,2,\dots,K  \]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>3차 스플라인의 조건</figcaption>
+<p><img src="../myimages/fig2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>3차 스플라인 기저 함수</figcaption>
+<p><img src="../myimages/cubic.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="스플라인-회귀" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="스플라인-회귀"><span class="header-section-number">13.3</span> 스플라인 회귀</h2>
+<p>이제 주어진 구간에서 직선식이 아닌 <span class="math inline">\(p\)</span>-차 다항식 <a href="#eq-poly" class="quarto-xref">식&nbsp;<span>13.1</span></a> 을 고려하자. <span class="math inline">\(K+1\)</span>개의 구간에서 <span class="math inline">\(p\)</span>-차 다항식이 매유 부드럽게 연결되기 위한 조건은 연결점들에서 연속이며 더 나아가 <span class="math inline">\(1,2,..,p-1\)</span>차의 미분값이 동일한 것이다. 이러한 조건을 만족하는 최적의 <span class="math inline">\(p\)</span>-차 다항식을 구하는 문제는 다음과 같은 <span class="math inline">\(K+p+1\)</span>개의 기저로 표현된 함수식에서 최적의 함수를 구하는 문제와 같다. 아래의 기저들을 절단된 다항함수(truncated power) 기저라고 부른다.</p>
+<p><span id="eq-base2"><span class="math display">\[
+\begin{aligned}
+N_j (x)  &amp; =   x^j, \quad j=0,1,2,\dots, p \\ \notag
+N_{p+k} (x) &amp; =  (x-\xi_k)^p_{+}, \quad  k=1,2,\dots, K
+\end{aligned}
+\tag{13.9}\]</span></span></p>
+<p>위와 같은 스플라인 회귀에서 가장 자주 사용되는 것은 3차 스플라인 회귀(Cubic spline, <span class="math inline">\(p=3\)</span>)이다. 각 연결점에서 연속이고 1차와 2차 마분값이 같은 조건을 주고 각 구간에서 다항식을 구하는 것이다. 이때 구간의 하한과 상한, 즉 경계점(boundary)에서 직선의 성질을 가지는 조건, 즉 <span id="eq-natural"><span class="math display">\[
+m''(0)=m'''(0) =0, \quad m''(1) = m'''(1) =0
+\tag{13.10}\]</span></span></p>
+<p>을 만족하는 스플라인을 자연 스플라인(natural spline)이리고 부르며 가장 자주 사용된다.</p>
+<p>예제로서 다음과 같은 모형에서 생성된 자료를 가지고 자연 스플라인을 적합해 보자.</p>
+<p><span class="math display">\[ y_i = 3 \sin(8x_i)  + e_i,\quad e_i \sim N(0,(0.3)^2) \]</span></p>
+<p>다음은 100개의 자료를 가지고 2개의 연결점 <span class="math inline">\(\xi_1=0.2\)</span>와 <span class="math inline">\(\xi_2 = 0.6\)</span>을 이용한 3차 스플라인 함수를 적합하고 그리는 프로그램이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>x.grid <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">ns</span>(x,<span class="at">knots =</span> <span class="fu">c</span>(<span class="fl">0.2</span>,<span class="fl">0.6</span>)) )</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="fu">c</span>(<span class="fl">0.2</span>,<span class="fl">0.6</span>), <span class="at">col =</span> <span class="st">'blue'</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>다음 프로그램에서는 연결점을 자동으로 선택하고 차수를 3차(자유도=3)로 사용하는 방법이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">ns</span>(x,<span class="at">df=</span><span class="dv">3</span>) )</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ ns(x, df = 3))
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.99282 -0.89068  0.05363  0.79646  2.09850 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      3.0027     0.3933   7.635 1.67e-11 ***
+ns(x, df = 3)1  -5.5292     0.4462 -12.391  &lt; 2e-16 ***
+ns(x, df = 3)2  -3.5667     1.0377  -3.437 0.000871 ***
+ns(x, df = 3)3   3.9815     0.3687  10.799  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.102 on 96 degrees of freedom
+Multiple R-squared:  0.7728,    Adjusted R-squared:  0.7657 
+F-statistic: 108.8 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>다음 프로그램에서는 25개의 연결점을 선택하고 차수를 3차(자유도=3)로 사용하는 방법이다. 과적합(overfitting)이 발생하였다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>kknots<span class="ot">=</span><span class="fu">seq</span>(<span class="dv">0</span><span class="fl">+0.1</span>,<span class="dv">1</span><span class="fl">-0.1</span>,<span class="at">len=</span><span class="dv">25</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> <span class="fu">ns</span>(x,<span class="at">df=</span><span class="dv">3</span>,<span class="at">knots =</span> kknots ))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x.grid, pred,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</section>
+<section id="평활-스플라인" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="평활-스플라인"><span class="header-section-number">13.4</span> 평활 스플라인</h2>
+<p>스플라인 회귀에서 추정된 평균 함수 <span class="math inline">\(\hat m(x)\)</span>의 부드러움(smoothness)는 연결점의 수 <span class="math inline">\(K\)</span>와 기저함수의 차수 <span class="math inline">\(p\)</span>로 결정된다. 일반적으로 기저함수의 차수는 3차를 사용하는 자연 3차 스플라인 회귀식을 사용하녀 고차식을 사용해도 큰 차이가 나지 않는다. 따라서 추정된 평균함수의 부드러움을 결정하는 주용한 요수는 연결점의 수이다.</p>
+<p>연결점의 수가 너무 적으면 너무 부드러워서 전체경향을 파악하기 힘들고(large bias, small variance) 반면에 너무 많으면 과적합(over fitting, small bias, large variance)이 된다.</p>
+<p>평활 스플라인(smoothing sapline)은 자료의 모든 점을 연결점으로 하면서 동시에 부드러움을 조절하는 방법이다. 이제 <span class="math inline">\(E(y|x)\)</span>를 추정하는 함수 <span class="math inline">\(f(x)\)</span>에 대한 벌칙항을 포함한 오차제곱합(reisgual sum of squares with penalty term)을 고려하자.</p>
+<p><span id="eq-pensse"><span class="math display">\[
+SSE(f, \lambda) = \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int [f''(x)]^2 dx
+\tag{13.11}\]</span></span></p>
+<p>위의 식에서 <span class="math inline">\(f''(x)\)</span>는 함수 <span class="math inline">\(f(x)\)</span>의 이차 미분이다. 따라서 고려하는 함수 <span class="math inline">\(f(x)\)</span>는 두 번 미분이 가능한 함수이다. 벌칙항을 포함한 오차제곱합에서 첫번째 항은 자료에 얼마나 가까운지를 측정하는 양이며 두 번째 항은 함수의 부드어운 정도를 측정하는 양이다.</p>
+<p><a href="#eq-pensse" class="quarto-xref">식&nbsp;<span>13.11</span></a> 에서 <span class="math inline">\(\lambda \in (0,\infty)\)</span>는 평활 모수(smoothing parameter)라고 부르며 스플라인 추정 함수의 부드러움을 조절해 주는 모수이다.</p>
+<ul>
+<li><p><span class="math inline">\(\lambda=0\)</span>: 이 경우는 <a href="#eq-pensse" class="quarto-xref">식&nbsp;<span>13.11</span></a> 가 일반적인 오차제곱함과 같다. 따라서 함수 <span class="math inline">\(f(x)\)</span>는 제약이 없다면 각 자료의 점들을 이어주는 아주 매우 거칠은 모양의 함수를 추정치로 얻게 된다.</p></li>
+<li><p><span class="math inline">\(\lambda =\infty\)</span>: 이 경우는 <span class="math inline">\(f(x)\)</span>가 가장 단순한(부드러운) 직선식으로 주어진다. 왜냐하면 직선식의 이차미분은 0이기 때문이다.</p></li>
+</ul>
+<p>벌칙항을 포함한 오차제곱합 <a href="#eq-pensse" class="quarto-xref">식&nbsp;<span>13.11</span></a> 를 최소로 하는 함수는 자료의 점 <span class="math inline">\((x_i, y_i)\)</span>를 지나는, 즉 <span class="math inline">\(n\)</span>개의 연결점을 자기는 자연 3차 스플라인이다. 따라서 모수는 모두 <span class="math inline">\(n\)</span>개이며 평활 모수의 값에 따라 계수들이 변한다.</p>
+<p>이제 <a href="#eq-pensse" class="quarto-xref">식&nbsp;<span>13.11</span></a> 를 최소로 하는 함수를 다음과 같이 자연 3차 스플라인의 기저 <span class="math inline">\(N_i(x), i=0,1,2,\dots,n-1\)</span>와 대응하는 계수 <span class="math inline">\(\beta_i\)</span>로 다음과 같이 나타내어 보자.</p>
+<p><span class="math display">\[
+y_i = \sum_{i=0}^{n-1} \beta_i N_i(x)
+\]</span></p>
+<p>그러면 벌칙항을 포함한 오차제곱합 <a href="#eq-pensse" class="quarto-xref">식&nbsp;<span>13.11</span></a> 를 다음과 같이 벡터식으로 나타낼 수 있다.</p>
+<p><span id="eq-pensse2"><span class="math display">\[
+SSE(f, \lambda) = ( \pmb y -\pmb N \pmb \beta)^t (\pmb y -\pmb N \pmb \beta)) + \lambda \pmb \beta^t \pmb \Omega_n \pmb \beta
+\tag{13.12}\]</span></span></p>
+<p>위의 식 에서 <span class="math inline">\(\pmb y\)</span>, <span class="math inline">\(\pmb N\)</span>, <span class="math inline">\(\pmb \beta\)</span>, <span class="math inline">\(\pmb \Omega\)</span>는 다음과 같이 정의된다.</p>
+<p><span class="math display">\[
+\pmb y =
+\begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_n
+\end{bmatrix}
+\quad
+\pmb N =
+\begin{bmatrix}
+N_0(x_1) &amp; N_1(x_1) &amp; \cdots &amp; N_{n-1}(x_1) \\
+N_0(x_2) &amp; N_1(x_2) &amp; \cdots &amp; N_{n-1}(x_2) \\
+\vdots &amp; \vdots &amp; \cdots &amp; \vdots \\
+N_0(x_n) &amp; N_1(x_n) &amp; \cdots &amp; N_{n-1}(x_n) \\
+\end{bmatrix}
+\quad
+\pmb \beta =
+\begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_{n-1}
+\end{bmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\pmb \Omega = \{\omega_{ij} \} \text{ where }
+\omega_{ij} = \int N_{i}^{''} (t) N_{j}^{''} (t) dt
+\]</span></p>
+<p>벌칙항이 있는 오차제곱합 <a href="#eq-pensse2" class="quarto-xref">식&nbsp;<span>13.12</span></a> 를 최소화하는 추정량 <span class="math inline">\(\hat {\pmb \beta}\)</span>는 다음과 같이 주어진다.</p>
+<p><span class="math display">\[
+\hat {\pmb \beta} =  (\pmb N^t \pmb N + \lambda \pmb \Omega)^{-1} {\pmb N}^t {\pmb y}
+\]</span></p>
+<p>그리고 반응변수들에 대한 예측치 <span class="math inline">\(\hat {\pmb y}\)</span>는 다음과 같이 반응변수 벡터 <span class="math inline">\(\pmb y\)</span>의 선형식으로 나타난다.</p>
+<p><span class="math display">\[
+\hat {\pmb y} =  \pmb N (\pmb N^t \pmb N + \lambda \pmb \Omega)^{-1} \pmb N^t \pmb y =\pmb S_\lambda {\pmb y}
+\]</span></p>
+<p>위의 식에서 <span class="math inline">\(\pmb S_\lambda\)</span>는 <span class="math inline">\(n \times n\)</span> 의 행렬이며 평활행렬(smoothing matrix)라고 부른다.</p>
+<p>또한 평활행렬 <span class="math inline">\(\pmb S_\lambda\)</span>의 대각원소의 합을 유효 자유도(effective degrees of freedom)이라고 부른다.</p>
+<p><span class="math display">\[ df_\lambda = trace ({\pmb S}_\lambda) \]</span></p>
+<p>유효 자유도는 일반 선형모형에서 나타나는 독립변수의 개수를 확장한 개념이다. 다음과 같은 일반선형모형에서</p>
+<p><span class="math display">\[ \pmb y = \pmb X \pmb \beta + \pmb e \]</span></p>
+<p>계획행렬 <span class="math inline">\(\pmb X\)</span>의 열의 개수는 상수항을 포함한 독립변수의 개수 <span class="math inline">\(p+1\)</span>이다. 이 때 반응변수에 대한 예측은 반응변수 벡터 <span class="math inline">\(\pmb y\)</span>의 선형변환으로 나타나며</p>
+<p><span class="math display">\[ \hat {\pmb y} = \pmb X (\pmb X^t \pmb X)^{-1} \pmb X^t \pmb y =\pmb H {\pmb y} \]</span></p>
+<p>이때 사영행렬(projection matrix) <span class="math inline">\(\pmb H\)</span>의 대각합은 <span class="math inline">\(p+1\)</span>이고 이는 반응변수의 평균을 추정할 때 필요한 자료의 크기이며 이를 자유도라고 한다.</p>
+<p><span class="math display">\[ trace(\pmb H) = trace[\pmb X (\pmb X^t \pmb X)^{-1} \pmb X^t] =
+trace[ (\pmb X^t \pmb X)^{-1} \pmb X^t \pmb X] = trace(\pmb I_{p+1})=p+1 \]</span></p>
+<p>참고로 일반 선형모형에서 오차의 분산 <span class="math inline">\(\sigma^2\)</span>를 추정할 때 필요한 자유도는 전체 자료의 개수 <span class="math inline">\(n\)</span>에서 반응변수의 평균을 추정할 때 필요한 자료의 개수 <span class="math inline">\(p+1\)</span>를 뺀 <span class="math inline">\(n-p-1\)</span>이다.</p>
+<p>스플라인 회귀에서 정의된 유효 자유도는 일반 선형모형에서 사용된 사영행렬 <span class="math inline">\(\pmb H\)</span> 의 대각합을 일반화한 개념이다. 일반 선형모형에서는 자유도, 즉 사영행렬의 대각합은 상수항을 포함한 독립변수의 개수 <span class="math inline">\(p+1\)</span>이 된다. 스플라인 회귀와 같은 비모수회귀에서는 평활행렬 <span class="math inline">\(\pmb S_\lambda\)</span> 의 대각합을 유효 자유도라고 일반화한 것이다. 따라서 유효 자유도는 정확하게 독립변수의 개수를 나타내는 것이 아니지만 반응변수의 평균을 추정할 떄 사용되는 모수(계수)의 개수로 해석할 수 있다.</p>
+<p>예를 들어 3차 스플라인(cubic spline)을 고려하고 연결점을 <span class="math inline">\(K\)</span>개를 사용하면 총 <span class="math inline">\(K+3+1=K+4\)</span>개의 기저가 필요하다. 더 나아가 자연 3차 스플라인은 <a href="#eq-natural" class="quarto-xref">식&nbsp;<span>13.10</span></a> 에서 주어진 4개의 제약조건때문에 전체적으로 <span class="math inline">\(K\)</span>개의 모르는 모수가 필요하다고 할 수 있다. 따라서 자연 3차 스플라인의 유효 자유도는 <span class="math inline">\(K\)</span>개이다.</p>
+<p>다음 프로그램은 R 에서 평활 스플라인을 적합하는 방법이다. 유효 자유도를 5로 사용한 예이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fitsm5 <span class="ot">=</span> <span class="fu">smooth.spline</span>(y <span class="sc">~</span> x, <span class="at">all.knots=</span>T, <span class="at">cv=</span>T, <span class="at">df=</span><span class="dv">5</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>fitsm5</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+smooth.spline(x = y ~ x, df = 5, cv = T, all.knots = T)
+
+Smoothing Parameter  spar= 1.091532  lambda= 0.005790657 (13 iterations)
+Equivalent Degrees of Freedom (Df): 4.999328
+Penalized Criterion (RSS): 21.97263
+PRESS(l.o.o. CV): 0.2676181</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm5,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p>유효 자유도를 증가시키면 추정된 평활곡선은 다음과 같이 나타난다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fitsm15<span class="ot">=</span> <span class="fu">smooth.spline</span>(y <span class="sc">~</span> x, <span class="at">all.knots=</span>T, <span class="at">cv=</span>T, <span class="at">df=</span><span class="dv">15</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fitsm50<span class="ot">=</span> <span class="fu">smooth.spline</span>(y <span class="sc">~</span> x, <span class="at">all.knots=</span>T, <span class="at">cv=</span>T, <span class="at">df=</span><span class="dv">50</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>fitsm70<span class="ot">=</span> <span class="fu">smooth.spline</span>(y <span class="sc">~</span> x, <span class="at">all.knots=</span>T, <span class="at">cv=</span>T, <span class="at">df=</span><span class="dv">70</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"effective degress of freedom = 5"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm5,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"effective degress of freedom = 15"</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm15,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"effective degress of freedom = 50"</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm50,<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"effective degress of freedom = 70"</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm70,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>만약 유효 자유도를 지정해주지 않으며 CV를 최소화해주는 자유도를 구하여 자동으로 스플라인함수를 추정해준다. 아래에서 구해진 평활모수는 <span class="math inline">\(\lambda = 0.000122\)</span> 이고 자유도는 <span class="math inline">\(df = 11.34031\)</span>이다.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">runif</span>(n)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">3</span><span class="sc">*</span><span class="fu">sin</span>(<span class="dv">8</span><span class="sc">*</span>x) <span class="sc">+</span> <span class="fu">rnorm</span>(n,<span class="dv">0</span>,.<span class="dv">3</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>fitsmauto<span class="ot">=</span> <span class="fu">smooth.spline</span>(y <span class="sc">~</span> x, <span class="at">all.knots=</span>T, <span class="at">cv=</span>T)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>fitsmauto</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+smooth.spline(x = y ~ x, cv = T, all.knots = T)
+
+Smoothing Parameter  spar= 0.8713205  lambda= 0.0001610047 (17 iterations)
+Equivalent Degrees of Freedom (Df): 10.79427
+Penalized Criterion (RSS): 6.44642
+PRESS(l.o.o. CV): 0.08056366</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsmauto,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="spline-02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "복사완료!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "복사완료!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    const typesetMath = (el) => {
+      if (window.MathJax) {
+        // MathJax Typeset
+        window.MathJax.typeset([el]);
+      } else if (window.katex) {
+        // KaTeX Render
+        var mathElements = el.getElementsByClassName("math");
+        var macros = [];
+        for (var i = 0; i < mathElements.length; i++) {
+          var texText = mathElements[i].firstChild;
+          if (mathElements[i].tagName == "SPAN") {
+            window.katex.render(texText.data, mathElements[i], {
+              displayMode: mathElements[i].classList.contains('display'),
+              throwOnError: false,
+              macros: macros,
+              fleqn: false
+            });
+          }
+        }
+      }
+    }
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        for (let i = 0; i < 2; i++) {
+          container.appendChild(note.children[i].cloneNode(true));
+        }
+        typesetMath(container);
+        return container.innerHTML
+      } else {
+        typesetMath(note);
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      typesetMath(note);
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../notes/spline-01.html" class="pagination-link  aria-label=" &lt;span="" 회귀모형&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
