@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>데이터 분석 방법론 - 8&nbsp; 로지스틱 회귀모형 실습 1</title>
+<title>데이터 분석 방법론 - 11&nbsp; 로지스틱 회귀모형 실습 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../notes/logistic_practice_2.html" rel="next">
-<link href="../notes/random_effect.html" rel="prev">
+<link href="../notes/survival-01.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -153,7 +153,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -266,7 +266,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">실습</span></a>
+ <span class="menu-text">비모수 회귀모형</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -274,26 +274,20 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
+  <a href="../notes/spline-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  <a href="../notes/spline-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
+  <a href="../notes/survival-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">생존함수와 위험함수</span></span></a>
   </div>
 </li>
       </ul>
@@ -301,7 +295,7 @@ div.csl-indent {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">비모수 회귀모형</span></a>
+ <span class="menu-text">실습</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -309,14 +303,26 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/spline-01.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span></a>
+  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/spline-02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span></a>
+  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,29 +343,29 @@ div.csl-indent {
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#필요한-패키지와-함수" id="toc-필요한-패키지와-함수" class="nav-link active" data-scroll-target="#필요한-패키지와-함수"><span class="header-section-number">8.1</span> 필요한 패키지와 함수</a></li>
-  <li><a href="#분석-자료" id="toc-분석-자료" class="nav-link" data-scroll-target="#분석-자료"><span class="header-section-number">8.2</span> 분석 자료</a></li>
-  <li><a href="#로지스틱-회귀모형" id="toc-로지스틱-회귀모형" class="nav-link" data-scroll-target="#로지스틱-회귀모형"><span class="header-section-number">8.3</span> 로지스틱 회귀모형</a>
+  <li><a href="#필요한-패키지와-함수" id="toc-필요한-패키지와-함수" class="nav-link active" data-scroll-target="#필요한-패키지와-함수"><span class="header-section-number">11.1</span> 필요한 패키지와 함수</a></li>
+  <li><a href="#분석-자료" id="toc-분석-자료" class="nav-link" data-scroll-target="#분석-자료"><span class="header-section-number">11.2</span> 분석 자료</a></li>
+  <li><a href="#로지스틱-회귀모형" id="toc-로지스틱-회귀모형" class="nav-link" data-scroll-target="#로지스틱-회귀모형"><span class="header-section-number">11.3</span> 로지스틱 회귀모형</a>
   <ul class="collapse">
-  <li><a href="#회귀계수의-의미" id="toc-회귀계수의-의미" class="nav-link" data-scroll-target="#회귀계수의-의미"><span class="header-section-number">8.3.1</span> 회귀계수의 의미</a></li>
-  <li><a href="#모형의-비교-내포된-모형" id="toc-모형의-비교-내포된-모형" class="nav-link" data-scroll-target="#모형의-비교-내포된-모형"><span class="header-section-number">8.3.2</span> 모형의 비교: 내포된 모형</a></li>
-  <li><a href="#모형의-비교-일반적인-모형" id="toc-모형의-비교-일반적인-모형" class="nav-link" data-scroll-target="#모형의-비교-일반적인-모형"><span class="header-section-number">8.3.3</span> 모형의 비교: 일반적인 모형</a></li>
+  <li><a href="#회귀계수의-의미" id="toc-회귀계수의-의미" class="nav-link" data-scroll-target="#회귀계수의-의미"><span class="header-section-number">11.3.1</span> 회귀계수의 의미</a></li>
+  <li><a href="#모형의-비교-내포된-모형" id="toc-모형의-비교-내포된-모형" class="nav-link" data-scroll-target="#모형의-비교-내포된-모형"><span class="header-section-number">11.3.2</span> 모형의 비교: 내포된 모형</a></li>
+  <li><a href="#모형의-비교-일반적인-모형" id="toc-모형의-비교-일반적인-모형" class="nav-link" data-scroll-target="#모형의-비교-일반적인-모형"><span class="header-section-number">11.3.3</span> 모형의 비교: 일반적인 모형</a></li>
   </ul></li>
-  <li><a href="#회귀모형의-진단" id="toc-회귀모형의-진단" class="nav-link" data-scroll-target="#회귀모형의-진단"><span class="header-section-number">8.4</span> 회귀모형의 진단</a>
+  <li><a href="#회귀모형의-진단" id="toc-회귀모형의-진단" class="nav-link" data-scroll-target="#회귀모형의-진단"><span class="header-section-number">11.4</span> 회귀모형의 진단</a>
   <ul class="collapse">
-  <li><a href="#잔차" id="toc-잔차" class="nav-link" data-scroll-target="#잔차"><span class="header-section-number">8.4.1</span> 잔차</a></li>
-  <li><a href="#다중공선성" id="toc-다중공선성" class="nav-link" data-scroll-target="#다중공선성"><span class="header-section-number">8.4.2</span> 다중공선성</a></li>
+  <li><a href="#잔차" id="toc-잔차" class="nav-link" data-scroll-target="#잔차"><span class="header-section-number">11.4.1</span> 잔차</a></li>
+  <li><a href="#다중공선성" id="toc-다중공선성" class="nav-link" data-scroll-target="#다중공선성"><span class="header-section-number">11.4.2</span> 다중공선성</a></li>
   </ul></li>
-  <li><a href="#예측" id="toc-예측" class="nav-link" data-scroll-target="#예측"><span class="header-section-number">8.5</span> 예측</a></li>
+  <li><a href="#예측" id="toc-예측" class="nav-link" data-scroll-target="#예측"><span class="header-section-number">11.5</span> 예측</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/logistic_practice.html">실습</a></li><li class="breadcrumb-item"><a href="../notes/logistic_practice.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="logistic_practice_1" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></h1>
+<h1 class="title"><span id="logistic_practice_1" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></h1>
 </div>
 
 
@@ -376,8 +382,8 @@ div.csl-indent {
 </header>
 
 
-<section id="필요한-패키지와-함수" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="필요한-패키지와-함수"><span class="header-section-number">8.1</span> 필요한 패키지와 함수</h2>
+<section id="필요한-패키지와-함수" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="필요한-패키지와-함수"><span class="header-section-number">11.1</span> 필요한 패키지와 함수</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -393,8 +399,8 @@ div.csl-indent {
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/functions.R"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="분석-자료" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="분석-자료"><span class="header-section-number">8.2</span> 분석 자료</h2>
+<section id="분석-자료" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="분석-자료"><span class="header-section-number">11.2</span> 분석 자료</h2>
 <p>로지스틱 회귀모형에 대한 분석은 교과서 <span class="citation" data-cites="faraway2016ext">Faraway (<a href="../references.html#ref-faraway2016ext" role="doc-biblioref">2016</a>)</span> 에서 사용된 <code>wcgs</code> 데이터프레임을 사용한다.</p>
 <p>데이터프레임 <code>wcgs</code> 은 Western Collaborative Group Study 에 참가한 3154명의 39-59 세 남성에 대한 신체 자료와 관상동맥질환(coronary heat disease)의 발병 여부에 대한 자료이다.</p>
 <div class="cell">
@@ -448,8 +454,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="로지스틱-회귀모형" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="로지스틱-회귀모형"><span class="header-section-number">8.3</span> 로지스틱 회귀모형</h2>
+<section id="로지스틱-회귀모형" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="로지스틱-회귀모형"><span class="header-section-number">11.3</span> 로지스틱 회귀모형</h2>
 <p>이제 다음과 같이 개의 설명 변수가 포함된 로지스틱 회귀모형을 적합해 보자.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_all <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> age <span class="sc">+</span>  height <span class="sc">+</span>  weight <span class="sc">+</span> sdp <span class="sc">+</span> dbp <span class="sc">+</span>  chol <span class="sc">+</span> behave <span class="sc">+</span>  cigs , <span class="at">family =</span> binomial, wcgs_1)</span>
@@ -486,8 +492,8 @@ AIC: 1602.4
 Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 </div>
-<section id="회귀계수의-의미" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="회귀계수의-의미"><span class="header-section-number">8.3.1</span> 회귀계수의 의미</h3>
+<section id="회귀계수의-의미" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="회귀계수의-의미"><span class="header-section-number">11.3.1</span> 회귀계수의 의미</h3>
 <p>위의 결과에서 회귀계수의 의미에 대하여 살펴보자. 먼저 하루에 평균 피우는 담배의 개수 <code>cigs</code> 의 의미는 다음과 같다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit_all<span class="sc">$</span>coefficients[<span class="st">'cigs'</span>]</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -501,7 +507,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <p><span id="eq-coeff-mean"><span class="math display">\[ \frac{\text{odd(cigs = a+1)}}{\text{odd(cigs = a)}} =
 \frac{\tfrac{P(\text{chd =  y} | \text{cigs = a+1})}{1- P(\text{chd = y} | \text{cigs = a+1} )}}
 {\tfrac{P(\text{chd = y} | \text{cigs = a})}{1- P(\text{chd = y} | \text{cigs = a})}}= \exp(0.020998) = 1.02122
-\tag{8.1}\]</span></span></p>
+\tag{11.1}\]</span></span></p>
 <p>이제 좀 더 이해하기 쉬운 상대위험으로 회귀계수의 영향에 대하여 알아보자.</p>
 <p>먼저 연속형 변수들의 평균을 구하고 데이터프레임으로 만들자. 또한 범주형 변수인 <code>behave</code> 도 하나의 레벨을 추가하자.</p>
 <div class="cell">
@@ -514,7 +520,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 </div>
 </div>
 <p>이제 데이터프레임 <code>mean_vars</code> 에서 주어진 설명변수의 값에서 성공의 확률을 예측해 보자</p>
-<p><span id="eq-prob-logit"><span class="math display">\[ \hat P(y=1| \pmb x) = \frac{1}{1+\exp(-[\hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p])} \tag{8.2}\]</span></span></p>
+<p><span id="eq-prob-logit"><span class="math display">\[ \hat P(y=1| \pmb x) = \frac{1}{1+\exp(-[\hat \beta_0 + \hat \beta_1 x_1 + \dots + \hat \beta_p x_p])} \tag{11.2}\]</span></span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -539,7 +545,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 -2.430767 </code></pre>
 </div>
 </div>
-<p>확률로 바꿀려면 다음과 같이 <a href="#eq-prob-logit" class="quarto-xref">식&nbsp;<span>8.2</span></a> 을 이용하면 된다.</p>
+<p>확률로 바꿀려면 다음과 같이 <a href="#eq-prob-logit" class="quarto-xref">식&nbsp;<span>11.2</span></a> 을 이용하면 된다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fu">predict</span>(fit_all, <span class="at">newdata=</span>mean_vars, <span class="at">type =</span> <span class="st">"link"</span>)))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -576,7 +582,7 @@ Number of Fisher Scoring iterations: 6</code></pre>
 0.08085642 0.08243076 </code></pre>
 </div>
 </div>
-<p>위의 결과로 오즈비를 구해보면 <a href="#eq-coeff-mean" class="quarto-xref">식&nbsp;<span>8.1</span></a> 에 나타난 값과 같다.</p>
+<p>위의 결과로 오즈비를 구해보면 <a href="#eq-coeff-mean" class="quarto-xref">식&nbsp;<span>11.1</span></a> 에 나타난 값과 같다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>(pre_p[<span class="dv">2</span>]<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>pre_p[<span class="dv">2</span>]))<span class="sc">/</span>(pre_p[<span class="dv">1</span>]<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>pre_p[<span class="dv">1</span>]))</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -639,10 +645,10 @@ Number of Fisher Scoring iterations: 6</code></pre>
 \frac{\text{odd(behave = A2)}}{\text{odd(behave = A0)}} =
 \frac{\tfrac{P(\text{chd =  y} | \text{ehave = A2})}{1- P(\text{chd = y} | \text{behave = A2)} )}}
 {\tfrac{P(\text{chd = y} | \text{ehave = A0})}{1- P(\text{chd = y} | \text{ehave = A0})}}= \exp(0.0882657 - 0) = 1.0922783
-\tag{8.3}\]</span></span></p>
+\tag{11.3}\]</span></span></p>
 </section>
-<section id="모형의-비교-내포된-모형" class="level3" data-number="8.3.2">
-<h3 data-number="8.3.2" class="anchored" data-anchor-id="모형의-비교-내포된-모형"><span class="header-section-number">8.3.2</span> 모형의 비교: 내포된 모형</h3>
+<section id="모형의-비교-내포된-모형" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="모형의-비교-내포된-모형"><span class="header-section-number">11.3.2</span> 모형의 비교: 내포된 모형</h3>
 <p>이제 몇 개의 변수를 제외한 모형을 더적합해 보자. 모형에서 <code>height</code> 와 <code>dbp</code> 를 제외하고 적합해 보자.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>fit_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(chd <span class="sc">~</span> age <span class="sc">+</span>  weight <span class="sc">+</span> sdp  <span class="sc">+</span>  chol <span class="sc">+</span> behave <span class="sc">+</span>  cigs , <span class="at">family =</span> binomial, wcgs_1)</span>
@@ -820,8 +826,8 @@ cigs         1.255611e-02  0.02935499</code></pre>
 </div>
 </div>
 </section>
-<section id="모형의-비교-일반적인-모형" class="level3" data-number="8.3.3">
-<h3 data-number="8.3.3" class="anchored" data-anchor-id="모형의-비교-일반적인-모형"><span class="header-section-number">8.3.3</span> 모형의 비교: 일반적인 모형</h3>
+<section id="모형의-비교-일반적인-모형" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="모형의-비교-일반적인-모형"><span class="header-section-number">11.3.3</span> 모형의 비교: 일반적인 모형</h3>
 <p>일반적으로 두 개 이상의 모형을 비교하는 경우 가장 자주 사용되는 측도는 정보기준 측도인 AIC(Akaike Information Criteris) 와 BIC(Bayesian Information Criteria) 가 이 있다. AIC와 BIC 모두 값이 작은 것이 좋으 모형이다.</p>
 <p>이제 앞에서 살펴본 3개의 모형의 AIC 와 BIC 를 구해보자.</p>
 <div class="cell">
@@ -845,13 +851,13 @@ fit_2    8 1652.799</code></pre>
 <p>AIC 기준으로는 모형 <code>fit_1</code> 이 제일 좋으며 BIC 기준으로는 <code>fit_2</code> 가 가장 좋다. BIC 가 AIC 보다 설명변수의 수가 적은 성김 모형을 선호하는 일반적인 결과이다.</p>
 </section>
 </section>
-<section id="회귀모형의-진단" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="회귀모형의-진단"><span class="header-section-number">8.4</span> 회귀모형의 진단</h2>
-<section id="잔차" class="level3" data-number="8.4.1">
-<h3 data-number="8.4.1" class="anchored" data-anchor-id="잔차"><span class="header-section-number">8.4.1</span> 잔차</h3>
+<section id="회귀모형의-진단" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="회귀모형의-진단"><span class="header-section-number">11.4</span> 회귀모형의 진단</h2>
+<section id="잔차" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="잔차"><span class="header-section-number">11.4.1</span> 잔차</h3>
 <p>선형회귀 모형처럼 관측값(로지스틱 회귀에서는 0 또는 1)에서 예측값을 뺀 잔차 <span class="math inline">\(r_i\)</span> (residual, raw residual)을 구할 수 있다.</p>
-<p><span id="eq-residual-raw"><span class="math display">\[ r_i = y_i - \hat P(y_i=1| \pmb x_i)  \tag{8.4}\]</span></span></p>
-<p>다음과 같이 <code>residuals</code> 함수에 <code>type="response"</code>를 이용하면 <a href="#eq-residual-raw" class="quarto-xref">식&nbsp;<span>8.4</span></a> 의 잔차 를 구할 수 있다.</p>
+<p><span id="eq-residual-raw"><span class="math display">\[ r_i = y_i - \hat P(y_i=1| \pmb x_i)  \tag{11.4}\]</span></span></p>
+<p>다음과 같이 <code>residuals</code> 함수에 <code>type="response"</code>를 이용하면 <a href="#eq-residual-raw" class="quarto-xref">식&nbsp;<span>11.4</span></a> 의 잔차 를 구할 수 있다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_all, <span class="at">type=</span><span class="st">"response"</span>)) <span class="co"># 너무 많아서 일부만 출력</span></span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -860,7 +866,7 @@ fit_2    8 1652.799</code></pre>
 </div>
 </div>
 <p>이제 잔차를 표준화한 피어슨 잔차(pearson residual)은 다음과 같이 구할 수 있다.</p>
-<p><span id="eq-raw-pearson"><span class="math display">\[ r^*_i = \frac{y_i - \hat p_i}{\sqrt{\hat p_i (1-\hat p_i)}}  \tag{8.5}\]</span></span></p>
+<p><span id="eq-raw-pearson"><span class="math display">\[ r^*_i = \frac{y_i - \hat p_i}{\sqrt{\hat p_i (1-\hat p_i)}}  \tag{11.5}\]</span></span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">residuals</span>(fit_all, <span class="at">type=</span><span class="st">"pearson"</span>)) </span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -903,13 +909,13 @@ fit_2    8 1652.799</code></pre>
 </div>
 </div>
 <p>다른 잔차로서 편차 잔차(deviance residual) 이 있으며 이는 편차의 합으로 표시될 수 있도록 잔차를 로그가능도 함수의 값으로 정의한 것이다.</p>
-<p><span id="eq-raw-deviance"><span class="math display">\[ d_i = sign(y-\hat p_i) \sqrt{-2\{  y_i \log \hat p_i + (1-y_i) \log (1- \hat p_i)\}}  \tag{8.6}\]</span></span></p>
+<p><span id="eq-raw-deviance"><span class="math display">\[ d_i = sign(y-\hat p_i) \sqrt{-2\{  y_i \log \hat p_i + (1-y_i) \log (1- \hat p_i)\}}  \tag{11.6}\]</span></span></p>
 <p>여기서 정의된 편차 잔차는 다음의 식을 만족하도록 구한 잔차이다.</p>
 <p><span class="math display">\[ \text{deviance} = D(\hat {\pmb y} ; \hat {\pmb \mu } ) = \sum_{i=1}^n d^2_i \]</span></p>
 <p>로지스틱 회귀모형에서의 정의된 모든 잔차는 선형모형과의 잔차와는 많이 다르다. 로지스틱 회귀모형에서 반응값은 0 또는 1 의 값만 가지기 때문에 잔차의 범위가 제약되어 있고 두 개의 패턴으로 몰려서 나오기 때문에 이상점을 찾거나 등분산성을 판단하는 진단으로 이용하기는 힘들다.</p>
 </section>
-<section id="다중공선성" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="다중공선성"><span class="header-section-number">8.4.2</span> 다중공선성</h3>
+<section id="다중공선성" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="다중공선성"><span class="header-section-number">11.4.2</span> 다중공선성</h3>
 <p>로지스틱 회귀모형에서도 다중공선성(colliearity)는 쉽게 진단할 수 있다.</p>
 <p>함수<code>vif</code> 를 이용하면 분산팽창계수(variance inflation factor; vif)의 값을 구하고 상대적으로 큰 값을 보이는 설명변수들이 다중공선성의 위험이 높다.</p>
 <p>다음의 결과에서 두 개의 혈압 <code>sdp</code> 와 <code>dbp</code> 의 vif 값이 높다는 것을 알 수 있다.</p>
@@ -957,8 +963,8 @@ cigs      0.096031834  0.06976125 -0.06001367 -0.05354670  1.000000000</code></p
 </div>
 </section>
 </section>
-<section id="예측" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="예측"><span class="header-section-number">8.5</span> 예측</h2>
+<section id="예측" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="예측"><span class="header-section-number">11.5</span> 예측</h2>
 <p>이제 적합된 성공 확률을 이용하여 반응변수의 값과 예측값을이 얼마나 일치하는지 알아보자.</p>
 <p><span class="math display">\[
 \hat y_i =
@@ -1473,13 +1479,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/random_effect.html" class="pagination-link  aria-label=" &lt;span="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span>
+      <a href="../notes/survival-01.html" class="pagination-link  aria-label=" &lt;span="" 위험함수&lt;="" span&gt;"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">생존함수와 위험함수</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/logistic_practice_2.html" class="pagination-link" aria-label="<span class='chapter-number'>9</span>&nbsp; <span class='chapter-title'>로지스틱 회귀모형 실습 2</span>">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/logistic_practice_2.html" class="pagination-link" aria-label="<span class='chapter-number'>12</span>&nbsp; <span class='chapter-title'>로지스틱 회귀모형 실습 2</span>">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

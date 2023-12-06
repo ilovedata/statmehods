@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>데이터 분석 방법론 - 12&nbsp; 국소 회귀모형</title>
+<title>데이터 분석 방법론 - 8&nbsp; 국소 회귀모형</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../notes/spline-02.html" rel="next">
-<link href="../notes/lme_practice_2.html" rel="prev">
+<link href="../notes/random_effect.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -133,7 +133,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-01.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-01.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="사이드바 전환" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -246,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">실습</span></a>
+ <span class="menu-text">비모수 회귀모형</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -254,26 +254,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
+  <a href="../notes/spline-01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  <a href="../notes/spline-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
+  <a href="../notes/survival-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">생존함수와 위험함수</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">비모수 회귀모형</span></a>
+ <span class="menu-text">실습</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="토글 섹션">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -289,14 +283,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/spline-01.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></span></a>
+  <a href="../notes/logistic_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 1</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../notes/spline-02.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span></a>
+  <a href="../notes/logistic_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">로지스틱 회귀모형 실습 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">반복측정자료 실습 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/lme_practice_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
   </div>
 </li>
       </ul>
@@ -317,13 +323,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">목차</h2>
    
   <ul>
-  <li><a href="#regressogram" id="toc-regressogram" class="nav-link active" data-scroll-target="#regressogram"><span class="header-section-number">12.1</span> Regressogram</a></li>
-  <li><a href="#커널추정" id="toc-커널추정" class="nav-link" data-scroll-target="#커널추정"><span class="header-section-number">12.2</span> 커널추정</a>
+  <li><a href="#regressogram" id="toc-regressogram" class="nav-link active" data-scroll-target="#regressogram"><span class="header-section-number">8.1</span> Regressogram</a></li>
+  <li><a href="#커널추정" id="toc-커널추정" class="nav-link" data-scroll-target="#커널추정"><span class="header-section-number">8.2</span> 커널추정</a>
   <ul class="collapse">
-  <li><a href="#커널추정법" id="toc-커널추정법" class="nav-link" data-scroll-target="#커널추정법"><span class="header-section-number">12.2.1</span> 커널추정법</a></li>
-  <li><a href="#편이-분산의-관계" id="toc-편이-분산의-관계" class="nav-link" data-scroll-target="#편이-분산의-관계"><span class="header-section-number">12.2.2</span> 편이-분산의 관계</a></li>
-  <li><a href="#최적-구간길이-선택" id="toc-최적-구간길이-선택" class="nav-link" data-scroll-target="#최적-구간길이-선택"><span class="header-section-number">12.2.3</span> 최적 구간길이 선택</a></li>
-  <li><a href="#붓스트랩-신뢰-구간" id="toc-붓스트랩-신뢰-구간" class="nav-link" data-scroll-target="#붓스트랩-신뢰-구간"><span class="header-section-number">12.2.4</span> 붓스트랩 신뢰 구간</a></li>
+  <li><a href="#커널추정법" id="toc-커널추정법" class="nav-link" data-scroll-target="#커널추정법"><span class="header-section-number">8.2.1</span> 커널추정법</a></li>
+  <li><a href="#편이-분산의-관계" id="toc-편이-분산의-관계" class="nav-link" data-scroll-target="#편이-분산의-관계"><span class="header-section-number">8.2.2</span> 편이-분산의 관계</a></li>
+  <li><a href="#최적-구간길이-선택" id="toc-최적-구간길이-선택" class="nav-link" data-scroll-target="#최적-구간길이-선택"><span class="header-section-number">8.2.3</span> 최적 구간길이 선택</a></li>
+  <li><a href="#붓스트랩-신뢰-구간" id="toc-붓스트랩-신뢰-구간" class="nav-link" data-scroll-target="#붓스트랩-신뢰-구간"><span class="header-section-number">8.2.4</span> 붓스트랩 신뢰 구간</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -331,9 +337,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-01.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../notes/spline-01.html">비모수 회귀모형</a></li><li class="breadcrumb-item"><a href="../notes/spline-01.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">국소 회귀모형</span></h1>
 </div>
 
 
@@ -367,8 +373,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>여기서 <span class="math inline">\(X_i\)</span>와 독립인 오차항 <span class="math inline">\(e_i\)</span>는 서로 독립이고 평균이 0이며 분산이 <span class="math inline">\(\tau^2\)</span>인 확률변수로 가정한다. 따라서 설명변수의 값이 <span class="math inline">\(x\)</span>라면 아래와 같이 나타낼 수 있다.</p>
 <p><span class="math display">\[ E(Y_i|X_i =x) = E[ m(X_i) + e_i | X_i =x] = m(x) \]</span></p>
 <p>이제 이러한 회귀모형에서 <span class="math inline">\(m(x)\)</span> 의 형태를 추정하는 것을 생각해보자. <span class="math inline">\(m(x)\)</span>의 형태를 추정하는 방법은 여러가지가 있을 수 있으며 여기서는 국소회귀모형(local regression model)을 이용하여 <span class="math inline">\(m(x)\)</span>의 형태를 추정하는 방법을 알아보자.</p>
-<section id="regressogram" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="regressogram"><span class="header-section-number">12.1</span> Regressogram</h2>
+<section id="regressogram" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="regressogram"><span class="header-section-number">8.1</span> Regressogram</h2>
 <p>Regressogram은 histogrm을 회귀모형에 적용한 방법이다. 아래의 함수 <code>regressogram</code>은 설명변수 벡터 <code>x</code>와 반응변수 벡터 <code>y</code> 를 인자로 받으며 구간 <code>(left, right)</code> 를 <code>k</code>개의 구간으로 나누어 각 구간마다 반응값들의 평균을 구해주는 함수이다. 이렇게 주어진 구간에서 평균값을 이용하여 회귀식을 추정하는 모형을 국소회귀(local regression)이라고 한다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>regressogram <span class="ot">=</span> <span class="cf">function</span>(x,y,left,right,k,plotit,<span class="at">xlab=</span><span class="st">""</span>,<span class="at">ylab=</span><span class="st">""</span>,<span class="at">sub=</span><span class="st">""</span>){</span>
@@ -448,10 +454,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="커널추정" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="커널추정"><span class="header-section-number">12.2</span> 커널추정</h2>
-<section id="커널추정법" class="level3" data-number="12.2.1">
-<h3 data-number="12.2.1" class="anchored" data-anchor-id="커널추정법"><span class="header-section-number">12.2.1</span> 커널추정법</h3>
+<section id="커널추정" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="커널추정"><span class="header-section-number">8.2</span> 커널추정</h2>
+<section id="커널추정법" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="커널추정법"><span class="header-section-number">8.2.1</span> 커널추정법</h3>
 <p>국소회귀에서 가장 많이 사용되는 방법이 커널추정(kernel estimation) 방법이다.</p>
 <p>커널은 다음과 같은 성질을 만족하는 함수 <span class="math inline">\(K(x)\)</span>이다.</p>
 <p><span class="math display">\[
@@ -596,8 +602,8 @@ K \left ( \frac{x -y}{h} \right )  = (2\pi h^2)^{-1/2} \exp  \left (  - \frac{(x
 </div>
 </div>
 </section>
-<section id="편이-분산의-관계" class="level3" data-number="12.2.2">
-<h3 data-number="12.2.2" class="anchored" data-anchor-id="편이-분산의-관계"><span class="header-section-number">12.2.2</span> 편이-분산의 관계</h3>
+<section id="편이-분산의-관계" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="편이-분산의-관계"><span class="header-section-number">8.2.2</span> 편이-분산의 관계</h3>
 <p>만약 <span class="math inline">\(\hat m(x)\)</span>가 <span class="math inline">\(m(x)\)</span>의 추정량이라면 예측위험함수(prediction risk, prediction error) <span class="math inline">\(R(m, \hat m)\)</span>는 다음과 같이 정의되고분해할 수 있다. 아래의 식을 유도할 때 편의상 <span class="math inline">\(X\)</span>는 확률변수가 아닌 고정된 값이라고 할 것이며 확률변수인 경우에도 유사한 결과를 얻는다.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -620,8 +626,8 @@ R(m, \hat m) &amp; = E[Y - \hat m(X))^2 ]^2 \\
 \end{aligned}
 \]</span></p>
 </section>
-<section id="최적-구간길이-선택" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="최적-구간길이-선택"><span class="header-section-number">12.2.3</span> 최적 구간길이 선택</h3>
+<section id="최적-구간길이-선택" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="최적-구간길이-선택"><span class="header-section-number">8.2.3</span> 최적 구간길이 선택</h3>
 <p>다음의 함수 <code>CV(x,y,H)</code>는 자료벡터 <code>x</code>,<code>y</code>와 서로 다른 <span class="math inline">\(h\)</span>의 값들을 모아 놓은 벡터 <code>H</code>를 받아서 다음과 같은 cross-validation의 값 <span class="math inline">\(CV\)</span>, <span class="math inline">\(GCV\)</span>, <span class="math inline">\(\nu\)</span>를 계산해 주는 함수이다.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -694,8 +700,8 @@ GCV &amp; = \frac{1}{ \left ( 1-\frac{\nu}{n} \right )^2 } \frac{1}{n} \sum_i^n 
 </div>
 <p>위의 그래프는 선택된 <span class="math inline">\(h=0.6157895\)</span>을 이용하여 추정한 반응변수 <code>density</code> 의 커널회귀 함수 <span class="math inline">\(\hat m(x)\)</span> 이다.</p>
 </section>
-<section id="붓스트랩-신뢰-구간" class="level3" data-number="12.2.4">
-<h3 data-number="12.2.4" class="anchored" data-anchor-id="붓스트랩-신뢰-구간"><span class="header-section-number">12.2.4</span> 붓스트랩 신뢰 구간</h3>
+<section id="붓스트랩-신뢰-구간" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="붓스트랩-신뢰-구간"><span class="header-section-number">8.2.4</span> 붓스트랩 신뢰 구간</h3>
 <p>다음 프로그램은 붓스트랩(Bootstrap)을 이용하여 주어진 <span class="math inline">\(x\)</span>값에서 추정량 <span class="math inline">\(\hat m(x)\)</span>의 표준오차 <span class="math inline">\(SE(x)\)</span>를 구하는 프로그램이다.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>boot <span class="ot">=</span> <span class="cf">function</span>(x,y,grid,h,B){</span>
@@ -1139,13 +1145,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../notes/lme_practice_2.html" class="pagination-link  aria-label=" &lt;span="" 실습="" 2&lt;="" span&gt;"="">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span>
+      <a href="../notes/random_effect.html" class="pagination-link  aria-label=" &lt;span="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">반복측정자료</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../notes/spline-02.html" class="pagination-link" aria-label="<span class='chapter-number'>13</span>&nbsp; <span class='chapter-title'>스플라인 회귀모형</span>">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../notes/spline-02.html" class="pagination-link" aria-label="<span class='chapter-number'>9</span>&nbsp; <span class='chapter-title'>스플라인 회귀모형</span>">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">스플라인 회귀모형</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
