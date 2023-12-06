@@ -26,16 +26,19 @@ book:
     - part: "혼합모형"
       chapters:
         - notes/random_effect.qmd
+    - part: "비모수 회귀모형"
+      chapters:
+        - notes/spline-01.qmd    
+        - notes/spline-02.qmd
+        - notes/survival-01.qmd
     - part: "실습"
       chapters:
         - notes/logistic_practice.qmd
         - notes/logistic_practice_2.qmd
         - notes/lme_practice.qmd
         - notes/lme_practice_2.qmd
-    - part: "비모수 회귀모형"
-      chapters:
-        - notes/spline-01.qmd    
-        - notes/spline-02.qmd    
+ 
+        
     - references.qmd
 
 bibliography: references.bib
