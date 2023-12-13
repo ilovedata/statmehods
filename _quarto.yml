@@ -3,6 +3,7 @@ project:
   
 execute:
   cache: false
+#  freeze: auto  # re-render only when source changes
 
 book:
   title: "데이터 분석 방법론"
@@ -37,6 +38,7 @@ book:
         - notes/logistic_practice_2.qmd
         - notes/lme_practice.qmd
         - notes/lme_practice_2.qmd
+        - notes/random_effect_sim.qmd
  
         
     - references.qmd
