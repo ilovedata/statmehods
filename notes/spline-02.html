@@ -305,6 +305,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">반복측정자료 실습 2</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../notes/random_effect_sim.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">반복측정자료의 모의실험</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -527,21 +533,21 @@ Call:
 lm(formula = y ~ ns(x, df = 3))
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--1.56759 -0.52665 -0.04589  0.66292  1.50074 
+    Min      1Q  Median      3Q     Max 
+-2.6346 -0.7204  0.1997  0.8190  1.7707 
 
 Coefficients:
                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)      1.1173     0.2576   4.337 3.57e-05 ***
-ns(x, df = 3)1  -8.2121     0.3176 -25.860  &lt; 2e-16 ***
-ns(x, df = 3)2   2.3917     0.6621   3.612 0.000485 ***
-ns(x, df = 3)3   2.2644     0.2700   8.387 4.29e-13 ***
+(Intercept)      2.8921     0.4312   6.707 1.37e-09 ***
+ns(x, df = 3)1  -7.3537     0.4592 -16.013  &lt; 2e-16 ***
+ns(x, df = 3)2  -1.7793     1.1068  -1.608    0.111    
+ns(x, df = 3)3   3.4791     0.3969   8.766 6.63e-14 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.7611 on 96 degrees of freedom
-Multiple R-squared:  0.8786,    Adjusted R-squared:  0.8748 
-F-statistic: 231.7 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 1.083 on 96 degrees of freedom
+Multiple R-squared:  0.7604,    Adjusted R-squared:  0.7529 
+F-statistic: 101.5 on 3 and 96 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pred  <span class="ot">=</span> <span class="fu">predict</span>(fit,<span class="at">newdata=</span><span class="fu">list</span>(<span class="at">x=</span>x.grid))</span>
@@ -657,10 +663,10 @@ trace[ (\pmb X^t \pmb X)^{-1} \pmb X^t \pmb X] = trace(\pmb I_{p+1})=p+1 \]</spa
 <pre><code>Call:
 smooth.spline(x = y ~ x, df = 5, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 1.100309  lambda= 0.006217389 (14 iterations)
-Equivalent Degrees of Freedom (Df): 4.999499
-Penalized Criterion (RSS): 28.20109
-PRESS(l.o.o. CV): 0.3151211</code></pre>
+Smoothing Parameter  spar= 1.071293  lambda= 0.006166073 (13 iterations)
+Equivalent Degrees of Freedom (Df): 4.999474
+Penalized Criterion (RSS): 28.35393
+PRESS(l.o.o. CV): 0.3245808</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsm5,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -713,10 +719,10 @@ PRESS(l.o.o. CV): 0.3151211</code></pre>
 <pre><code>Call:
 smooth.spline(x = y ~ x, cv = T, all.knots = T)
 
-Smoothing Parameter  spar= 1.166066  lambda= 0.0001103875 (14 iterations)
-Equivalent Degrees of Freedom (Df): 11.75165
-Penalized Criterion (RSS): 7.183328
-PRESS(l.o.o. CV): 0.09073042</code></pre>
+Smoothing Parameter  spar= 0.867106  lambda= 0.0001764013 (14 iterations)
+Equivalent Degrees of Freedom (Df): 10.572
+Penalized Criterion (RSS): 8.976152
+PRESS(l.o.o. CV): 0.1138647</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">pch=</span><span class="dv">20</span>, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(fitsmauto,<span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="클립보드 복사" class="code-copy-button"><i class="bi"></i></button></pre></div>
